@@ -1,10 +1,13 @@
 {
   "version": "0.0.0",
+  "name": "cheesy-lemons-frontend",
+  "description": "Front end development for cheesy lemons",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest -env=jsdom"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.1",

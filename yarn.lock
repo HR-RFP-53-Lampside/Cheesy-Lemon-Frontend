@@ -2047,6 +2047,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cheesy-lemons-frontend@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "cheesy-lemons-frontend@workspace:."
+  dependencies:
+    "@material-ui/core": ^4.12.1
+    "@material-ui/icons": ^4.11.2
+    "@material-ui/styles": ^4.11.4
+    "@vitejs/plugin-react-refresh": ^1.3.1
+    axios: ^0.21.1
+    eslint: ^7.30.0
+    eslint-config-airbnb: ^18.2.1
+    eslint-plugin-import: ^2.23.4
+    eslint-plugin-jsx-a11y: ^6.4.1
+    eslint-plugin-react: ^7.24.0
+    eslint-plugin-react-hooks: ^4.2.0
+    firebase: ^8.7.1
+    jest: ^27.0.6
+    material-ui-image: ^3.3.2
+    prop-types: ^15.7.2
+    react: ^17.0.0
+    react-dom: ^17.0.0
+    react-router-dom: ^5.2.0
+    sass: ^1.35.2
+    vite: ^2.4.0
+  languageName: unknown
+  linkType: soft
+
 "chokidar@npm:>=3.0.0 <4.0.0":
   version: 3.5.2
   resolution: "chokidar@npm:3.5.2"
@@ -5660,33 +5687,6 @@ resolve@^2.0.0-next.3:
   checksum: 7c63a7251e87715795a4141371f4f7b31ce46c7dd8273a0f4b5240977eb7ecaddd1e8d0fdaf8eabfc7cf73075cc9d83e03c67b89e56f31a2e85cf1089e9fc34f
   languageName: node
   linkType: hard
-
-"root-workspace-0b6124@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "root-workspace-0b6124@workspace:."
-  dependencies:
-    "@material-ui/core": ^4.12.1
-    "@material-ui/icons": ^4.11.2
-    "@material-ui/styles": ^4.11.4
-    "@vitejs/plugin-react-refresh": ^1.3.1
-    axios: ^0.21.1
-    eslint: ^7.30.0
-    eslint-config-airbnb: ^18.2.1
-    eslint-plugin-import: ^2.23.4
-    eslint-plugin-jsx-a11y: ^6.4.1
-    eslint-plugin-react: ^7.24.0
-    eslint-plugin-react-hooks: ^4.2.0
-    firebase: ^8.7.1
-    jest: ^27.0.6
-    material-ui-image: ^3.3.2
-    prop-types: ^15.7.2
-    react: ^17.0.0
-    react-dom: ^17.0.0
-    react-router-dom: ^5.2.0
-    sass: ^1.35.2
-    vite: ^2.4.0
-  languageName: unknown
-  linkType: soft
 
 "safe-buffer@npm:>=5.1.0":
   version: 5.2.1
