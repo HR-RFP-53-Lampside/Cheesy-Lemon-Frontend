@@ -22,6 +22,15 @@ const RegisterStart = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
+    firebase.auth().createUserWithEmailAndPassword(username, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log('REGISTERED NEW USER', user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
   };
 
   const passwordValidity = () => {
