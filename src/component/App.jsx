@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
 import {
-  CssBaseline, useMediaQuery, Container,
+  CssBaseline, useMediaQuery, Container, Box,
 } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
@@ -17,16 +17,20 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
+import DekstopSideBar from './DesktopSideBar';
 
 function App() {
   // Establish dark or light mode
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  console.log(prefersDarkMode);
   const [darkMode, setDarkMode] = useState(prefersDarkMode);
   const palleteType = darkMode ? 'dark' : 'light';
   const bgColor = darkMode ? grey[900] : grey[200];
 
   const [pantry, setPantry] = useState({});
   const [logStatus, setLogStatus] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [sidebarShow, setSidebarShow] = useState(false);
 
   // create design for the project
   const themeDesign = useMemo(() => createTheme({
@@ -59,22 +63,25 @@ function App() {
                 {logStatus ? <Redirect push to="/wfd" /> : null}
                 <RegisterStart />
               </Route>
-              <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
-                <Route exact path="/wfd">
-                  {'what\'s for dinner'}
-                </Route>
-                <Route exact path="/pantry">
-                  pantry
-                </Route>
-                <Route exact path="/social">
-                  social
-                </Route>
-                <Route exact path="/social/:reviewId">
-                  social/reviewId
-                </Route>
-                {/* More routes for later */}
-              </Container>
+              <Box display="flex">
+                <DekstopSideBar />
+                <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
+                  {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                  <Route exact path="/wfd">
+                    {'what\'s for dinner'}
+                  </Route>
+                  <Route exact path="/pantry">
+                    pantry
+                  </Route>
+                  <Route exact path="/social">
+                    social
+                  </Route>
+                  <Route exact path="/social/:reviewId">
+                    social/reviewId
+                  </Route>
+                  {/* More routes for later */}
+                </Container>
+              </Box>
             </Switch>
             {logStatus ? <BottomBar /> : null}
           </LogStatus.Provider>

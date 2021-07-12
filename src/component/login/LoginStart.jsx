@@ -27,11 +27,10 @@ const LoginStart = () => {
       .then((userCredential) => {
         // Signed in
         const { user } = userCredential;
-        console.log('SIGNED IN', user);
         setLogStatus(user);
       })
       .catch((error) => {
-        console.log(error.code, error.message);
+        throw error;
       });
   };
 

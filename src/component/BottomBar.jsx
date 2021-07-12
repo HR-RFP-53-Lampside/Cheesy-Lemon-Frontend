@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  BottomNavigation, BottomNavigationAction, Box, Icon,
+  BottomNavigation, BottomNavigationAction, Box, Icon, Hidden,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { Menu, Kitchen, Group } from '@material-ui/icons/';
@@ -12,7 +12,7 @@ const BottomBar = () => {
   const themeDesign = useTheme();
 
   return (
-    <>
+    <Hidden lgUp>
       <Box
         component={BottomNavigation}
         value={navValue}
@@ -35,7 +35,7 @@ const BottomBar = () => {
         width: '100%', position: 'fixed', bottom: '0', height: '.5em', backgroundColor: themeDesign.palette.primary.light,
       }}
       />
-    </>
+    </Hidden>
   );
 };
 

@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState } from 'react';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
+  Paper, Box, Typography, TextField, Button, Container, Hidden,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
@@ -23,7 +22,6 @@ const RegisterStart = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log('someone wants to be elevated!');
   };
 
   const passwordValidity = () => {
