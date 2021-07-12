@@ -98,44 +98,6 @@ const RegisterStart = () => {
               </Button>
             </Box>
           </form>
-          <Typography style={{
-            color: themeDesign.custom.muted.grey,
-            ...SpacingDesign.marginTop(2),
-            ...SpacingDesign.marginLeft(1),
-          }}
-          >
-            Elevate with our partners
-          </Typography>
-          <Box display="flex">
-            <IconButton
-              aria-label="social media"
-              className="fab fa-facebook"
-              style={{
-                ...SpacingDesign.padding(2),
-                fontSize: 32,
-                ...themeDesign.custom.facebook,
-              }}
-            />
-            <IconButton
-              aria-label="social media"
-              className="fab fa-google"
-              style={{
-                ...SpacingDesign.padding(2),
-                fontSize: 32,
-                ...themeDesign.custom.google,
-                ...SpacingDesign.marginx(3),
-              }}
-            />
-            <IconButton
-              aria-label="social media"
-              className="fab fa-twitter"
-              style={{
-                ...SpacingDesign.padding(2),
-                fontSize: 32,
-                ...themeDesign.custom.twitter,
-              }}
-            />
-          </Box>
           <Button component={Link} to="/login">
             <Typography style={{ color: themeDesign.palette.info.light }}>
               been elevated? Rise up!
