@@ -35,6 +35,28 @@ const LoginStart = () => {
       });
   };
 
+  const OAuthLogin = (provider) => {
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+        const { credential, user } = result;
+        const { accessToken } = credential;
+        console.log(user, 'SIGNED IN WITH OAuth', 'ACCESS TOKEN', accessToken);
+        setLogStatus(user);
+      })
+      .catch((error) => {
+        const {
+          code,
+          message,
+          email,
+          credential,
+        } = error;
+        console.log(code, message, email, credential);
+      });
+  };
+
   return (
     <Box display="flex">
       <Hidden mdDown>
@@ -115,6 +137,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-facebook"
+              onClick={() => OAuthLogin(new firebase.auth.FacebookAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,
@@ -124,6 +147,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-google"
+              onClick={() => OAuthLogin(new firebase.auth.GoogleAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,
@@ -134,6 +158,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-twitter"
+              onClick={() => OAuthLogin(new firebase.auth.TwitterAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,
