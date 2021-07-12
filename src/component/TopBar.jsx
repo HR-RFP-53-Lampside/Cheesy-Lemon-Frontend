@@ -1,0 +1,43 @@
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  AppBar, Typography, Toolbar, Switch, Icon, Hidden, Box, Button,
+} from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import SpacingDesign from './context/design/SpacingDesign';
+
+const TopBar = ({ darkMode, setDarkMode }) => {
+  const themeDesign = useTheme();
+
+  return (
+    <AppBar position="sticky">
+      <Toolbar>
+        <Hidden mdUp>
+          <Box style={{ flexGrow: 0.25 }} />
+        </Hidden>
+        <Box style={{ flexGrow: 1 }} align="center">
+          <Button style={SpacingDesign.marginLeft(5)}>
+            <Icon className="fa fa-cloud-meatball" color="action" />
+            <Hidden mdDown>
+              <Typography
+                style={{ ...SpacingDesign.marginx(3) }}
+                color="textSecondary"
+              >
+                Whats for dinner
+              </Typography>
+            </Hidden>
+          </Button>
+        </Box>
+        <Switch check={darkMode.toString()} onChange={() => setDarkMode(!darkMode)} color="secondary" />
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+TopBar.propTypes = {
+  darkMode: PropTypes.bool.isRequired,
+  setDarkMode: PropTypes.func.isRequired,
+}
+
+export default TopBar;
