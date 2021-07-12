@@ -23,7 +23,16 @@ const RegisterStart = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log('someone wants to be elevated!');
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('REGISTERED NEW USER', user);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
   };
 
   const passwordValidity = () => {
