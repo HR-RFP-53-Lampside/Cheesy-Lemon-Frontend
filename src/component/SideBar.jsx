@@ -94,12 +94,12 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
               />
               <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
                 <Typography variant="h5">
-                  USERNAME
+                  {logStatus && logStatus.username}
                 </Typography>
                 <Box display="flex">
                   <Icon className="fas fa-cookie" />
                   <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
-                    100
+                    {logStatus.yummyPoints}
                   </Typography>
                 </Box>
               </Box>
