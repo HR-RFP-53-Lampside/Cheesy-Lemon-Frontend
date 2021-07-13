@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState } from 'react';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,useMediaQuery,
+  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, useMediaQuery,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
