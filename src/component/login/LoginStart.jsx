@@ -20,6 +20,17 @@ const LoginStart = () => {
   const [logStatus, setLogStatus] = useContext(LogStatus);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userMessage, setUserMessage] = useState('');
+
+  const validationMessage = (message) => {
+    if (message === 'auth/wrong-password') {
+      setUserMessage('Wrong password');
+    } else if (message === 'auth/user-not-found') {
+      setUserMessage('User not found');
+    } else {
+      setUserMessage('Something went wrong');
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -27,12 +38,12 @@ const LoginStart = () => {
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then((userCredential) => {
         const { user } = userCredential;
-        const uid = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/' + uid).on('value', (snap) => {
+        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
           setLogStatus(snap.val());
         });
       })
       .catch((error) => {
+        validationMessage(error.code);
         throw error;
       });
   };
@@ -42,10 +53,10 @@ const LoginStart = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
+        // eslint-disable-next-line no-unused-vars
         const { credential, user } = result;
-        const { accessToken } = credential;
-        const uid = firebase.auth().currentUser.uid;
-        firebase.database().ref('users/' + uid).on('value', (snap) => {
+        // const { accessToken } = credential;
+        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
           if (!snap.val()) {
             const dbUser = {
               dietaryPrefs: '',
@@ -55,11 +66,10 @@ const LoginStart = () => {
               lastName: '',
               pantry: {},
               photoURL: user.photoURL || '',
-              uid: user.uid,
-              username: user.email.split('@')[0],
+              username: user.displayName || user.email.split('@')[0],
               yummyPoints: 0,
             };
-            firebase.database().ref('users/' + uid).set(dbUser).catch((error) => new Error(error));
+            firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
           }
           setLogStatus(snap.val());
         });
@@ -133,7 +143,7 @@ const LoginStart = () => {
               <Button
                 variant="contained"
                 color="primary"
-                style={SpacingDesign.paddingx(5)}
+                style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.marginy(2) }}
                 type="submit"
                 align="right"
               >
@@ -143,9 +153,18 @@ const LoginStart = () => {
               </Button>
             </Box>
           </form>
+          { userMessage
+            ? (
+              <Box bgcolor="warning.main" align="center" borderRadius={5} style={SpacingDesign.padding(1)}>
+                <Typography color="textPrimary">
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null}
           <Typography style={{
             color: themeDesign.custom.muted.grey,
-            ...SpacingDesign.marginTop(3),
+            ...SpacingDesign.marginTop(1),
             ...SpacingDesign.marginLeft(1),
           }}
           >

@@ -27,7 +27,7 @@ const BottomBar = ({ sidebarShow, setSidebarShow }) => {
           width: '100%', position: 'fixed', bottom: '.5em', height: '3.5em',
         }}
       >
-        <BottomNavigationAction label="More" color="secondary" icon={<Menu />} onClick={() => setSidebarShow(!sidebarShow)} />
+        <BottomNavigationAction label="More" color="secondary" icon={<Icon className="fas fa-hamburger" />} onClick={() => setSidebarShow(!sidebarShow)} />
         <BottomNavigationAction component={Link} to="/wfd" label="WFDinner" color="secondary" icon={<Icon className="fas fa-utensils" />} />
         <BottomNavigationAction component={Link} to="/pantry" label="Pantry" color="secondary" icon={<Kitchen />} />
         <BottomNavigationAction component={Link} to="/social" label="Community" color="secondary" icon={<Group />} />

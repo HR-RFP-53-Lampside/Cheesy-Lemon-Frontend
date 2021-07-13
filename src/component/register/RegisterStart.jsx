@@ -30,7 +30,7 @@ const RegisterStart = () => {
       username: user.email.split('@')[0],
       yummyPoints: 0,
     };
-    firebase.database().ref('users/' + user.uid).set(dbUser).catch((error) => new Error(error));
+    firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
   };
 
   const handleSubmit = (event) => {
@@ -39,12 +39,12 @@ const RegisterStart = () => {
     firebase.auth().createUserWithEmailAndPassword(username, password)
       .then((userCredential) => {
         const { user } = userCredential;
-        setUserMesssage('Successfully registered!');
+        setUserMessage('Successfully registered!');
         setDbUser(user);
       })
       .catch((error) => {
         const { message } = error;
-        setUserMesssage(message);
+        setUserMessage(message);
       });
   };
 
