@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
   Container, Card, Hidden, Button, Box, Avatar, Typography, Icon,
 } from '@material-ui/core';
@@ -12,7 +12,7 @@ import SpacingDesign from './context/design/SpacingDesign';
 import LogStatus from './context/auth/LogStatus';
 
 const DekstopSideBar = () => {
-  const [setting, setSetting] = useState('');
+  const history = useHistory();
   const [logStatus, setLogStatus] = useContext(LogStatus);
 
   return (
@@ -65,6 +65,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/favorites')}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-heart" style={SpacingDesign.marginx(2)} />
@@ -74,6 +75,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/wfd')}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-utensils" style={SpacingDesign.marginx(2)} />
@@ -83,6 +85,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/addingredient')}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-egg" style={SpacingDesign.marginx(2)} />
@@ -92,6 +95,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/pantry')}
             >
               <Typography variant="h5">
                 <Kitchen style={SpacingDesign.marginx(2)} />
@@ -101,6 +105,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/social')}
             >
               <Typography variant="h5">
                 <Group style={SpacingDesign.marginx(2)} />
@@ -110,6 +115,7 @@ const DekstopSideBar = () => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(3) }}
+              onClick={() => history.push('/settings')}
             >
               <Typography variant="h5">
                 <Settings style={SpacingDesign.marginx(2)} />
