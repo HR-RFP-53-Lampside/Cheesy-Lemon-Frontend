@@ -17,6 +17,7 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 
@@ -76,7 +77,7 @@ function App() {
                     your fave
                   </Route>
                   <Route exact path="/wfd">
-                    {'what\'s for dinner'}
+                    <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
                     pantry
@@ -92,6 +93,9 @@ function App() {
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
+                  </Route>
+                  <Route exact path="/recipe/:reviewId">
+                    Recipe Overview
                   </Route>
                   {/* More routes for later */}
                 </Container>
