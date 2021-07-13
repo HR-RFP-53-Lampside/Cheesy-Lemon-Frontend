@@ -17,6 +17,7 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
+import RecipeFocusStart from './recipe/RecipeFocusStart';
 
 function App() {
   // Establish dark or light mode
@@ -49,19 +50,19 @@ function App() {
             <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
             <Switch>
               <Route exact path="/">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+              {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/login">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
                 <LoginStart />
               </Route>
               <Route exact path="/register">
-                {logStatus ? <Redirect push to="/wfd" /> : null}
+              {logStatus ? <Redirect push to="/recipe/1" /> : null }
                 <RegisterStart />
               </Route>
               <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
-                <Route exact path="/wfd">
+              {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
+                <Route exact path="/whatsfordinner">
                   {'what\'s for dinner'}
                 </Route>
                 <Route exact path="/pantry">
@@ -70,8 +71,11 @@ function App() {
                 <Route exact path="/social">
                   social
                 </Route>
-                <Route exact path="/social/:reviewId">
+                <Route path="/social/:reviewId">
                   social/reviewId
+                </Route>
+                <Route path="/recipe/:recipeId">
+                  <RecipeFocusStart />
                 </Route>
                 {/* More routes for later */}
               </Container>

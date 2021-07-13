@@ -10,14 +10,14 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeReviewList = () => {
-  const themeDesign = useTheme();
+const RecipeDescription = () => {
+
   return (
     <div>
-    <div>map of three reviews here?</div>
-      <Button style={{ color: themeDesign.custom.muted.grey }}>add Review</Button>
+      {/* <div>DESCRIPTION</div> */}
+      <div>this is where the description goes</div>
     </div>
   );
 };
 
-export default RecipeReviewList;
+export default RecipeDescription;
