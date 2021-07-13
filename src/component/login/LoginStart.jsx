@@ -138,7 +138,7 @@ const LoginStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => { setUserMessage(''); setUsername(event.target.value); }}
             />
             <TextField
               label="Password"
@@ -214,7 +214,7 @@ const LoginStart = () => {
               }}
             />
           </Box>
-          <Button component={Link} to="../social">
+          <Button component={Link} to="../register">
             <Typography style={{ color: themeDesign.palette.info.light }}>
               Not elevated? Join us!
             </Typography>

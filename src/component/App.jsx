@@ -73,15 +73,14 @@ function App() {
             <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
             <Switch>
               <Route exact path="/">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                {firebase.auth().currentUser ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/login">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
-                <LoginStart />
+                {logStatus ? <Redirect push to="/wfd" /> : <LoginStart />}
               </Route>
               <Route exact path="/register">
-                {logStatus ? <Redirect push to="/wfd" /> : null}
-                <RegisterStart />
+                {console.log(logStatus)}
+                {logStatus ? <Redirect push to="/wfd" /> : <RegisterStart />}
               </Route>
               <Box display="flex">
                 {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
