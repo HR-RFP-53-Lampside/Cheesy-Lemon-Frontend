@@ -18,6 +18,7 @@ import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
+import PantryStart from './foodcardlist/pantry/PantryStart.jsx'
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 
@@ -80,7 +81,7 @@ function App() {
                     <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
-                    pantry
+                    <PantryStart />
                   </Route>
                   <Route exact path="/addingredient">
                     add ingredient
