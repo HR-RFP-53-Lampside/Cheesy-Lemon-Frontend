@@ -1,22 +1,23 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Box, Typography, Icon, TextField,
+  Box,
 } from '@material-ui/core';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 
 import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
+import ChangeFields from './ChangeFields';
 
 const AccountSettings = () => {
-  const [logStatus] = useContext(LogStatus);
   const [accountSettings, setAccountSettings] = useState();
-  const [editingSetting, setEditingSetting] = useState({});
+  const [changeFields, setChangeFields] = useState();
 
   const textInputs = {
     username: 'Username',
     firstName: 'First Name',
     lastName: 'Last Name',
+    aboutMe: 'About Me',
+    photoURL: 'Profile Pic',
   };
 
   const handleChange = (event, newValue) => {
@@ -24,15 +25,15 @@ const AccountSettings = () => {
   };
 
   useEffect(() => {
-    if (accountSettings === 'username' || accountSettings === 'firstName' || accountSettings === 'lastName') {
-      setEditingSetting({
-        newField: <TextField
+    if (accountSettings) {
+      setChangeFields(
+        <ChangeFields
           label={textInputs[accountSettings]}
-          variant="filled"
-          style={{ ...SpacingDesign.marginLeft(1) }}
-          defaultValue={logStatus[accountSettings]}
+          accountSettings={accountSettings}
+          multiline={accountSettings === 'aboutMe' && true}
+          rows={accountSettings === 'aboutMe' ? 8 : 1}
         />,
-      });
+      );
     }
   }, [accountSettings]);
 
@@ -45,7 +46,7 @@ const AccountSettings = () => {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      {editingSetting.newField}
+      {changeFields}
     </Box>
   );
 };
