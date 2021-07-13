@@ -17,7 +17,7 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
-import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 import UserProfileStart from './user/UserProfileStart';
