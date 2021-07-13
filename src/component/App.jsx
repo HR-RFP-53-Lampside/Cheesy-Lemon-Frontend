@@ -17,6 +17,7 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 
 function App() {
   // Establish dark or light mode
@@ -62,7 +63,8 @@ function App() {
               <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
                 {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
                 <Route exact path="/wfd">
-                  {'what\'s for dinner'}
+                  {/* {'what\'s for dinner'} */}
+                  <WhatsForDinnerStart />
                 </Route>
                 <Route exact path="/pantry">
                   pantry
