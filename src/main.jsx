@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import App from './component/App';
-import config from './config/config';
+import config from './config/config.js';
 
 const firebaseConfig = config;
 // Initialize Firebase
