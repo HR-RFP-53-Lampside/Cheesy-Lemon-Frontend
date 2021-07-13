@@ -18,6 +18,7 @@ import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import DekstopSideBar from './DesktopSideBar';
+import SideBar from './SideBar';
 
 function App() {
   // Establish dark or light mode
@@ -68,6 +69,7 @@ function App() {
               </Route>
               <Box display="flex">
                 {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                <SideBar sidebarShow={sidebarShow} setSidebarShow={setSidebarShow} />
                 <DekstopSideBar />
                 <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
                   <Route exact path="/favorites">
@@ -95,7 +97,7 @@ function App() {
                 </Container>
               </Box>
             </Switch>
-            {logStatus ? <BottomBar /> : null}
+            {logStatus && <BottomBar sidebarShow={sidebarShow} setSidebarShow={setSidebarShow} />}
           </LogStatus.Provider>
         </PantryContext.Provider>
       </ThemeProvider>

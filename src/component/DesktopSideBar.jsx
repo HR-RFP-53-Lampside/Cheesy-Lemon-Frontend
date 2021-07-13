@@ -17,7 +17,10 @@ const DekstopSideBar = () => {
 
   return (
     <Hidden mdDown>
-      <Container maxWidth="xs">
+      <Container style={{
+        flexShrink: 1, position: 'absolute', left: '0', maxWidth: '30em',
+      }}
+      >
         <Card
           style={{
             ...SpacingDesign.marginTop(5),

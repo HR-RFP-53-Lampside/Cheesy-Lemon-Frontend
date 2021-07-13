@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   BottomNavigation, BottomNavigationAction, Box, Icon, Hidden,
@@ -7,7 +8,7 @@ import {
 import { useTheme } from '@material-ui/core/styles';
 import { Menu, Kitchen, Group } from '@material-ui/icons/';
 
-const BottomBar = () => {
+const BottomBar = ({ sidebarShow, setSidebarShow }) => {
   const [navValue, setNavValue] = useState(-1);
   const themeDesign = useTheme();
 
@@ -26,7 +27,7 @@ const BottomBar = () => {
           width: '100%', position: 'fixed', bottom: '.5em', height: '3.5em',
         }}
       >
-        <BottomNavigationAction label="More" color="secondary" icon={<Menu />} />
+        <BottomNavigationAction label="More" color="secondary" icon={<Menu />} onClick={() => setSidebarShow(!sidebarShow)} />
         <BottomNavigationAction component={Link} to="/wfd" label="WFDinner" color="secondary" icon={<Icon className="fas fa-utensils" />} />
         <BottomNavigationAction component={Link} to="/pantry" label="Pantry" color="secondary" icon={<Kitchen />} />
         <BottomNavigationAction component={Link} to="/social" label="Community" color="secondary" icon={<Group />} />
@@ -37,6 +38,11 @@ const BottomBar = () => {
       />
     </Hidden>
   );
+};
+
+BottomBar.propTypes = {
+  sidebarShow: PropTypes.bool.isRequired,
+  setSidebarShow: PropTypes.func.isRequired,
 };
 
 export default BottomBar;
