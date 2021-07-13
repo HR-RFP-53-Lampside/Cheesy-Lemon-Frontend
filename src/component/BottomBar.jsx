@@ -6,7 +6,7 @@ import {
   BottomNavigation, BottomNavigationAction, Box, Icon, Hidden,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
-import { Menu, Kitchen, Group } from '@material-ui/icons/';
+import { Kitchen, Group } from '@material-ui/icons/';
 
 const BottomBar = ({ sidebarShow, setSidebarShow }) => {
   const [navValue, setNavValue] = useState(-1);
