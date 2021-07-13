@@ -77,6 +77,7 @@ function App() {
                   </Route>
                   <Route exact path="/wfd">
                     {'what\'s for dinner'}
+                    <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
                     pantry
@@ -89,6 +90,9 @@ function App() {
                   </Route>
                   <Route exact path="/settings">
                     add ingredient
+                  </Route>
+                  <Route exact path="/social/:reviewId">
+                    social/reviewId
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
