@@ -20,7 +20,6 @@ import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
-import recipeFeed from './recipeFeed/recipeFeed'
 import RecipeFeed from './recipeFeed/recipeFeed';
 
 function App() {
