@@ -8,6 +8,9 @@ import {
 } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import PantryContext from './context/foodies/PantryContext';
 import LogStatus from './context/auth/LogStatus';
@@ -35,6 +38,18 @@ function App() {
   useEffect(() => {
     setDarkMode(prefersDarkMode);
   }, [prefersDarkMode]);
+
+  useEffect(() => {
+    if (!logStatus) {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+            setLogStatus(snap.val());
+          })
+        }
+      });
+    };
+  }, [logStatus]);
 
   // create design for the project
   const themeDesign = useMemo(() => createTheme({
