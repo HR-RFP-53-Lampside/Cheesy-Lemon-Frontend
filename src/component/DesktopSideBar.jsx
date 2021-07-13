@@ -83,12 +83,12 @@ const DekstopSideBar = () => {
               />
               <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
                 <Typography variant="h5">
-                  {logStatus.username}
+                  {logStatus && logStatus.username}
                 </Typography>
                 <Box display="flex">
                   <Icon className="fas fa-cookie" />
                   <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
-                    {logStatus.yummyPoints}
+                    {logStatus && logStatus.yummyPoints}
                   </Typography>
                 </Box>
               </Box>

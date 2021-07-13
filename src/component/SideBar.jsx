@@ -99,7 +99,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
                 <Box display="flex">
                   <Icon className="fas fa-cookie" />
                   <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
-                    {logStatus.yummyPoints}
+                    {logStatus && logStatus.yummyPoints}
                   </Typography>
                 </Box>
               </Box>
