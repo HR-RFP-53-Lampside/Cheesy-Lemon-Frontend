@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 
 
-const recipeReviewCard = ({userData}) => {
+const recipeReviewCard = ({userData, test}) => {
     // create a card like template like for individual recipe that shows all reviews of recipe
     return (
         <Typography >

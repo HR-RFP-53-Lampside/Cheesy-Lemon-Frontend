@@ -17,20 +17,54 @@ const handleNewFilter = (e) => {
 setSelected(e.target.value)
 }
 
+const test = [
+  {
+    title: 'banana',
+    body: 'this banana is the wworst in the world I hate bananas besides this one',
+    favorite: 5,
+    reviews: 3
+  },
+  {
+    title: 'grapes',
+    body: 'this banana is the wworst in the world I hate bananas besides this one',
+    favorite: 5,
+    reviews: 3
+  },
+  {
+    title: 'steak dinner',
+    body: 'this banana is the wworst in the world I hate bananas besides this one tgere us ou reason to east meant',
+    favorite: 5,
+    reviews: 3
+  },
+  {
+    title: 'hariy peanuts',
+    body: 'this banana is the wworst in the world I hate bananas besides this one I love peanuts bc I am an eleeghan',
+    favorite: 5,
+    reviews: 3
+  },
+  {
+    title: 'my guy is so good',
+    body: 'this banana is the wworst in the world I hate bananas besides this one and I cant wait to eat this banana',
+    favorite: 5,
+    reviews: 3
+  },
+]
 
+
+// this will be directed to from social file
 return (
     <Box display='flex'>
         <Container maxWidth='sm'
         style={{
             flexGrow: 1, flexBasis: '20%', alignSelf: 'center', maxHeight: '90vh',
           }}>
-              <Select value={filterOptions} onChange={handleNewFilter}>{filterOptions.map((item) => (
-                  {item}
-              ))}</Select>
               <Typography variant="h2" align="center" style={{ color: themeDesign.custom.muted.grey }}>
           Recipe Feed
         </Typography>
-        <listOfRecipes data={userData} selected={selected}/>
+              <Select value={filterOptions} onChange={handleNewFilter}>{filterOptions.map((item) => (
+                  {item}
+              ))}</Select>
+        <listOfRecipes data={userData} selected={selected} test={test}/>
           </Container>
     </Box>
 )
