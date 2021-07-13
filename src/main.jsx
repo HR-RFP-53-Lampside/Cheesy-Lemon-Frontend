@@ -1,17 +1,20 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase/app';
-import App from './component/App';
 import 'firebase/auth';
 
+import App from './component/App';
+import config from './config/config';
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyC3MfYIGqpTRmiURX5kfIAzYKI3cd0FSXg',
+  apiKey: config.API_KEY,
   authDomain: 'cheesy-lemons.firebaseapp.com',
   projectId: 'cheesy-lemons',
   databaseURL: 'https://cheesy-lemons-default-rtdb.firebaseio.com/',
   storageBucket: 'cheesy-lemons.appspot.com',
   messagingSenderId: '87894079592',
-  appId: '1:87894079592:web:0e70c91d369ac3a67c23dd',
+  appId: config.APPID,
   measurementId: 'G-39GT3EL25Q',
 };
 // Initialize Firebase

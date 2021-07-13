@@ -13,3 +13,5 @@ dist-ssr
 !.yarn/versions
 
 package-lock.json
+.env
+config.js

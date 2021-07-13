@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
@@ -22,8 +22,7 @@ import DekstopSideBar from './DesktopSideBar';
 function App() {
   // Establish dark or light mode
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  console.log(prefersDarkMode);
-  const [darkMode, setDarkMode] = useState(prefersDarkMode);
+  const [darkMode, setDarkMode] = useState(false);
   const palleteType = darkMode ? 'dark' : 'light';
   const bgColor = darkMode ? grey[900] : grey[200];
 
@@ -31,6 +30,10 @@ function App() {
   const [logStatus, setLogStatus] = useState();
   // eslint-disable-next-line no-unused-vars
   const [sidebarShow, setSidebarShow] = useState(false);
+
+  useEffect(() => {
+    setDarkMode(prefersDarkMode);
+  }, [prefersDarkMode]);
 
   // create design for the project
   const themeDesign = useMemo(() => createTheme({
