@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
-import recipeph from './ba-recipe-pasta-al-limone.jpeg';
 const data = [
   {
      "id":715594,
@@ -46,7 +45,7 @@ const WhatsForDinnerStart = () => {
 
 
   return (
-    <Box style={{...SpacingDesign.marginBottom(10)}}>
+    <Box style={{...SpacingDesign.marginBottom(1)}}>
         <form noValidate autoComplete="off" onChange={handleFilter}>
           <TextField
             id="search"
@@ -59,8 +58,10 @@ const WhatsForDinnerStart = () => {
 
         <Container
           style={{
-            height: '100vh',
-            ...SpacingDesign.marginTop(3)
+            height: 'auto',
+            ...SpacingDesign.marginTop(3),
+            ...SpacingDesign.marginBottom(1)
+
           }}
           elevation={1}>
           <Typography variant='h5' align='center'>
