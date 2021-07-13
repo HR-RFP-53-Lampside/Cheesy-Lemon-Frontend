@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@firebase/app", "npm:0.6.28"],
             ["@material-ui/core", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.12.1"],
             ["@material-ui/icons", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.2"],
             ["@material-ui/styles", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.4"],
@@ -3065,6 +3066,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["cheesy-lemons-frontend", "workspace:."],
+            ["@firebase/app", "npm:0.6.28"],
             ["@material-ui/core", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.12.1"],
             ["@material-ui/icons", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.2"],
             ["@material-ui/styles", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.4"],

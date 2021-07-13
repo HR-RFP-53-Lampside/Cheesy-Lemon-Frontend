@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
@@ -25,9 +26,13 @@ const LoginStart = () => {
     event.stopPropagation();
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then((userCredential) => {
-        // Signed in
         const { user } = userCredential;
         setLogStatus(user);
+        const uid = firebase.auth().currentUser.uid;
+        const email = 'test@email.com'
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+          console.log(snap.val());
+        });
       })
       .catch((error) => {
         throw error;
