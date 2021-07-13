@@ -17,7 +17,7 @@ const RegisterStart = () => {
   const themeDesign = useTheme();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [userMessage, setUserMesssage] = useState('');
+  const [userMessage, setUserMessage] = useState('');
 
   const setDbUser = (user) => {
     const dbUser = {
@@ -27,7 +27,7 @@ const RegisterStart = () => {
       lastName: '',
       photoURL: user.photoURL || '',
       uid: user.uid,
-      username: '',
+      username: user.email.split('@')[0],
       yummyPoints: 0,
     };
     firebase.database().ref('users/' + user.uid).set(dbUser).catch((error) => new Error(error));

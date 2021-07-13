@@ -27,10 +27,9 @@ const LoginStart = () => {
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then((userCredential) => {
         const { user } = userCredential;
-        setLogStatus(user);
         const uid = firebase.auth().currentUser.uid;
         firebase.database().ref('users/' + uid).on('value', (snap) => {
-          console.log(snap.val());
+          setLogStatus(snap.val());
         });
       })
       .catch((error) => {
@@ -45,7 +44,6 @@ const LoginStart = () => {
       .then((result) => {
         const { credential, user } = result;
         const { accessToken } = credential;
-        setLogStatus(user);
         const uid = firebase.auth().currentUser.uid;
         firebase.database().ref('users/' + uid).on('value', (snap) => {
           if (!snap.val()) {
@@ -58,11 +56,12 @@ const LoginStart = () => {
               pantry: {},
               photoURL: user.photoURL || '',
               uid: user.uid,
-              username: '',
+              username: user.email.split('@')[0],
               yummyPoints: 0,
             };
             firebase.database().ref('users/' + uid).set(dbUser).catch((error) => new Error(error));
           }
+          setLogStatus(snap.val());
         });
       })
       .catch((error) => {
