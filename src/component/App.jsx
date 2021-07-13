@@ -20,6 +20,7 @@ import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
+import RecipeFocusStart from './recipe/RecipeFocusStart.jsx';
 
 function App() {
   // Establish dark or light mode
@@ -96,6 +97,7 @@ function App() {
                   </Route>
                   <Route exact path="/recipe/:reviewId">
                     Recipe Overview
+                    <RecipeFocusStart />
                   </Route>
                   {/* More routes for later */}
                 </Container>
