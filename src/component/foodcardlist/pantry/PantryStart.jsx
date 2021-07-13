@@ -23,6 +23,7 @@ const PantryStart = () => {
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
+    console.log(filter)
   }
 
   return (
@@ -65,7 +66,7 @@ const PantryStart = () => {
         <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
           <CardContent>
             <CardMedia
-              style={{ height: '300px' }}
+              style={{ ...SpacingDesign.height(40)}}
               image={lemonImg}
               title='Lemon'
             />
