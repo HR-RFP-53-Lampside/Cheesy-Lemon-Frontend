@@ -36,14 +36,13 @@ const ChangeFields = ({
       display = (
         <>
           <Box display="flex" justifyContent="center" style={SpacingDesign.marginy(3)}>
-            {[1, 2, 3].map((row, index) => (
+            {[1, 2, 3].map((row) => (
               <Avatar
-                // eslint-disable-next-line react/no-array-index-key
-                key={`photo-card${index}`}
+                key={`photo-card${row}`}
                 title="UserProfilePicture"
                 src={logStatus && logStatus.photoURL}
                 style={{
-                  ...SpacingDesign.square((index + 1) * 3),
+                  ...SpacingDesign.square(row * 3),
                   alignSelf: 'center',
                   ...SpacingDesign.marginx(1),
                 }}
