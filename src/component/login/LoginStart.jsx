@@ -28,11 +28,6 @@ const LoginStart = () => {
       .then((userCredential) => {
         const { user } = userCredential;
         setLogStatus(user);
-        const uid = firebase.auth().currentUser.uid;
-        const email = 'test@email.com'
-        firebase.database().ref('users/' + uid).on('value', (snap) => {
-          console.log(snap.val());
-        });
       })
       .catch((error) => {
         throw error;
@@ -47,6 +42,10 @@ const LoginStart = () => {
         const { credential, user } = result;
         const { accessToken } = credential;
         setLogStatus(user);
+        const uid = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+          console.log(snap.val());
+        });
       })
       .catch((error) => {
         const {
