@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Paper, Box, Typography, TextField, Button, Container, Hidden,
 } from '@material-ui/core';
@@ -10,14 +10,13 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
 const RegisterStart = () => {
   const themeDesign = useTheme();
-  const [logStatus, setLogStatus] = useContext(LogStatus);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userMessage, setUserMesssage] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,10 +25,11 @@ const RegisterStart = () => {
       .then((userCredential) => {
         const { user } = userCredential;
         console.log('REGISTERED NEW USER', user);
+        setUserMesssage('Successfully registered!');
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        const { message } = error;
+        setUserMesssage(message);
       });
   };
 
@@ -105,6 +105,15 @@ const RegisterStart = () => {
               </Button>
             </Box>
           </form>
+          { userMessage
+            ? (
+              <Box bgcolor="warning.main" align="center" borderRadius={5} style={SpacingDesign.padding(1)}>
+                <Typography color="textPrimary">
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null}
           <Button component={Link} to="/login">
             <Typography style={{ color: themeDesign.palette.info.light }}>
               been elevated? Rise up!
