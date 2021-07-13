@@ -9,15 +9,14 @@ import { useTheme } from '@material-ui/core/styles';
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
-import RecipeInstruction from './RecipeInstruction';
 
-const RecipeInstructionsList = () => {
+const RecipeDescription = () => {
 
   return (
     <div>
-    <RecipeInstruction />
+      <div>this is where the description goes</div>
     </div>
   );
 };
 
-export default RecipeInstructionsList;
+export default RecipeDescription;
