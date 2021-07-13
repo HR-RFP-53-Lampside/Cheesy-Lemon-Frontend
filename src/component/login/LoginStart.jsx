@@ -28,6 +28,10 @@ const LoginStart = () => {
       .then((userCredential) => {
         const { user } = userCredential;
         setLogStatus(user);
+        const uid = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+          console.log(snap.val());
+        });
       })
       .catch((error) => {
         throw error;
@@ -44,7 +48,21 @@ const LoginStart = () => {
         setLogStatus(user);
         const uid = firebase.auth().currentUser.uid;
         firebase.database().ref('users/' + uid).on('value', (snap) => {
-          console.log(snap.val());
+          if (!snap.val()) {
+            const dbUser = {
+              dietaryPrefs: '',
+              email: user.email,
+              favRecipes: {},
+              firstName: '',
+              lastName: '',
+              pantry: {},
+              photoURL: user.photoURL || '',
+              uid: user.uid,
+              username: '',
+              yummyPoints: 0,
+            };
+            firebase.database().ref('users/' + uid).set(dbUser).catch((error) => new Error(error));
+          }
         });
       })
       .catch((error) => {
