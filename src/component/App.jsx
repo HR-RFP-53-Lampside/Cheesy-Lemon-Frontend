@@ -22,6 +22,7 @@ import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
+import RecipeFocusStart from './recipe/RecipeFocusStart';
 
 function App() {
   // Establish dark or light mode
@@ -101,6 +102,7 @@ function App() {
                   </Route>
                   <Route exact path="/recipe/:recipeId">
                     Recipe Overview
+                    <RecipeFocusStart />
                   </Route>
                   {/* More routes for later */}
                 </Container>
