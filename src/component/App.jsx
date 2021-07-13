@@ -16,10 +16,8 @@ import SpacingDesign from './context/design/SpacingDesign';
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
-import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
-
 import RegisterStart from './register/RegisterStart';
-
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 
@@ -60,14 +58,14 @@ function App() {
             <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
             <Switch>
               <Route exact path="/">
-              {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
+                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/login">
-                {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
+                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
                 <LoginStart />
               </Route>
               <Route exact path="/register">
-              {logStatus ? <Redirect push to="/recipe/1" /> : null }
+                {logStatus ? <Redirect push to="/wfd" /> : null}
                 <RegisterStart />
               </Route>
               <Box display="flex">
@@ -79,7 +77,6 @@ function App() {
                     your fave
                   </Route>
                   <Route exact path="/wfd">
-                    {'what\'s for dinner'}
                     <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
@@ -96,6 +93,9 @@ function App() {
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
+                  </Route>
+                  <Route exact path="/recipe/:reviewId">
+                    Recipe Overview
                   </Route>
                   {/* More routes for later */}
                 </Container>
