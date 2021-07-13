@@ -41,35 +41,42 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
           }}
           disableRipple
         >
-          <Box
-            style={{
-              ...SpacingDesign.height(20),
-              ...SpacingDesign.padding(2),
+          <CardActionArea
+            onClick={() => {
+              setSidebarShow(false);
+              history.push('/profile');
             }}
-            bgcolor="primary.main"
-            display="flex"
           >
-            <Avatar
-              title="UserProfilePicture"
-              src={logStatus && logStatus.photoURL}
+            <Box
               style={{
-                height: '64px',
-                width: '64px',
-                alignSelf: 'center',
+                ...SpacingDesign.height(20),
+                ...SpacingDesign.padding(2),
               }}
-            />
-            <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
-              <Typography variant="h5">
-                USERNAME
-              </Typography>
-              <Box display="flex">
-                <Icon className="fas fa-cookie" />
-                <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
-                  100
+              bgcolor="primary.main"
+              display="flex"
+            >
+              <Avatar
+                title="UserProfilePicture"
+                src={logStatus && logStatus.photoURL}
+                style={{
+                  height: '64px',
+                  width: '64px',
+                  alignSelf: 'center',
+                }}
+              />
+              <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
+                <Typography variant="h5">
+                  USERNAME
                 </Typography>
+                <Box display="flex">
+                  <Icon className="fas fa-cookie" />
+                  <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
+                    100
+                  </Typography>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          </CardActionArea>
           <Box
             style={{
               height: 'calc(100% - 160px)',
