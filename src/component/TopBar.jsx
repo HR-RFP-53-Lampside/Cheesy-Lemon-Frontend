@@ -9,11 +9,8 @@ import SpacingDesign from './context/design/SpacingDesign';
 const TopBar = ({ darkMode, setDarkMode }) => (
   <AppBar position="sticky">
     <Toolbar>
-      <Hidden mdUp>
-        <Box style={{ flexGrow: 0.25 }} />
-      </Hidden>
       <Box style={{ flexGrow: 1 }} align="center">
-        <Button style={SpacingDesign.marginLeft(5)} aria-label="Go to home screen">
+        <Button style={SpacingDesign.marginLeft(9)} aria-label="Go to home screen">
           <Icon className="fa fa-cloud-meatball" color="action" />
           <Hidden mdDown>
             <Typography
@@ -29,7 +26,6 @@ const TopBar = ({ darkMode, setDarkMode }) => (
     </Toolbar>
   </AppBar>
 );
-
 TopBar.propTypes = {
   darkMode: PropTypes.bool.isRequired,
   setDarkMode: PropTypes.func.isRequired,

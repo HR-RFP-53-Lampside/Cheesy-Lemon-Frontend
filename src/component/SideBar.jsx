@@ -17,7 +17,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
   const history = useHistory();
   const themeDesign = useTheme();
   const [logStatus, setLogStatus] = useContext(LogStatus);
-  const isItMobile = useMediaQuery(themeDesign.breakpoints.up('lg'));
+  const isItDesktop = useMediaQuery(themeDesign.breakpoints.up('lg'));
   const options = [
     {
       message: 'Favorites',
@@ -53,7 +53,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
 
   const buttonPaddings = 1.5;
 
-  if (isItMobile) {
+  if (isItDesktop) {
     setSidebarShow(false);
   }
 

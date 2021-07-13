@@ -8,6 +8,9 @@ import {
 } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import PantryContext from './context/foodies/PantryContext';
 import LogStatus from './context/auth/LogStatus';
@@ -17,10 +20,13 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
-import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 import RecipeFeed from './recipeFeed/recipeFeed';
+import UserProfileStart from './user/UserProfileStart';
+import SettingsStart from './settings/SettingsStart';
+import RecipeFocusStart from './recipe/RecipeFocusStart';
 
 function App() {
   // Establish dark or light mode
@@ -37,6 +43,18 @@ function App() {
   useEffect(() => {
     setDarkMode(prefersDarkMode);
   }, [prefersDarkMode]);
+
+  useEffect(() => {
+    if (!logStatus) {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+            setLogStatus(snap.val());
+          });
+        }
+      });
+    }
+  }, [logStatus]);
 
   // create design for the project
   const themeDesign = useMemo(() => createTheme({
@@ -62,12 +80,10 @@ function App() {
                 {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/login">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
-                <LoginStart />
+                {logStatus ? <Redirect push to="/wfd" /> : <LoginStart />}
               </Route>
               <Route exact path="/register">
-                {logStatus ? <Redirect push to="/wfd" /> : null}
-                <RegisterStart />
+                {logStatus ? <Redirect push to="/wfd" /> : <RegisterStart />}
               </Route>
               <Box display="flex">
                 {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
@@ -90,13 +106,17 @@ function App() {
                     <RecipeFeed />
                   </Route>
                   <Route exact path="/settings">
-                    add ingredient
+                    <SettingsStart />
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
                   </Route>
-                  <Route exact path="/recipe/:reviewId">
+                  <Route path="/profile">
+                    <UserProfileStart />
+                  </Route>
+                  <Route exact path="/recipe/:recipeId">
                     Recipe Overview
+                    <RecipeFocusStart />
                   </Route>
                   {/* More routes for later */}
                 </Container>
