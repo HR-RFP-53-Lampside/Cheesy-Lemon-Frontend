@@ -67,17 +67,26 @@ function App() {
                 <RegisterStart />
               </Route>
               <Box display="flex">
+                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
                 <DekstopSideBar />
                 <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
-                  {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                  <Route exact path="/favorites">
+                    your fave
+                  </Route>
                   <Route exact path="/wfd">
                     {'what\'s for dinner'}
                   </Route>
                   <Route exact path="/pantry">
                     pantry
                   </Route>
+                  <Route exact path="/addingredient">
+                    add ingredient
+                  </Route>
                   <Route exact path="/social">
                     social
+                  </Route>
+                  <Route exact path="/settings">
+                    add ingredient
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
