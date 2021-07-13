@@ -39,10 +39,8 @@ const LoginStart = () => {
       .auth()
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result);
         const { credential, user } = result;
         const { accessToken } = credential;
-        console.log(user, 'SIGNED IN WITH OAuth', 'ACCESS TOKEN', accessToken);
         setLogStatus(user);
       })
       .catch((error) => {
