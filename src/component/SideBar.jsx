@@ -2,10 +2,11 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Drawer, Card, Box, Avatar, Typography, Button, Icon, CardActionArea,
+  Drawer, Card, Box, Avatar, Typography, Button, Icon, CardActionArea, useMediaQuery,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Kitchen, Group, Settings } from '@material-ui/icons/';
+import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -13,10 +14,15 @@ import SpacingDesign from './context/design/SpacingDesign';
 import LogStatus from './context/auth/LogStatus';
 
 const SideBar = ({ sidebarShow, setSidebarShow }) => {
-  console.log('sidebar loading');
   const history = useHistory();
+  const themeDesign = useTheme();
   const [logStatus, setLogStatus] = useContext(LogStatus);
+  const isItMobile = useMediaQuery(themeDesign.breakpoints.up('lg'));
   const buttonPaddings = 1.5;
+
+  if (isItMobile) {
+    setSidebarShow(false);
+  }
 
   return (
     <Drawer
