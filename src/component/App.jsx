@@ -79,7 +79,6 @@ function App() {
                 {logStatus ? <Redirect push to="/wfd" /> : <LoginStart />}
               </Route>
               <Route exact path="/register">
-                {console.log(logStatus)}
                 {logStatus ? <Redirect push to="/wfd" /> : <RegisterStart />}
               </Route>
               <Box display="flex">
