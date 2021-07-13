@@ -35,12 +35,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
           height: '100%',
         }}
       >
-        <CardActionArea
-          onClick={() => {
-            setSidebarShow(false);
-          }}
-          disableRipple
-        >
+        <Box>
           <CardActionArea
             onClick={() => {
               setSidebarShow(false);
@@ -89,7 +84,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/favorites')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/favorites');
+              }}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-heart" style={SpacingDesign.marginx(2)} />
@@ -99,7 +97,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/wfd')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/wfd');
+              }}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-utensils" style={SpacingDesign.marginx(2)} />
@@ -109,7 +110,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/addingredient')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/addingredient');
+              }}
             >
               <Typography variant="h5">
                 <Icon className="fas fa-egg" style={SpacingDesign.marginx(2)} />
@@ -119,7 +123,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/pantry')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/pantry');
+              }}
             >
               <Typography variant="h5">
                 <Kitchen style={SpacingDesign.marginx(2)} />
@@ -129,7 +136,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/social')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/social');
+              }}
             >
               <Typography variant="h5">
                 <Group style={SpacingDesign.marginx(2)} />
@@ -139,7 +149,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => history.push('/settings')}
+              onClick={() => {
+                setSidebarShow(false);
+                history.push('/settings');
+              }}
             >
               <Typography variant="h5">
                 <Settings style={SpacingDesign.marginx(2)} />
@@ -155,6 +168,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
                     setLogStatus();
                   // history.push('/login');
                   });
+                setSidebarShow(false);
               }}
             >
               <Typography variant="h5">
@@ -163,7 +177,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
               </Typography>
             </Button>
           </Box>
-        </CardActionArea>
+        </Box>
       </Card>
     </Drawer>
   );
