@@ -1,54 +1,24 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Paper, Box, Typography, TextField, Button, Icon,
+  Paper, Box, Typography,
 } from '@material-ui/core';
 
+import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
+
 import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
+import AccountSettings from './AccountSettings';
+import PrivacySettings from './PrivacySetting';
 
 const SettingsStart = () => {
-  const [logStatus] = useContext(LogStatus);
+  const [settingsFocus, setSettingsFocus] = useState('');
+  const [goToPage, setGoToPage] = useState();
 
-  return (
-    <Paper elevation={3} style={SpacingDesign.padding(3)}>
-      <Typography variant="h5" align="center">
-        Settings
-      </Typography>
-      <TextField
-        fullWidth
-        label="Username"
-        variant="filled"
-        defaultValue={logStatus && logStatus.username}
-        style={SpacingDesign.marginy(1.5)}
-      />
-      <Box display="flex" flexWrap="wrap" justifyContent="space-between" style={SpacingDesign.marginy(1.5)}>
-        <TextField
-          label="First Name"
-          variant="filled"
-          defaultValue={logStatus && logStatus.firstName}
-          style={{
-            flexGrow: 1, flexBasis: '45%', minWidth: '10em', ...SpacingDesign.margin(1),
-          }}
-        />
-        <TextField
-          label="Last Name"
-          variant="filled"
-          defaultValue={logStatus && logStatus.lastName}
-          style={{
-            flexGrow: 1, flexBasis: '45%', minWidth: '10em', ...SpacingDesign.margin(1),
-          }}
-        />
-      </Box>
-      <TextField
-        fullWidth
-        label="About Me"
-        variant="outlined"
-        defaultValue={logStatus && logStatus.aboutMe}
-        multiline
-        rows={5}
-        style={SpacingDesign.marginy(1.5)}
-      />
+  const handleChange = (event, newValue) => {
+    setSettingsFocus(newValue);
+  };
+
+  /*
       <Button
         variant="outlined"
         component="label"
@@ -59,7 +29,37 @@ const SettingsStart = () => {
         <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
         <input type="file" hidden />
       </Button>
-    </Paper>
+  */
+
+  useEffect(() => {
+    if (settingsFocus === 'account') {
+      setGoToPage(<AccountSettings />);
+    } else if (settingsFocus === 'privacy') {
+      setGoToPage(<PrivacySettings />);
+    }
+  }, [settingsFocus]);
+
+  return (
+    <Box elevation={3} style={{ ...SpacingDesign.height(100), ...SpacingDesign.padding(3) }}>
+      <Typography variant="h4" align="center">
+        Settings
+      </Typography>
+      <Paper fullWidth>
+        <ToggleButtonGroup value={settingsFocus} onChange={handleChange} aria-label="settings group" exclusive>
+          <ToggleButton value="account" aria-label="account">
+            <Typography>
+              Account
+            </Typography>
+          </ToggleButton>
+          <ToggleButton value="privacy" aria-label="privacy">
+            <Typography>
+              Privacy
+            </Typography>
+          </ToggleButton>
+        </ToggleButtonGroup>
+        {goToPage}
+      </Paper>
+    </Box>
   );
 };
 
