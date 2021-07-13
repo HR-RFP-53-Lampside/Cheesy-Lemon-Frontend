@@ -20,10 +20,12 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
-import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
-import RecipeFocusStart from './recipe/RecipeFocusStart.jsx';
+import UserProfileStart from './user/UserProfileStart';
+import SettingsStart from './settings/SettingsStart';
+import RecipeFocusStart from './recipe/RecipeFocusStart';
 
 function App() {
   // Establish dark or light mode
@@ -47,10 +49,10 @@ function App() {
         if (user) {
           firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
             setLogStatus(snap.val());
-          })
+          });
         }
       });
-    };
+    }
   }, [logStatus]);
 
   // create design for the project
@@ -103,12 +105,15 @@ function App() {
                     social
                   </Route>
                   <Route exact path="/settings">
-                    add ingredient
+                    <SettingsStart />
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
                   </Route>
-                  <Route exact path="/recipe/:reviewId">
+                  <Route path="/profile">
+                    <UserProfileStart />
+                  </Route>
+                  <Route exact path="/recipe/:recipeId">
                     Recipe Overview
                     <RecipeFocusStart />
                   </Route>

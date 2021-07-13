@@ -26,7 +26,6 @@ const TopBar = ({ darkMode, setDarkMode }) => (
     </Toolbar>
   </AppBar>
 );
-
 TopBar.propTypes = {
   darkMode: PropTypes.bool.isRequired,
   setDarkMode: PropTypes.func.isRequired,
