@@ -14,7 +14,6 @@ const RecipeDescription = () => {
 
   return (
     <div>
-      {/* <div>DESCRIPTION</div> */}
       <div>this is where the description goes</div>
     </div>
   );

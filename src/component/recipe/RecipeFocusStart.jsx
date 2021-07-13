@@ -14,6 +14,12 @@ import RecipeInstructionsList from './RecipeInstructionsList';
 import RecipeDescription from './RecipeDescription';
 import RecipeReviewList from './RecipeReviewList';
 
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+// import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+// import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 const RecipeFocusStart = () => {
 
   const themeDesign = useTheme();
@@ -22,19 +28,14 @@ const RecipeFocusStart = () => {
     name: "UBER YUMMY TITLE",
   }
   return (
-
-      <Box display="flex">
-      <Container
-        maxWidth="sm"
-        style={{
-          flexGrow: 1, flexBasis: '20%', alignSelf: 'center', maxHeight: '90vh', overflow: 'hidden', flexWrap: 'wrap',
-        }}
-      >
+    <Paper
+      style={SpacingDesign.padding(3)}
+    >
       <Image
         src={hardCodePic}
         cover
-        imageStyle={{ width: '100%', height: '100%', overflow: 'hidden' }}
-        style={{ height: '100%' }}
+        // imageStyle={{ width: '100%', height: 'auto', overflow: 'hidden' }}
+        // // style={{ height: '10%' }}
       />
         <Typography variant="h6" align="center" style={{ color: themeDesign.custom.muted.grey }}>
         RECIPE TITLE and put fav add/remove button here
@@ -63,8 +64,7 @@ const RecipeFocusStart = () => {
         <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
         <RecipeReviewList />
         </Typography>
-      </Container>
-    </Box>
+      </Paper>
   );
 };
 

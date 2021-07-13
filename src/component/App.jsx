@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect,
 } from 'react-router-dom';
 import {
-  CssBaseline, useMediaQuery, Container, Box,
+  CssBaseline, useMediaQuery, Container,
 } from '@material-ui/core';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { grey } from '@material-ui/core/colors';
@@ -17,28 +17,17 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
-<<<<<<< HEAD
 import RecipeFocusStart from './recipe/RecipeFocusStart';
-=======
-import DekstopSideBar from './DesktopSideBar';
-import SideBar from './SideBar';
->>>>>>> main
 
 function App() {
   // Establish dark or light mode
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(prefersDarkMode);
   const palleteType = darkMode ? 'dark' : 'light';
   const bgColor = darkMode ? grey[900] : grey[200];
 
   const [pantry, setPantry] = useState({});
   const [logStatus, setLogStatus] = useState();
-  // eslint-disable-next-line no-unused-vars
-  const [sidebarShow, setSidebarShow] = useState(false);
-
-  useEffect(() => {
-    setDarkMode(prefersDarkMode);
-  }, [prefersDarkMode]);
 
   // create design for the project
   const themeDesign = useMemo(() => createTheme({
@@ -71,7 +60,6 @@ function App() {
               {logStatus ? <Redirect push to="/recipe/1" /> : null }
                 <RegisterStart />
               </Route>
-<<<<<<< HEAD
               <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
               {logStatus ? <Redirect push to="/recipe/1" /> : <Redirect to="/login" />}
                 <Route exact path="/whatsfordinner">
@@ -91,39 +79,8 @@ function App() {
                 </Route>
                 {/* More routes for later */}
               </Container>
-=======
-              <Box display="flex">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
-                <SideBar sidebarShow={sidebarShow} setSidebarShow={setSidebarShow} />
-                <DekstopSideBar />
-                <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
-                  <Route exact path="/favorites">
-                    your fave
-                  </Route>
-                  <Route exact path="/wfd">
-                    {'what\'s for dinner'}
-                  </Route>
-                  <Route exact path="/pantry">
-                    pantry
-                  </Route>
-                  <Route exact path="/addingredient">
-                    add ingredient
-                  </Route>
-                  <Route exact path="/social">
-                    social
-                  </Route>
-                  <Route exact path="/settings">
-                    add ingredient
-                  </Route>
-                  <Route exact path="/social/:reviewId">
-                    social/reviewId
-                  </Route>
-                  {/* More routes for later */}
-                </Container>
-              </Box>
->>>>>>> main
             </Switch>
-            {logStatus && <BottomBar sidebarShow={sidebarShow} setSidebarShow={setSidebarShow} />}
+            {logStatus ? <BottomBar /> : null}
           </LogStatus.Provider>
         </PantryContext.Provider>
       </ThemeProvider>
