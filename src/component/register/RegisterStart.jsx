@@ -1,29 +1,51 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
+  Paper, Box, Typography, TextField, Button, Container, Hidden,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
 const RegisterStart = () => {
   const themeDesign = useTheme();
-  const [logStatus, setLogStatus] = useContext(LogStatus);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userMessage, setUserMessage] = useState('');
+
+  const setDbUser = (user) => {
+    const dbUser = {
+      dietaryPrefs: '',
+      email: user.email,
+      firstName: '',
+      lastName: '',
+      photoURL: user.photoURL || '',
+      uid: user.uid,
+      username: user.email.split('@')[0],
+      yummyPoints: 0,
+    };
+    firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log('someone wants to be elevated!');
+    firebase.auth().createUserWithEmailAndPassword(username, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        setUserMessage('Successfully registered!');
+        setDbUser(user);
+      })
+      .catch((error) => {
+        const { message } = error;
+        setUserMessage(message);
+      });
   };
 
   const passwordValidity = () => {
@@ -98,6 +120,15 @@ const RegisterStart = () => {
               </Button>
             </Box>
           </form>
+          { userMessage
+            ? (
+              <Box bgcolor="warning.main" align="center" borderRadius={5} style={SpacingDesign.padding(1)}>
+                <Typography color="textPrimary">
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null}
           <Button component={Link} to="/login">
             <Typography style={{ color: themeDesign.palette.info.light }}>
               been elevated? Rise up!
