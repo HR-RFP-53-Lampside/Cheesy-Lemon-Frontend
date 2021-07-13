@@ -41,7 +41,7 @@ const WhatsForDinnerStart = () => {
  const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
-    setFilter(e.target.value);
+    setFilter(e.target.value.toLowerCase());
   }
 
   return (
@@ -61,14 +61,13 @@ const WhatsForDinnerStart = () => {
             height: 'auto',
             ...SpacingDesign.marginTop(3),
             ...SpacingDesign.marginBottom(1)
-
           }}
           elevation={1}>
           <Typography variant='h5' align='center'>
           What's For Dinner
           </Typography>
 
-          {data.filter(main => main.title.indexOf(filter) !== -1)
+          {data.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
             .map((item) =>
               <Card style={{ ...SpacingDesign.margin(3)}} elevation={5}>
                 <CardActionArea
