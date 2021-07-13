@@ -94,6 +94,9 @@ function App() {
                   <Route exact path="/social/:reviewId">
                     social/reviewId
                   </Route>
+                  <Route exact path="/recipe/:reviewId">
+                    Recipe Overview
+                  </Route>
                   {/* More routes for later */}
                 </Container>
               </Box>

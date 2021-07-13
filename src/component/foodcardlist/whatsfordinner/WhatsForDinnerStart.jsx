@@ -3,8 +3,9 @@ import {
  Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
+
 
 import SpacingDesign from '../../context/design/SpacingDesign';
 const data = [
@@ -43,7 +44,6 @@ const WhatsForDinnerStart = () => {
     setFilter(e.target.value);
   }
 
-
   return (
     <Box style={{...SpacingDesign.marginBottom(1)}}>
         <form noValidate autoComplete="off" onChange={handleFilter}>
@@ -71,7 +71,9 @@ const WhatsForDinnerStart = () => {
           {data.filter(main => main.title.indexOf(filter) !== -1)
             .map((item) =>
               <Card style={{ ...SpacingDesign.margin(3)}} elevation={5}>
-                <CardActionArea onClick={() => {}}>
+                <CardActionArea
+                  component={Link} to={`recipe/${item.id}`}
+                  >
                   <CardContent>
                   <CardMedia
                     style={{ height: '300px'}}
