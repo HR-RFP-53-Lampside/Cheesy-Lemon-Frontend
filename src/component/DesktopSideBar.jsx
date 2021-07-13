@@ -50,7 +50,7 @@ const DekstopSideBar = () => {
   return (
     <Hidden mdDown>
       <Container style={{
-        flexShrink: 1, position: 'absolute', left: '0', maxWidth: '27em',
+        flexShrink: 1, position: 'absolute', left: '0', top: '48px', maxWidth: '27em',
       }}
       >
         <Card

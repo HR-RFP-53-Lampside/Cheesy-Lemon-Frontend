@@ -19,6 +19,8 @@ import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
+import UserProfileStart from './user/UserProfileStart';
+import SettingsStart from './settings/SettingsStart';
 
 function App() {
   // Establish dark or light mode
@@ -88,10 +90,13 @@ function App() {
                     social
                   </Route>
                   <Route exact path="/settings">
-                    add ingredient
+                    <SettingsStart />
                   </Route>
                   <Route exact path="/social/:reviewId">
                     social/reviewId
+                  </Route>
+                  <Route path="/profile">
+                    <UserProfileStart />
                   </Route>
                   {/* More routes for later */}
                 </Container>
