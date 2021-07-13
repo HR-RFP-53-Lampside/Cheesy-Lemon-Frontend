@@ -16,6 +16,7 @@ import SpacingDesign from './context/design/SpacingDesign';
 import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
+import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart.jsx';
 
 import RegisterStart from './register/RegisterStart';
 
@@ -79,6 +80,7 @@ function App() {
                   </Route>
                   <Route exact path="/wfd">
                     {'what\'s for dinner'}
+                    <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
                     pantry

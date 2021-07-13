@@ -24,9 +24,7 @@ const RecipeFocusStart = () => {
 
   const themeDesign = useTheme();
   const hardCodePic = "https://spoonacular.com/recipeImages/654901-556x370.jpg";
-  const titleHardCode = {
-    name: "UBER YUMMY TITLE",
-  }
+
   return (
     <Paper
       style={SpacingDesign.padding(3)}
