@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import backgroundBG from '../../assets/lowpoly2.png';
@@ -18,6 +19,20 @@ const RegisterStart = () => {
   const [password, setPassword] = useState('');
   const [userMessage, setUserMesssage] = useState('');
 
+  const setDbUser = (user) => {
+    const dbUser = {
+      dietaryPrefs: '',
+      email: user.email,
+      firstName: '',
+      lastName: '',
+      photoURL: user.photoURL || '',
+      uid: user.uid,
+      username: '',
+      yummyPoints: 0,
+    };
+    firebase.database().ref('users/' + user.uid).set(dbUser).catch((error) => new Error(error));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -25,6 +40,7 @@ const RegisterStart = () => {
       .then((userCredential) => {
         const { user } = userCredential;
         setUserMesssage('Successfully registered!');
+        setDbUser(user);
       })
       .catch((error) => {
         const { message } = error;
