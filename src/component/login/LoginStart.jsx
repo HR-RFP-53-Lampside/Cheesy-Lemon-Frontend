@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState } from 'react';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
+  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, useMediaQuery,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,7 @@ const LoginStart = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userMessage, setUserMessage] = useState('');
+  const isItDesktop = useMediaQuery(themeDesign.breakpoints.up('md'));
 
   const validationMessage = (message) => {
     if (message === 'auth/wrong-password') {
@@ -48,41 +49,51 @@ const LoginStart = () => {
       });
   };
 
+  const handleResult = (result) => {
+    // eslint-disable-next-line no-unused-vars
+    const { credential, user } = result;
+    // const { accessToken } = credential;
+    firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+      if (!snap.val()) {
+        const dbUser = {
+          aboutMe: '',
+          dietaryPrefs: '',
+          email: user.email,
+          favRecipes: {},
+          firstName: '',
+          lastName: '',
+          pantry: {},
+          photoURL: user.photoURL || '',
+          username: user.displayName || user.email.split('@')[0],
+          yummyPoints: 0,
+        };
+        firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
+      }
+      setLogStatus(snap.val());
+    })
+  };
+
+  const handleError = (error) => {
+    const {
+      code,
+      message,
+      email,
+      credential,
+    } = error;
+    console.log(code, message, email, credential);
+  };
+
   const OAuthLogin = (provider) => {
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        // eslint-disable-next-line no-unused-vars
-        const { credential, user } = result;
-        // const { accessToken } = credential;
-        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
-          if (!snap.val()) {
-            const dbUser = {
-              dietaryPrefs: '',
-              email: user.email,
-              favRecipes: {},
-              firstName: '',
-              lastName: '',
-              pantry: {},
-              photoURL: user.photoURL || '',
-              username: user.displayName || user.email.split('@')[0],
-              yummyPoints: 0,
-            };
-            firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
-          }
-          setLogStatus(snap.val());
-        });
-      })
-      .catch((error) => {
-        const {
-          code,
-          message,
-          email,
-          credential,
-        } = error;
-        console.log(code, message, email, credential);
-      });
+    if (isItDesktop) {
+      firebase.auth().signInWithPopup(provider)
+        .then(handleResult)
+        .catch(handleError);
+    } else {
+      firebase.auth().signInWithRedirect(provider)
+      firebase.auth().getRedirectResult()
+        .then(handleResult)
+        .catch(handleError);
+    }
   };
 
   return (
@@ -127,7 +138,7 @@ const LoginStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => { setUserMessage(''); setUsername(event.target.value); }}
             />
             <TextField
               label="Password"
