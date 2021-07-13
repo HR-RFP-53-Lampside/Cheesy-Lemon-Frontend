@@ -76,7 +76,7 @@ const WhatsForDinnerStart = () => {
                   >
                   <CardContent>
                   <CardMedia
-                    style={{ height: '300px'}}
+                    style={{ ...SpacingDesign.height(40)}}
                     image={item.image}
                     title={item.title}
                   />
