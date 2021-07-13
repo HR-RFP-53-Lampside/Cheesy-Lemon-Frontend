@@ -7,16 +7,7 @@ import 'firebase/auth';
 import App from './component/App';
 import config from './config/config';
 
-const firebaseConfig = {
-  apiKey: config.API_KEY,
-  authDomain: 'cheesy-lemons.firebaseapp.com',
-  projectId: 'cheesy-lemons',
-  databaseURL: 'https://cheesy-lemons-default-rtdb.firebaseio.com/',
-  storageBucket: 'cheesy-lemons.appspot.com',
-  messagingSenderId: '87894079592',
-  appId: config.APPID,
-  measurementId: 'G-39GT3EL25Q',
-};
+const firebaseConfig = config;
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
