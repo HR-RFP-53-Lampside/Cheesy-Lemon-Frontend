@@ -203,7 +203,7 @@ const LoginStart = () => {
               }}
             />
           </Box>
-          <Button component={Link} to="/register">
+          <Button component={Link} to="../social">
             <Typography style={{ color: themeDesign.palette.info.light }}>
               Not elevated? Join us!
             </Typography>
