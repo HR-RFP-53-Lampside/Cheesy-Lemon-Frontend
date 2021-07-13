@@ -98,6 +98,7 @@ function App() {
                   </Route>
                   <Route path="/profile">
                     <UserProfileStart />
+                  </Route>
                   <Route exact path="/recipe/:reviewId">
                     Recipe Overview
                   </Route>
