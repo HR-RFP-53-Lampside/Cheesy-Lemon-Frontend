@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext } from 'react';
 import {
-  Container, Card, Hidden, Button, Box, Avatar, Typography, Icon,
+  Container, Card, Hidden, Button, Box, Avatar, Typography, Icon, CardActionArea,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Kitchen, Group, Settings } from '@material-ui/icons/';
@@ -17,42 +17,51 @@ const DekstopSideBar = () => {
 
   return (
     <Hidden mdDown>
-      <Container maxWidth="xs">
+      <Container style={{
+        flexShrink: 1, position: 'absolute', left: '0', maxWidth: '27em',
+      }}
+      >
         <Card
           style={{
             ...SpacingDesign.marginTop(5),
             height: '100%',
           }}
         >
-          <Box
-            style={{
-              ...SpacingDesign.height(15),
-              ...SpacingDesign.padding(3),
+          <CardActionArea
+            onClick={() => {
+              history.push('/profile');
             }}
-            bgcolor="primary.main"
-            display="flex"
           >
-            <Avatar
-              title="UserProfilePicture"
-              src={logStatus && logStatus.photoURL}
+            <Box
               style={{
-                height: '64px',
-                width: '64px',
-                alignSelf: 'center',
+                ...SpacingDesign.height(15),
+                ...SpacingDesign.padding(3),
               }}
-            />
-            <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
-              <Typography variant="h5">
-                USERNAME
-              </Typography>
-              <Box display="flex">
-                <Icon className="fas fa-cookie" />
-                <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
-                  100
+              bgcolor="primary.main"
+              display="flex"
+            >
+              <Avatar
+                title="UserProfilePicture"
+                src={logStatus && logStatus.photoURL}
+                style={{
+                  height: '64px',
+                  width: '64px',
+                  alignSelf: 'center',
+                }}
+              />
+              <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2) }}>
+                <Typography variant="h5">
+                  USERNAME
                 </Typography>
+                <Box display="flex">
+                  <Icon className="fas fa-cookie" />
+                  <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }}>
+                    100
+                  </Typography>
+                </Box>
               </Box>
             </Box>
-          </Box>
+          </CardActionArea>
           <Box
             style={{
               height: 'calc(90% - 120px)',

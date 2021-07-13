@@ -13,7 +13,7 @@ const TopBar = ({ darkMode, setDarkMode }) => (
         <Box style={{ flexGrow: 0.25 }} />
       </Hidden>
       <Box style={{ flexGrow: 1 }} align="center">
-        <Button style={SpacingDesign.marginLeft(5)}>
+        <Button style={SpacingDesign.marginLeft(5)} aria-label="Go to home screen">
           <Icon className="fa fa-cloud-meatball" color="action" />
           <Hidden mdDown>
             <Typography
@@ -25,7 +25,7 @@ const TopBar = ({ darkMode, setDarkMode }) => (
           </Hidden>
         </Button>
       </Box>
-      <Switch check={darkMode.toString()} onChange={() => setDarkMode(!darkMode)} color="secondary" />
+      <Switch check={darkMode.toString()} onChange={() => setDarkMode(!darkMode)} color="secondary" aria-label="dark mode toggling" />
     </Toolbar>
   </AppBar>
 );
