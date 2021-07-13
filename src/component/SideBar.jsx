@@ -18,6 +18,39 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
   const themeDesign = useTheme();
   const [logStatus, setLogStatus] = useContext(LogStatus);
   const isItMobile = useMediaQuery(themeDesign.breakpoints.up('lg'));
+  const options = [
+    {
+      message: 'Favorites',
+      link: '/favorites',
+      icon: (<Icon className="fas fa-heart" style={SpacingDesign.marginx(2)} />),
+    },
+    {
+      message: 'What\'s for dinner',
+      link: '/wfd',
+      icon: (<Icon className="fas fa-utensils" style={SpacingDesign.marginx(2)} />),
+    },
+    {
+      message: 'Add Ingredients',
+      link: '/addingredients',
+      icon: (<Icon className="fas fa-egg" style={SpacingDesign.marginx(2)} />),
+    },
+    {
+      message: 'My Pantry',
+      link: '/pantry',
+      icon: (<Kitchen style={SpacingDesign.marginx(2)} />),
+    },
+    {
+      message: 'Social',
+      link: '/social',
+      icon: (<Group style={SpacingDesign.marginx(2)} />),
+    },
+    {
+      message: 'Settings',
+      link: '/settings',
+      icon: (<Settings style={SpacingDesign.marginx(2)} />),
+    },
+  ];
+
   const buttonPaddings = 1.5;
 
   if (isItMobile) {
@@ -81,84 +114,22 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
             display="flex"
             flexDirection="column"
           >
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/favorites');
-              }}
-            >
-              <Typography variant="h5">
-                <Icon className="fas fa-heart" style={SpacingDesign.marginx(2)} />
-                Favorites
-              </Typography>
-            </Button>
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/wfd');
-              }}
-            >
-              <Typography variant="h5">
-                <Icon className="fas fa-utensils" style={SpacingDesign.marginx(2)} />
-                {'What\'s for dinner'}
-              </Typography>
-            </Button>
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/addingredient');
-              }}
-            >
-              <Typography variant="h5">
-                <Icon className="fas fa-egg" style={SpacingDesign.marginx(2)} />
-                Add Ingredients
-              </Typography>
-            </Button>
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/pantry');
-              }}
-            >
-              <Typography variant="h5">
-                <Kitchen style={SpacingDesign.marginx(2)} />
-                My Pantry
-              </Typography>
-            </Button>
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/social');
-              }}
-            >
-              <Typography variant="h5">
-                <Group style={SpacingDesign.marginx(2)} />
-                Social
-              </Typography>
-            </Button>
-            <Button
-              fullWidth
-              style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
-              onClick={() => {
-                setSidebarShow(false);
-                history.push('/settings');
-              }}
-            >
-              <Typography variant="h5">
-                <Settings style={SpacingDesign.marginx(2)} />
-                Settings
-              </Typography>
-            </Button>
+            {options.map((item) => (
+              <Button
+                fullWidth
+                style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
+                onClick={() => {
+                  setSidebarShow(false);
+                  history.push(item.link);
+                }}
+                key={item.message}
+              >
+                <Typography variant="h5">
+                  {item.icon}
+                  {item.message}
+                </Typography>
+              </Button>
+            ))}
             <Button
               fullWidth
               style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
@@ -166,7 +137,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
                 firebase.auth().signOut()
                   .then(() => {
                     setLogStatus();
-                  // history.push('/login');
+                    // history.push('/login');
                   });
                 setSidebarShow(false);
               }}
