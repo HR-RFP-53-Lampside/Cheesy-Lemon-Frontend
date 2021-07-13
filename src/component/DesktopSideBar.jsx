@@ -1,12 +1,13 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import {
-  Container, Card, Hidden, Box,
+  Container, Card, Hidden, CardMedia,
 } from '@material-ui/core';
 import SpacingDesign from './context/design/SpacingDesign';
 
 const DekstopSideBar = () => {
   const [setting, setSetting] = useState('');
+
   return (
     <Hidden mdDown>
       <Container maxWidth="xs">
@@ -15,7 +16,9 @@ const DekstopSideBar = () => {
             ...SpacingDesign.marginTop(5),
           }}
         >
-          Testing
+          <CardMedia
+            title="UserProfilePicture"
+          />
         </Card>
       </Container>
     </Hidden>
