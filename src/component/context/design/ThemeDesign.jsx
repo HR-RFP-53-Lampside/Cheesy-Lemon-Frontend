@@ -1,25 +1,12 @@
 /* eslint-disable import/no-unresolved */
 import {
-  amber, indigo, grey,
+  amber, indigo, green, grey,
 } from '@material-ui/core/colors';
-
-const green = {
-  50: '#F0F8EB',
-  100: '#D9EBCF',
-  200: '#C0DEB0',
-  300: '#A8D190',
-  400: '#95C779',
-  500: '#83BE64',
-  600: '#76AE5A',
-  700: '#639A4F',
-  800: '#528644',
-  900: '#336330',
-};
 
 export default {
   palette: {
     primary: {
-      main: green[600],
+      main: green[500],
     },
     secondary: {
       main: amber[500],

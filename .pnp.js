@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@firebase/app", "npm:0.6.28"],
             ["@material-ui/core", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.12.1"],
             ["@material-ui/icons", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.2"],
             ["@material-ui/styles", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.4"],
@@ -841,7 +842,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@babel-runtime-npm-7.14.6-3272013297-dd931f6ef1.zip/node_modules/@babel/runtime/",
           "packageDependencies": [
             ["@babel/runtime", "npm:7.14.6"],
-            ["regenerator-runtime", "npm:0.13.8"]
+            ["regenerator-runtime", "npm:0.13.7"]
           ],
           "linkType": "HARD",
         }]
@@ -852,7 +853,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["@babel/runtime-corejs3", "npm:7.14.7"],
             ["core-js-pure", "npm:3.15.2"],
-            ["regenerator-runtime", "npm:0.13.8"]
+            ["regenerator-runtime", "npm:0.13.7"]
           ],
           "linkType": "HARD",
         }]
@@ -2933,7 +2934,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["browserslist", "npm:4.16.6"],
             ["caniuse-lite", "npm:1.0.30001243"],
             ["colorette", "npm:1.2.2"],
-            ["electron-to-chromium", "npm:1.3.772"],
+            ["electron-to-chromium", "npm:1.3.773"],
             ["escalade", "npm:3.1.1"],
             ["node-releases", "npm:1.1.73"]
           ],
@@ -3065,6 +3066,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["cheesy-lemons-frontend", "workspace:."],
+            ["@firebase/app", "npm:0.6.28"],
             ["@material-ui/core", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.12.1"],
             ["@material-ui/icons", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.2"],
             ["@material-ui/styles", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:4.11.4"],
@@ -3592,10 +3594,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["electron-to-chromium", [
-        ["npm:1.3.772", {
-          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.3.772-a869c09950-bae6129443.zip/node_modules/electron-to-chromium/",
+        ["npm:1.3.773", {
+          "packageLocation": "./.yarn/cache/electron-to-chromium-npm-1.3.773-39e5c2ace1-0c376540ca.zip/node_modules/electron-to-chromium/",
           "packageDependencies": [
-            ["electron-to-chromium", "npm:1.3.772"]
+            ["electron-to-chromium", "npm:1.3.773"]
           ],
           "linkType": "HARD",
         }]
@@ -3688,7 +3690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["is-negative-zero", "npm:2.0.1"],
             ["is-regex", "npm:1.1.3"],
             ["is-string", "npm:1.0.6"],
-            ["object-inspect", "npm:1.10.3"],
+            ["object-inspect", "npm:1.11.0"],
             ["object-keys", "npm:1.1.1"],
             ["object.assign", "npm:4.1.2"],
             ["string.prototype.trimend", "npm:1.0.4"],
@@ -6496,10 +6498,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["object-inspect", [
-        ["npm:1.10.3", {
-          "packageLocation": "./.yarn/cache/object-inspect-npm-1.10.3-5aa499f036-f5d21d86db.zip/node_modules/object-inspect/",
+        ["npm:1.11.0", {
+          "packageLocation": "./.yarn/cache/object-inspect-npm-1.11.0-c9d4bd1487-7890688465.zip/node_modules/object-inspect/",
           "packageDependencies": [
-            ["object-inspect", "npm:1.10.3"]
+            ["object-inspect", "npm:1.11.0"]
           ],
           "linkType": "HARD",
         }]
@@ -7204,10 +7206,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["regenerator-runtime", [
-        ["npm:0.13.8", {
-          "packageLocation": "./.yarn/cache/regenerator-runtime-npm-0.13.8-0450f887d6-20178f5753.zip/node_modules/regenerator-runtime/",
+        ["npm:0.13.7", {
+          "packageLocation": "./.yarn/cache/regenerator-runtime-npm-0.13.7-41bcbe64ea-6ef567c662.zip/node_modules/regenerator-runtime/",
           "packageDependencies": [
-            ["regenerator-runtime", "npm:0.13.8"]
+            ["regenerator-runtime", "npm:0.13.7"]
           ],
           "linkType": "HARD",
         }]
@@ -7449,7 +7451,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["side-channel", "npm:1.0.4"],
             ["call-bind", "npm:1.0.2"],
             ["get-intrinsic", "npm:1.1.1"],
-            ["object-inspect", "npm:1.10.3"]
+            ["object-inspect", "npm:1.11.0"]
           ],
           "linkType": "HARD",
         }]

@@ -71,7 +71,7 @@ const WhatsForDinnerStart = () => {
           {data.filter(main => main.title.indexOf(filter) !== -1)
             .map((item) =>
               <Card style={{ ...SpacingDesign.margin(3)}} elevation={5}>
-                <CardActionArea>
+                <CardActionArea onClick={() => {}}>
                   <CardContent>
                   <CardMedia
                     style={{ height: '300px'}}

@@ -33,6 +33,28 @@ const SpacingDesign = {
     paddingTop: `${8 * factor}px`,
     paddingBottom: `${8 * factor}px`,
   }),
+  paddingLeft: (factor) => ({
+    paddingLeft: `${8 * factor}px`,
+  }),
+  paddingRight: (factor) => ({
+    paddingRight: `${8 * factor}px`,
+  }),
+  paddingTop: (factor) => ({
+    paddingTop: `${8 * factor}px`,
+  }),
+  paddingBottom: (factor) => ({
+    paddingBottom: `${8 * factor}px`,
+  }),
+  square: (factor) => ({
+    height: `${8 * factor}px`,
+    width: `${8 * factor}px`,
+  }),
+  height: (factor) => ({
+    height: `${8 * factor}px`,
+  }),
+  width: (factor) => ({
+    width: `${8 * factor}px`,
+  }),
 };
 
 export default SpacingDesign;

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
@@ -19,19 +20,68 @@ const LoginStart = () => {
   const [logStatus, setLogStatus] = useContext(LogStatus);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userMessage, setUserMessage] = useState('');
+
+  const validationMessage = (message) => {
+    if (message === 'auth/wrong-password') {
+      setUserMessage('Wrong password');
+    } else if (message === 'auth/user-not-found') {
+      setUserMessage('User not found');
+    } else {
+      setUserMessage('Something went wrong');
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then((userCredential) => {
-        // Signed in
         const { user } = userCredential;
-        console.log('SIGNED IN', user);
-        setLogStatus(user);
+        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+          setLogStatus(snap.val());
+        });
       })
       .catch((error) => {
-        console.log(error.code, error.message);
+        validationMessage(error.code);
+        throw error;
+      });
+  };
+
+  const OAuthLogin = (provider) => {
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        // eslint-disable-next-line no-unused-vars
+        const { credential, user } = result;
+        // const { accessToken } = credential;
+        firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
+          if (!snap.val()) {
+            const dbUser = {
+              dietaryPrefs: '',
+              email: user.email,
+              favRecipes: {},
+              firstName: '',
+              lastName: '',
+              pantry: {},
+              photoURL: user.photoURL || '',
+              username: user.displayName || user.email.split('@')[0],
+              yummyPoints: 0,
+            };
+            firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
+          }
+          setLogStatus(snap.val());
+        });
+      })
+      .catch((error) => {
+        const {
+          code,
+          message,
+          email,
+          credential,
+        } = error;
+        console.log(code, message, email, credential);
       });
   };
 
@@ -93,7 +143,7 @@ const LoginStart = () => {
               <Button
                 variant="contained"
                 color="primary"
-                style={SpacingDesign.paddingx(5)}
+                style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.marginy(2) }}
                 type="submit"
                 align="right"
               >
@@ -103,9 +153,18 @@ const LoginStart = () => {
               </Button>
             </Box>
           </form>
+          { userMessage
+            ? (
+              <Box bgcolor="warning.main" align="center" borderRadius={5} style={SpacingDesign.padding(1)}>
+                <Typography color="textPrimary">
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null}
           <Typography style={{
             color: themeDesign.custom.muted.grey,
-            ...SpacingDesign.marginTop(3),
+            ...SpacingDesign.marginTop(1),
             ...SpacingDesign.marginLeft(1),
           }}
           >
@@ -115,6 +174,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-facebook"
+              onClick={() => OAuthLogin(new firebase.auth.FacebookAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,
@@ -124,6 +184,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-google"
+              onClick={() => OAuthLogin(new firebase.auth.GoogleAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,
@@ -134,6 +195,7 @@ const LoginStart = () => {
             <IconButton
               aria-label="social media"
               className="fab fa-twitter"
+              onClick={() => OAuthLogin(new firebase.auth.TwitterAuthProvider())}
               style={{
                 ...SpacingDesign.padding(2),
                 fontSize: 32,

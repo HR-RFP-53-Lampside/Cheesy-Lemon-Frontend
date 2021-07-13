@@ -1,23 +1,19 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import {
-  Drawer, Card, Box, Avatar, Typography, Button, Icon, CardActionArea, useMediaQuery,
+  Container, Card, Hidden, Button, Box, Avatar, Typography, Icon, CardActionArea,
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { Kitchen, Group, Settings } from '@material-ui/icons/';
-import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
 import SpacingDesign from './context/design/SpacingDesign';
 import LogStatus from './context/auth/LogStatus';
 
-const SideBar = ({ sidebarShow, setSidebarShow }) => {
+const DekstopSideBar = () => {
   const history = useHistory();
-  const themeDesign = useTheme();
   const [logStatus, setLogStatus] = useContext(LogStatus);
-  const isItMobile = useMediaQuery(themeDesign.breakpoints.up('lg'));
   const options = [
     {
       message: 'Favorites',
@@ -50,35 +46,28 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
       icon: (<Settings style={SpacingDesign.marginx(2)} />),
     },
   ];
-
-  const buttonPaddings = 1.5;
-
-  if (isItMobile) {
-    setSidebarShow(false);
-  }
-
+  const buttonPaddings = 3;
   return (
-    <Drawer
-      anchor="left"
-      open={sidebarShow}
-      onClose={() => setSidebarShow(!sidebarShow)}
-    >
-      <Card
-        style={{
-          height: '100%',
-        }}
+    <Hidden mdDown>
+      <Container style={{
+        flexShrink: 1, position: 'absolute', left: '0', maxWidth: '27em',
+      }}
       >
-        <Box>
+        <Card
+          style={{
+            ...SpacingDesign.marginTop(5),
+            height: '100%',
+          }}
+        >
           <CardActionArea
             onClick={() => {
-              setSidebarShow(false);
               history.push('/profile');
             }}
           >
             <Box
               style={{
-                ...SpacingDesign.height(20),
-                ...SpacingDesign.padding(2),
+                ...SpacingDesign.height(15),
+                ...SpacingDesign.padding(3),
               }}
               bgcolor="primary.main"
               display="flex"
@@ -107,7 +96,7 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
           </CardActionArea>
           <Box
             style={{
-              height: 'calc(100% - 160px)',
+              height: 'calc(90% - 120px)',
               justifyContent: 'space-between',
               ...SpacingDesign.paddingTop(4),
             }}
@@ -119,7 +108,6 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
                 fullWidth
                 style={{ justifyContent: 'flex-start', ...SpacingDesign.paddingy(buttonPaddings) }}
                 onClick={() => {
-                  setSidebarShow(false);
                   history.push(item.link);
                 }}
                 key={item.message}
@@ -139,7 +127,6 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
                     setLogStatus();
                     // history.push('/login');
                   });
-                setSidebarShow(false);
               }}
             >
               <Typography variant="h5">
@@ -148,15 +135,10 @@ const SideBar = ({ sidebarShow, setSidebarShow }) => {
               </Typography>
             </Button>
           </Box>
-        </Box>
-      </Card>
-    </Drawer>
+        </Card>
+      </Container>
+    </Hidden>
   );
 };
 
-SideBar.propTypes = {
-  sidebarShow: PropTypes.bool.isRequired,
-  setSidebarShow: PropTypes.func.isRequired,
-};
-
-export default SideBar;
+export default DekstopSideBar;
