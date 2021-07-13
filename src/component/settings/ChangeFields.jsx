@@ -12,6 +12,7 @@ import LogStatus from '../context/auth/LogStatus';
 const ChangeFields = ({
   label, accountSettings, multiline, rows,
 }) => {
+  // eslint-disable-next-line no-unused-vars
   const [editValues, setEditValues] = useState(accountSettings);
   const [logStatus] = useContext(LogStatus);
   const handleChange = (event) => {
@@ -37,7 +38,8 @@ const ChangeFields = ({
           <Box display="flex" justifyContent="center" style={SpacingDesign.marginy(3)}>
             {[1, 2, 3].map((row, index) => (
               <Avatar
-                key={`photo-${index}`}
+                // eslint-disable-next-line react/no-array-index-key
+                key={`photo-card${index}`}
                 title="UserProfilePicture"
                 src={logStatus && logStatus.photoURL}
                 style={{

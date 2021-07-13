@@ -49,10 +49,10 @@ function App() {
         if (user) {
           firebase.database().ref(`users/${user.uid}`).on('value', (snap) => {
             setLogStatus(snap.val());
-          })
+          });
         }
       });
-    };
+    }
   }, [logStatus]);
 
   // create design for the project
