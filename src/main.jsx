@@ -10,7 +10,6 @@ import config from './config/config';
 const firebaseConfig = config;
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
 
 ReactDOM.render(
   <React.StrictMode>

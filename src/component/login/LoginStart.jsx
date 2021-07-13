@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
@@ -25,9 +26,11 @@ const LoginStart = () => {
     event.stopPropagation();
     firebase.auth().signInWithEmailAndPassword(username, password)
       .then((userCredential) => {
-        // Signed in
         const { user } = userCredential;
-        setLogStatus(user);
+        const uid = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+          setLogStatus(snap.val());
+        });
       })
       .catch((error) => {
         throw error;
@@ -41,7 +44,25 @@ const LoginStart = () => {
       .then((result) => {
         const { credential, user } = result;
         const { accessToken } = credential;
-        setLogStatus(user);
+        const uid = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + uid).on('value', (snap) => {
+          if (!snap.val()) {
+            const dbUser = {
+              dietaryPrefs: '',
+              email: user.email,
+              favRecipes: {},
+              firstName: '',
+              lastName: '',
+              pantry: {},
+              photoURL: user.photoURL || '',
+              uid: user.uid,
+              username: user.email.split('@')[0],
+              yummyPoints: 0,
+            };
+            firebase.database().ref('users/' + uid).set(dbUser).catch((error) => new Error(error));
+          }
+          setLogStatus(snap.val());
+        });
       })
       .catch((error) => {
         const {
