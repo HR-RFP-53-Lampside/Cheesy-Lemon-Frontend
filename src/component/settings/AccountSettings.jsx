@@ -11,7 +11,7 @@ import LogStatus from '../context/auth/LogStatus';
 const AccountSettings = () => {
   const [logStatus] = useContext(LogStatus);
   const [accountSettings, setAccountSettings] = useState();
-  const [editingSetting, setEditingSetting] = useState();
+  const [editingSetting, setEditingSetting] = useState({});
 
   const textInputs = {
     username: 'Username',
@@ -25,7 +25,14 @@ const AccountSettings = () => {
 
   useEffect(() => {
     if (accountSettings === 'username' || accountSettings === 'firstName' || accountSettings === 'lastName') {
-
+      setEditingSetting({
+        newField: <TextField
+          label={textInputs[accountSettings]}
+          variant="filled"
+          style={{ ...SpacingDesign.marginLeft(1) }}
+          defaultValue={logStatus[accountSettings]}
+        />,
+      });
     }
   }, [accountSettings]);
 
@@ -38,7 +45,7 @@ const AccountSettings = () => {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
-      {editingSetting}
+      {editingSetting.newField}
     </Box>
   );
 };
