@@ -33,6 +33,11 @@ const LoginStart = () => {
     }
   };
 
+  const updateForm = (event) => {
+    if (userMessage) { setUserMessage(''); };
+    setUsername(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -44,8 +49,10 @@ const LoginStart = () => {
         });
       })
       .catch((error) => {
+        event.target.reset();
+        setUsername('');
+        setPassword('');
         validationMessage(error.code);
-        throw error;
       });
   };
 
