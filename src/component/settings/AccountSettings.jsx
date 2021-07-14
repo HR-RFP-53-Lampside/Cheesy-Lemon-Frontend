@@ -31,7 +31,7 @@ const AccountSettings = () => {
           label={textInputs[accountSettings]}
           accountSettings={accountSettings}
           multiline={accountSettings === 'aboutMe' && true}
-          rows={accountSettings === 'aboutMe' ? 8 : 1}
+          rows={accountSettings === 'aboutMe' ? 6 : 1}
         />,
       );
     }
