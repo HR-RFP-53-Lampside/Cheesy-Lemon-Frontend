@@ -58,7 +58,7 @@ const ChangeFields = ({
     } else {
       display = (
         <>
-          <Box display="flex" justifyContent="center" style={SpacingDesign.marginy(3)}>
+          <Box display="flex" style={SpacingDesign.marginy(3)}>
             {[1, 2, 3].map((row) => (
               <Avatar
                 key={`photo-card${row}`}
@@ -78,7 +78,7 @@ const ChangeFields = ({
             style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
             htmlFor="profile-image"
           >
-            <Typography variant="body2" color="textAction">
+            <Typography variant="body2">
               change profile
             </Typography>
             <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
@@ -99,7 +99,7 @@ const ChangeFields = ({
     <>
       {label
       && (
-        <Box display="flex" flexDirection="column" justifyContent>
+        <Box display="flex" flexDirection="column">
           {display}
           <Button
             style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
