@@ -34,6 +34,20 @@ const RegisterStart = () => {
     firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
   };
 
+  const updateFormUser = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setUsername(event.target.value);
+  };
+
+  const updateFormPass = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setPassword(event.target.value);
+  };
+
+  const updateFormPassVerify = (event) => {
+    if (userMessage) { setUserMessage(''); }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -45,6 +59,9 @@ const RegisterStart = () => {
       })
       .catch((error) => {
         const { message } = error;
+        event.target.reset();
+        setUsername('');
+        setPassword('');
         setUserMessage(message);
       });
   };
@@ -83,7 +100,7 @@ const RegisterStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(event) => updateFormUser(event)}
             />
             <TextField
               label="Password"
