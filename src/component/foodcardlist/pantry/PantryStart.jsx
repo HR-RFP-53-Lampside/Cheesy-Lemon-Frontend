@@ -32,12 +32,15 @@ const data = [
   }
 ]
 
-
+// const selected = {
+//   Lemons: lemons,
+//   Cheese: cheese
+// }
 
 const PantryStart = () => {
   const themeDesign = useTheme();
   const [ingredients, setIngredients] = useState(data);
-  const [selected, setSelected] = useState([])
+  const [selected, setSelected] = useState({});
   const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
@@ -45,7 +48,19 @@ const PantryStart = () => {
   }
 
   const handleSelect = (e) => {
-    console.log(e.target.name)
+    let name = e.target.name;
+    let obj = {...selected};
+
+    if (!obj[name]) {
+      //if undefined - add to list
+      obj[name] = name;
+      setSelected({...obj});
+    } else {
+      //if defined remove from the list
+      delete obj[name];
+      setSelected({...obj});
+    }
+    console.log(obj);
   }
 
   const handleSubmit = (e) => {
@@ -84,7 +99,6 @@ const PantryStart = () => {
           label="Filter"
           fullWidth
           variant='outlined'
-          borderRadius='50%'
         />
       </form>
 
@@ -116,7 +130,7 @@ const PantryStart = () => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
             .map((item) =>
-            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
+            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.name}>
               <CardContent>
                 {/* <CardMedia
                   style={{ ...SpacingDesign.height(40) }}
@@ -132,7 +146,6 @@ const PantryStart = () => {
                     {item.name}
                   </Typography>
                   <Box display='flex' justifyContent='space-between' style={{
-                    // ...SpacingDesign.marginx(1),
                     ...SpacingDesign.marginLeft(4.5),
                     ...SpacingDesign.marginRight(2.5),
                   }}>
