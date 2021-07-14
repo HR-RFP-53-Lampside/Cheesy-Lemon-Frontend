@@ -99,7 +99,7 @@ function App() {
                     <WhatsForDinnerStart />
                   </Route>
                   <Route exact path="/pantry">
-                    pantry
+                    <PantryStart />
                   </Route>
                   <Route exact path="/addingredient">
                     add ingredient
