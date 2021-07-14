@@ -63,7 +63,7 @@ const ReviewCard = ({
             {upvotes}
           </Typography>
         </Button>
-        <Button component={Link} to={`/recipe/${recipeId}/review/${id}`}>
+        <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
             {upvotes}

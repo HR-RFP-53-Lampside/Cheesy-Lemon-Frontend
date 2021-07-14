@@ -27,7 +27,7 @@ const ReviewFocus = () => {
           src="https://media.gettyimages.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?s=2048x2048"
           cover
         />
-        <CardActionArea component={Link} to="/recipe/1/reviews/">
+        <CardActionArea component={Link} to="/recipes/1/reviews/">
           <Typography variant="h3">
             Review Title
           </Typography>
