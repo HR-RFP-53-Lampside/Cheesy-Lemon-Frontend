@@ -60,22 +60,23 @@ const WhatsForDinnerStart = () => {
           style={{
             height: 'auto',
             ...SpacingDesign.marginTop(3),
-            ...SpacingDesign.marginBottom(1)
+            ...SpacingDesign.marginBottom(1),
+            ...SpacingDesign.paddingx(0)
           }}
           elevation={1}>
-          <Typography variant='h5' align='center'>
-          What's For Dinner
+          <Typography variant='h4' align='center'>
+            What's For Dinner
           </Typography>
 
           {data.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
             .map((item) =>
-              <Card style={{ ...SpacingDesign.margin(3)}} elevation={5}>
+              <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5}>
                 <CardActionArea
                   component={Link} to={`recipe/${item.id}`}
                   >
                   <CardContent>
                   <CardMedia
-                    style={{ height: '300px'}}
+                    style={{ ...SpacingDesign.height(40)}}
                     image={item.image}
                     title={item.title}
                   />
