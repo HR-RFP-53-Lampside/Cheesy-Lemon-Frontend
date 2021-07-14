@@ -120,7 +120,6 @@ function App() {
                     <RecipeFocusStart />
                   </Route>
                   <Route exact path="/recipe/:recipeId/reviews">
-                    Reviews
                     <ReviewList />
                   </Route>
                   {/* More routes for later */}
