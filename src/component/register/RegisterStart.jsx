@@ -21,6 +21,7 @@ const RegisterStart = () => {
 
   const setDbUser = (user) => {
     const dbUser = {
+      aboutMe: '',
       dietaryPrefs: '',
       email: user.email,
       firstName: '',
