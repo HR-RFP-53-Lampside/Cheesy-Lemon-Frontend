@@ -57,6 +57,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:17.0.2"],
             ["react-dom", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:17.0.2"],
             ["react-router-dom", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:5.2.0"],
+            ["react-show-more-text", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:1.4.6"],
             ["sass", "npm:1.35.2"],
             ["vite", "npm:2.4.2"]
           ],
@@ -834,6 +835,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [
             "@babel/core",
             "@types/babel__core"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@babel/polyfill", [
+        ["npm:7.12.1", {
+          "packageLocation": "./.yarn/cache/@babel-polyfill-npm-7.12.1-a393b8d870-299db4d426.zip/node_modules/@babel/polyfill/",
+          "packageDependencies": [
+            ["@babel/polyfill", "npm:7.12.1"],
+            ["core-js", "npm:2.6.12"],
+            ["regenerator-runtime", "npm:0.13.7"]
           ],
           "linkType": "HARD",
         }]
@@ -3124,6 +3136,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react", "npm:17.0.2"],
             ["react-dom", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:17.0.2"],
             ["react-router-dom", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:5.2.0"],
+            ["react-show-more-text", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:1.4.6"],
             ["sass", "npm:1.35.2"],
             ["vite", "npm:2.4.2"]
           ],
@@ -3322,6 +3335,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["core-js", [
+        ["npm:2.6.12", {
+          "packageLocation": "./.yarn/unplugged/core-js-npm-2.6.12-0b93d77d31/node_modules/core-js/",
+          "packageDependencies": [
+            ["core-js", "npm:2.6.12"]
+          ],
+          "linkType": "HARD",
+        }],
         ["npm:3.6.5", {
           "packageLocation": "./.yarn/unplugged/core-js-npm-3.6.5-5941340066/node_modules/core-js/",
           "packageDependencies": [
@@ -7157,6 +7177,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-router", "virtual:78e6c6e1908f3ce8c9efcdb30bcd6c6ce71d80236603004e977672f0b3c7ad54b09b11f089e9c4133fd00e94d50041e74b5b359ae44c651a2e217c2aafec23b4#npm:5.2.0"],
             ["tiny-invariant", "npm:1.1.0"],
             ["tiny-warning", "npm:1.0.3"]
+          ],
+          "packagePeers": [
+            "@types/react",
+            "react"
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["react-show-more-text", [
+        ["npm:1.4.6", {
+          "packageLocation": "./.yarn/cache/react-show-more-text-npm-1.4.6-9322f44968-7fd7247620.zip/node_modules/react-show-more-text/",
+          "packageDependencies": [
+            ["react-show-more-text", "npm:1.4.6"]
+          ],
+          "linkType": "SOFT",
+        }],
+        ["virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:1.4.6", {
+          "packageLocation": "./.yarn/$$virtual/react-show-more-text-virtual-f1ded889ce/0/cache/react-show-more-text-npm-1.4.6-9322f44968-7fd7247620.zip/node_modules/react-show-more-text/",
+          "packageDependencies": [
+            ["react-show-more-text", "virtual:9c739d90b6196f6926ff517bfc5a947b8ec0c0a528ad6a9a634ba803b06973bcf8a805dac20bd383c412011d65d0952d48d30b8a880543418dc1fb87c6a2aece#npm:1.4.6"],
+            ["@babel/polyfill", "npm:7.12.1"],
+            ["@types/react", null],
+            ["prop-types", "npm:15.7.2"],
+            ["react", "npm:17.0.2"]
           ],
           "packagePeers": [
             "@types/react",
