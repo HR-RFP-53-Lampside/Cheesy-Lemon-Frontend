@@ -45,20 +45,32 @@ const ChangeFields = ({
   const settleDisplay = () => {
     if (accountSettings !== 'photoURL') {
       display = (
-        <TextField
-          label={label}
-          variant="outlined"
-          style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
-          value={editValues}
-          multiline={multiline}
-          rows={rows}
-          onChange={handleChange}
-        />
+        <>
+          <TextField
+            label={label}
+            variant="outlined"
+            value={editValues}
+            multiline={multiline}
+            rows={rows}
+            onChange={handleChange}
+            fullWidth
+          />
+          <Button
+            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
+            <Typography>
+              Elevate changes
+            </Typography>
+          </Button>
+        </>
       );
     } else {
       display = (
-        <>
-          <Box display="flex" style={SpacingDesign.marginy(3)}>
+        <Box fullWidth display="flex" style={{ flexDirection: 'column' }}>
+          <Box display="flex" style={{ ...SpacingDesign.marginy(3), width: '100%' }} justifyContent="center">
             {[1, 2, 3].map((row) => (
               <Avatar
                 key={`photo-card${row}`}
@@ -67,7 +79,6 @@ const ChangeFields = ({
                 style={{
                   ...SpacingDesign.square(row * 3),
                   alignSelf: 'center',
-                  ...SpacingDesign.marginx(1),
                 }}
               />
             ))}
@@ -75,16 +86,16 @@ const ChangeFields = ({
           <Button
             variant="outlined"
             component="label"
-            style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
             htmlFor="profile-image"
+            style={{ alignSelf: 'center', ...SpacingDesign.marginy(2) }}
           >
             <Typography variant="body2">
               change profile
             </Typography>
-            <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
+            <Icon className="fas fa-camera" />
             <input type="file" id="profile-image" onChange={(event) => handleChange(event)} hidden />
           </Button>
-        </>
+        </Box>
       );
     }
   };
@@ -96,24 +107,14 @@ const ChangeFields = ({
   settleDisplay();
 
   return (
-    <>
+    <Box style={{ width: '100%' }}>
       {label
       && (
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" fullWidth>
           {display}
-          <Button
-            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-          >
-            <Typography>
-              Elevate changes
-            </Typography>
-          </Button>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 
