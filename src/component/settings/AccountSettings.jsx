@@ -38,7 +38,7 @@ const AccountSettings = () => {
   }, [accountSettings]);
 
   return (
-    <Box display="flex" style={SpacingDesign.marginTop(2)}>
+    <Box display="flex" style={{ ...SpacingDesign.marginTop(2) }}>
       <ToggleButtonGroup exclusive value={accountSettings} onChange={handleChange} orientation="vertical">
         {Object.keys(textInputs).map((key) => (
           <ToggleButton key={key} value={key} aria-label={`account-${textInputs[key]}`}>
