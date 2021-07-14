@@ -21,6 +21,7 @@ import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
+import ReviewList from './social/review/ReviewList';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
 import RecipeFeed from './recipeFeed/RecipeFeed';
@@ -117,6 +118,10 @@ function App() {
                   <Route exact path="/recipe/:recipeId">
                     Recipe Overview
                     <RecipeFocusStart />
+                  </Route>
+                  <Route exact path="/recipe/:recipeId/reviews">
+                    Reviews
+                    <ReviewList />
                   </Route>
                   {/* More routes for later */}
                 </Container>
