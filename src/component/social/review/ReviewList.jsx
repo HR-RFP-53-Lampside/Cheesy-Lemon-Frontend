@@ -16,20 +16,20 @@ const ReviewList = () => {
   const [sort, setSort] = useState('yummies');
 
   const getReviews = () => {
-    const id = 'RECIPE ID';
+    const id = '2';
     axios({
       method: 'GET',
-      url: `http://localhost:4000/local/${id}/reviews`,
+      url: `http://localhost:8000/local/${id}/reviews`,
     })
-      .then((response) => {
-        setReviews(response.data);
+      .then(({ data }) => {
+        console.log(data);
+        // setReviews(data);
       });
   };
 
-  // Need to figure out end point documentation first, also the id
-  // useEffect(() => {
-  //   getReviews();
-  // }, [props]);
+  useEffect(() => {
+    getReviews();
+  }, []);
 
   useEffect(() => {
     const copy = reviews.slice();
@@ -50,6 +50,7 @@ const ReviewList = () => {
   const mockReviews = [
     {
       id: 1,
+      recipeId: 1,
       recipe: 'Recipe 1',
       title: 'Title 1',
       authorName: 'Tarrin',
@@ -60,6 +61,7 @@ const ReviewList = () => {
     },
     {
       id: 2,
+      recipeId: 1,
       recipe: 'Recipe 1',
       title: 'Title 2',
       authorName: 'Tarrin',
@@ -70,6 +72,7 @@ const ReviewList = () => {
     },
     {
       id: 3,
+      recipeId: 1,
       recipe: 'Recipe 1',
       title: 'Title 3',
       authorName: 'Tarrin',
@@ -114,7 +117,7 @@ const ReviewList = () => {
         <option value="yummies">Most Yummies</option>
         <option value="recent">Most Recent</option>
       </Select>
-      {mockReviews.map((review) => <ReviewCard review={review} />)}
+      {mockReviews.map((review) => <ReviewCard key={review.id} review={review} />)}
     </Box>
   );
 };

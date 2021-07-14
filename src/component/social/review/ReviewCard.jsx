@@ -13,6 +13,8 @@ import {
   Icon,
   Chip,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
 import ShowMoreText from 'react-show-more-text';
 import SpacingDesign from '../../context/design/SpacingDesign';
 
@@ -56,7 +58,7 @@ const ReviewCard = ({ review }) => {
             {review.upvotes}
           </Typography>
         </Button>
-        <Button>
+        <Button component={Link} to={`/recipe/${review.recipeId}/review/${review.id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
             {review.upvotes}
