@@ -70,7 +70,7 @@ const RecipeFeed = () => {
       >
         Recipe Feed
       </Typography>
-      <Select value={selected} onChange={handleNewFilter} fullWidth variant="outlined">
+      <Select value={selected} onChange={handleNewFilter} fullWidth variant="outlined" native>
         {filterOptions.map((item) => (
           <MenuItem value={item} key={item}>
             {item}

@@ -27,7 +27,7 @@ const RecipeCard = ({ item }) => (
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
           less={<Icon className="fas fa-caret-up" color="secondary" />}
-          lines={5}
+          lines={4}
         >
           <Typography variant="body">
             {item.body}

@@ -1,47 +1,80 @@
-import React, { useState } from 'react';
-import { ThumbUp, ThumbDown } from '@material-ui/icons';
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ThumbUp, ThumbDown, RateReview } from '@material-ui/icons';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, Card, CardContent,
+  Box,
+  Typography,
+  Button,
+  Container,
+  Card,
+  CardContent,
+  CardActionArea,
+  Icon,
+  Chip,
 } from '@material-ui/core';
+import ShowMoreText from 'react-show-more-text';
+import SpacingDesign from '../../context/design/SpacingDesign';
 
-const ReviewCard = (props) => {
-  let handleUpvote = () => {
+const ReviewCard = ({ review }) => {
+  const handleUpvote = () => {
 
   };
 
-  let handleDownvote = () => {
+  const handleDownvote = () => {
 
   };
 
   return (
-    <Card style={{ marginBottom: '20px' }}>
+    <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }}>
       <CardContent>
-        <Typography variant="h5">
-          {props.review.title}
+        <Typography variant="h4">
+          {review.title}
         </Typography>
-        <Typography variant="h7">
-          {props.review.authorName}
+        <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
+          {review.authorName}
         </Typography>
-        <Typography variant="body1" style={{ marginBottom: '10px' }}>
-          {props.review.body}
-        </Typography>
-        <Typography variant="h7">
-          {props.review.recipe}
-        </Typography>
-
-        <Container style={{ display: 'flex', 'justify-content': 'space-between' }}>
-          <span>
-            <ThumbUp onClick={handleUpvote} />
-            {props.review.upvotes}
-          </span>
-          <span>
-            <ThumbDown onClick={handleDownvote} />
-            {props.review.downvotes}
-          </span>
-        </Container>
+        <ShowMoreText
+          more={<Icon className="fas fa-caret-down" color="primary" />}
+          less={<Icon className="fas fa-caret-up" color="secondary" />}
+          lines={4}
+        >
+          <Typography variant="body">
+            {review.body}
+          </Typography>
+        </ShowMoreText>
       </CardContent>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        bgcolor="primary"
+        style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.paddingy(2) }}
+      >
+        <Button onClick={handleUpvote}>
+          <ThumbUp />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {review.upvotes}
+          </Typography>
+        </Button>
+        <Button>
+          <RateReview />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {review.upvotes}
+          </Typography>
+        </Button>
+        <Button onClick={handleDownvote}>
+          <ThumbDown />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {review.downvotes}
+          </Typography>
+        </Button>
+      </Box>
     </Card>
   );
+};
+
+ReviewCard.propType = {
+  review: PropTypes.object.isRequired,
 };
 
 export default ReviewCard;
