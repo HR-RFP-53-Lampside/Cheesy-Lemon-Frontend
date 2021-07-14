@@ -19,37 +19,6 @@ import Image from "material-ui-image";
 import { Link } from "react-router-dom";
 import { useTheme } from "@material-ui/core/styles";
 
-<<<<<<< HEAD
-const listOfRecipes = ({ data, selected }) => {
-  const handleClick = () => {
-    // on click of title redirect to card of recipe reviews
-  };
-  // filter results by selected
-  // if most reviewed === selected filter first
-  // if most favorited === selected filter
-  // or my reviews === selected filter
-  return (
-    <Card>
-      <Typography variant="h2" align="center" style={{ color: themeDesign.custom.muted.grey }} onClick={handleClick()}>
-        { title }
-      </Typography>
-      <Typography variant="h2" align="center" style={{ color: themeDesign.custom.muted.grey }}>
-        { body }
-      </Typography>
-      <Typography variant="h2" align="center" style={{ color: themeDesign.custom.muted.grey }}>
-        Favorite
-        {' '}
-        <Icon class="fas fa-hashtag" />
-        <Typography variant="h2" align="center" style={{ color: themeDesign.custom.muted.grey }}>
-          <Icon class="fas fa-hashtag" />
-          Reviews
-        </Typography>
-      </Typography>
-    </Card>
-  );
-};
-
-=======
 import SpacingDesign from "../context/design/SpacingDesign";
 
 const listOfRecipes = ({ data, selected, test }) => {
@@ -59,12 +28,12 @@ const listOfRecipes = ({ data, selected, test }) => {
   // if most reviewed === selected filter first
   // if most favorited === selected filter
   //or my reviews === selected filter
-  
+
 
   //add buttons for reviews and favorites. Route to go to all reviews when onClick
   return (
     <Container>
-      
+
       {test.map((item, i) => (
         selected === 'Most Reviews' &&
         <Card style={{ ...SpacingDesign.margin(3) }} elevation={5}>
@@ -83,7 +52,7 @@ const listOfRecipes = ({ data, selected, test }) => {
               >
                 {item.title}
               </Typography>
-             
+
               <Typography
                 variant="h5"
                 align="center"
@@ -115,5 +84,4 @@ const listOfRecipes = ({ data, selected, test }) => {
   );
 };
 
->>>>>>> c51563712edabc05ffbfe67890a516e59e6a4eea
 export default listOfRecipes;
