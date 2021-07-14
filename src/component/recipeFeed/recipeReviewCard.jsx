@@ -6,15 +6,13 @@ import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 
+const recipeReviewCard = ({ userData }) =>
+// create a card like template like for individual recipe that shows all reviews of recipe
+  (
+    <Typography>
+      All Reviews for recipe id 135446
 
-const recipeReviewCard = ({userData}) => {
-    // create a card like template like for individual recipe that shows all reviews of recipe
-    return (
-        <Typography >
-            All Reviews for recipe id 135446
-            
-        </Typography>
-    )
-}
+    </Typography>
+  );
 
-export default recipeReviewCard
+export default recipeReviewCard;
