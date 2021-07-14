@@ -7,11 +7,9 @@ import {
   Select,
 } from '@material-ui/core';
 import axios from 'axios';
-import { useTheme } from '@material-ui/core/styles';
 import ReviewCard from './ReviewCard';
 
 const ReviewList = () => {
-  const themeDesign = useTheme();
   const mockReviews = [
     {
       id: 1,
@@ -94,14 +92,13 @@ const ReviewList = () => {
       <Typography
         variant="h3"
         align="center"
-        style={{ color: themeDesign.custom.muted.grey }}
       >
         Recipe 1
       </Typography>
       <Typography
         variant="h4"
         align="center"
-        style={{ color: themeDesign.custom.muted.grey }}
+        color="textSecondary"
       >
         reviews
       </Typography>

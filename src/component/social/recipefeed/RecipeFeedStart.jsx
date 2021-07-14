@@ -5,11 +5,9 @@ import {
   Typography,
   Select,
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import ListOfRecipes from './ListOfRecipes';
 
 const RecipeFeed = () => {
-  const themeDesign = useTheme();
   // user data will be data about recipes and display the title, body and favorite/#ofreviews
   // be able to filter recipe info from select tag by most liked or most commented or my reviews
   const filterOptions = [
@@ -78,7 +76,6 @@ const RecipeFeed = () => {
       <Typography
         variant="h2"
         align="center"
-        style={{ color: themeDesign.custom.muted.grey }}
       >
         Recipe Feed
       </Typography>
