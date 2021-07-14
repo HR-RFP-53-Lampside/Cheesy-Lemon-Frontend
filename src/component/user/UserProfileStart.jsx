@@ -29,7 +29,7 @@ const UserProfileStart = () => {
             {logStatus && `@${logStatus.username}`}
           </Typography>
           <Box display="flex">
-            <Icon className="fas fa-cookie" color="textsecondary" />
+            <Icon className="fas fa-cookie" color="disabled" />
             <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }} color="textSecondary">
               {logStatus && logStatus.yummyPoints}
             </Typography>

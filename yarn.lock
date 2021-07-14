@@ -397,6 +397,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/polyfill@npm:^7.12.1":
+  version: 7.12.1
+  resolution: "@babel/polyfill@npm:7.12.1"
+  dependencies:
+    core-js: ^2.6.5
+    regenerator-runtime: ^0.13.4
+  checksum: 299db4d4260ea0eacd357727418755a791cd152b642494ed15c18d029f55ea625017a6f1c398f7839e30b2d5a48cd6165e0c1f39ac1b81f863e15f056a149d54
+  languageName: node
+  linkType: hard
+
 "@babel/runtime-corejs3@npm:^7.10.2":
   version: 7.14.7
   resolution: "@babel/runtime-corejs3@npm:7.14.7"
@@ -840,11 +850,11 @@ __metadata:
   linkType: hard
 
 "@grpc/grpc-js@npm:^1.3.2":
-  version: 1.3.4
-  resolution: "@grpc/grpc-js@npm:1.3.4"
+  version: 1.3.5
+  resolution: "@grpc/grpc-js@npm:1.3.5"
   dependencies:
     "@types/node": ">=12.12.47"
-  checksum: 54802e3932f0e9f9cbed48142cc84a9de2e4645aed7366c21fb9236effe7e7336476d96f76ab130ab54870c727cc84165e9794b27fb54af2e79c1a9c828ffc4e
+  checksum: 2acf1f73a861f81f84797f631821804c0f54ced6d16209a95f0c33a661610af2a646577f6d2571c01a351543b03aa9d7593d2977a8ed41f7a75b8577df3187fa
   languageName: node
   linkType: hard
 
@@ -1446,9 +1456,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=12.12.47, @types/node@npm:>=13.7.0":
-  version: 16.3.1
-  resolution: "@types/node@npm:16.3.1"
-  checksum: 2021138afd66a9235f4b64e412dd8a8d1199f3d17303c2868ab062a10214ba76b793bf4f59e14c3bf981623e099843855776390b445d840779cb171c2fcb97a9
+  version: 16.3.2
+  resolution: "@types/node@npm:16.3.2"
+  checksum: 11896edc7022a40f8938e64f57e497b3110ca732bdef785f86f0a0a819609e9b78ad0c950dcaa59177bc299f2793489b605a3e713cdf7900a39031f0018e2134
   languageName: node
   linkType: hard
 
@@ -1807,9 +1817,9 @@ __metadata:
   linkType: hard
 
 "axe-core@npm:^4.0.2":
-  version: 4.3.0
-  resolution: "axe-core@npm:4.3.0"
-  checksum: 41a5e2a06807338b09681b5a9583987d6eb47a0c2a311191930517b0cd73750e8631e47414fa011ba6dd684bcdcaf1c12c5365431704e90445de2ad8e6a038b7
+  version: 4.3.1
+  resolution: "axe-core@npm:4.3.1"
+  checksum: d8ebd33e5920da8e056a65d5555f35bacb0c4f7b23b595736cecb374b7651edf5cfd503a9d3005945395f70c1e8cf9008937241308d37d2d61363174ac4114ce
   languageName: node
   linkType: hard
 
@@ -2034,9 +2044,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001219":
-  version: 1.0.30001243
-  resolution: "caniuse-lite@npm:1.0.30001243"
-  checksum: 0d6330d2279c9ec2b58cf5154ec80eeea6bca861825a791f037c644e36cf28a19db32a35a66ac989ee026b7d19ffc0eb3ad78fbc8512f7433b0caa1964de4999
+  version: 1.0.30001244
+  resolution: "caniuse-lite@npm:1.0.30001244"
+  checksum: 9a5280e4df641edcc41aa547b5c4cf190d13f9b8f96c187c88b506b6ae7f4635381a40d8325e926e57f35b49f9133ce7e0de6c1074880e74204a649c686f7028
   languageName: node
   linkType: hard
 
@@ -2092,6 +2102,7 @@ __metadata:
     react: ^17.0.0
     react-dom: ^17.0.0
     react-router-dom: ^5.2.0
+    react-show-more-text: ^1.4.6
     sass: ^1.35.2
     vite: ^2.4.0
   languageName: unknown
@@ -2272,6 +2283,13 @@ __metadata:
   version: 3.6.5
   resolution: "core-js@npm:3.6.5"
   checksum: 9283348dd5be2f1d07feaf90e2336b3f00a2316e3d3c6d4f789c9a67bdd4d7b08ce1c88dca4e591340130056c6b412b0b74fae039f8e259206f1073f542e4e85
+  languageName: node
+  linkType: hard
+
+"core-js@npm:^2.6.5":
+  version: 2.6.12
+  resolution: "core-js@npm:2.6.12"
+  checksum: b865823ce9cb5bc63336856440f6525e4996bb91af30660081e82bf447d177f36104f0986906a34ea0c9c03cb8b3d960380848a478e2621dac30c9b8198d28da
   languageName: node
   linkType: hard
 
@@ -2505,9 +2523,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.723":
-  version: 1.3.773
-  resolution: "electron-to-chromium@npm:1.3.773"
-  checksum: 0c376540ca1cea4b7cce9183b86344075f0068e11eb4eed97491f33462cabbdc95ee83c9b2ee3cada07cbcb00ede6f7660b48675308f92487b6b22766bc2e2a3
+  version: 1.3.775
+  resolution: "electron-to-chromium@npm:1.3.775"
+  checksum: 6e62b08d9a6d8a7304984cb1e6557346fad497079ba2719cf604125130ef7f0be33ea46046fbedb077cec83e185e1daddf9fde6dfe5ba189a8caafc195349ce8
   languageName: node
   linkType: hard
 
@@ -3575,11 +3593,11 @@ __metadata:
   linkType: hard
 
 "is-core-module@npm:^2.2.0, is-core-module@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "is-core-module@npm:2.4.0"
+  version: 2.5.0
+  resolution: "is-core-module@npm:2.5.0"
   dependencies:
     has: ^1.0.3
-  checksum: caa2b30873ed14dff76e5351e3c55a677b890cf19cc4263e9894702eb4bd64f81ce78552daad878ba72adcdc9e62cad45ca57928fc8b4bdc84a7ff8acf934389
+  checksum: 25cbd8f2477855f446b339d24c56d7b3e3809c1653c8a748b090384d7728a0b18cf128bff613a8f512f8340dc91c1f43abe5fa774d077925012bbfeb109fe215
   languageName: node
   linkType: hard
 
@@ -5501,6 +5519,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-show-more-text@npm:^1.4.6":
+  version: 1.4.6
+  resolution: "react-show-more-text@npm:1.4.6"
+  dependencies:
+    "@babel/polyfill": ^7.12.1
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">= 16.x.x"
+  checksum: 7fd7247620f70a6440771f91f33697839651955498af85e884edf349b991325c13c0fa238769b8475f7a84605f122b89dabe61a807a607d258f0326ab4cf05e4
+  languageName: node
+  linkType: hard
+
 "react-transition-group@npm:^4.4.0":
   version: 4.4.2
   resolution: "react-transition-group@npm:4.4.2"
@@ -5572,9 +5602,9 @@ __metadata:
   linkType: hard
 
 "regenerator-runtime@npm:^0.13.4":
-  version: 0.13.7
-  resolution: "regenerator-runtime@npm:0.13.7"
-  checksum: 6ef567c662088b1b292214920cbd72443059298d477f72e1a37e0a113bafbfac9057cbfe35ae617284effc4b423493326a78561bbff7b04162c7949bdb9624e8
+  version: 0.13.8
+  resolution: "regenerator-runtime@npm:0.13.8"
+  checksum: 20178f5753f181d59691e5c3b4c59a2769987f75c7ccf325777673b5478acca61a553b10e895585086c222f72f5ee428090acf50320264de4b79f630f7388653
   languageName: node
   linkType: hard
 
