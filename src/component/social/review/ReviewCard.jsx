@@ -1,47 +1,94 @@
-import React, { useState } from 'react';
-import { ThumbUp, ThumbDown } from '@material-ui/icons';
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ThumbUp, ThumbDown, RateReview } from '@material-ui/icons';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, Card, CardContent,
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Icon,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-const ReviewCard = (props) => {
-  let handleUpvote = () => {
+import ShowMoreText from 'react-show-more-text';
+import SpacingDesign from '../../context/design/SpacingDesign';
+
+const ReviewCard = ({
+  id, title, authorName, body, upvotes, downvotes, recipeId, date,
+}) => {
+  const handleUpvote = () => {
 
   };
 
-  let handleDownvote = () => {
+  const handleDownvote = () => {
 
   };
+
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
   return (
-    <Card style={{ marginBottom: '20px' }}>
+    <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }} elevation={3}>
       <CardContent>
-        <Typography variant="h5">
-          {props.review.title}
+        <Typography variant="h4">
+          {title}
         </Typography>
-        <Typography variant="h7">
-          {props.review.authorName}
+        <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
+          {authorName}
         </Typography>
-        <Typography variant="body1" style={{ marginBottom: '10px' }}>
-          {props.review.body}
+        <ShowMoreText
+          more={<Icon className="fas fa-caret-down" color="primary" />}
+          less={<Icon className="fas fa-caret-up" color="secondary" />}
+          lines={4}
+        >
+          <Typography variant="body">
+            {body}
+          </Typography>
+        </ShowMoreText>
+        <Typography variant="subtitle">
+          {date.toLocaleDateString(undefined, dateOptions)}
         </Typography>
-        <Typography variant="h7">
-          {props.review.recipe}
-        </Typography>
-
-        <Container style={{ display: 'flex', 'justify-content': 'space-between' }}>
-          <span>
-            <ThumbUp onClick={handleUpvote} />
-            {props.review.upvotes}
-          </span>
-          <span>
-            <ThumbDown onClick={handleDownvote} />
-            {props.review.downvotes}
-          </span>
-        </Container>
       </CardContent>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        bgcolor="primary"
+        style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.paddingy(2) }}
+      >
+        <Button onClick={handleUpvote}>
+          <ThumbUp />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {upvotes}
+          </Typography>
+        </Button>
+        <Button component={Link} to={`/recipe/${recipeId}/review/${id}`}>
+          <RateReview />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {upvotes}
+          </Typography>
+        </Button>
+        <Button onClick={handleDownvote}>
+          <ThumbDown />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {downvotes}
+          </Typography>
+        </Button>
+      </Box>
     </Card>
   );
+};
+
+ReviewCard.propType = {
+  id: PropTypes.number.isRequired,
+  recipeId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  authorName: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  upvotes: PropTypes.number.isRequired,
+  downvotes: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
 };
 
 export default ReviewCard;
