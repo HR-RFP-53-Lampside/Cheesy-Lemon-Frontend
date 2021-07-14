@@ -29,13 +29,13 @@ const ChangeFields = ({
       setEditValues(formData);
     }
   };
-  const handleClick = (event) => {
+  const handleClick = () => {
     if (accountSettings !== 'photoURL') {
       firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
     } else {
       axios.post('http://localhost:8000/api/image', editValues)
         .then((result) => {
-          const url = result.data[0].url;
+          const { url } = result.data[0];
           firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch((error) => console.error(error));
         })
         .catch(console.error);
@@ -91,7 +91,7 @@ const ChangeFields = ({
 
   useEffect(() => {
     setEditValues(logStatus[accountSettings]);
-  }, [accountSettings])
+  }, [accountSettings]);
 
   settleDisplay();
 
