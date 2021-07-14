@@ -72,11 +72,10 @@ const LoginStart = () => {
           aboutMe: '',
           dietaryPrefs: '',
           email: user.email,
-          favRecipes: {},
           firstName: '',
           lastName: '',
-          pantry: {},
           photoURL: user.photoURL || '',
+          uid: user.uid,
           username: user.displayName || user.email.split('@')[0],
           yummyPoints: 0,
         };
