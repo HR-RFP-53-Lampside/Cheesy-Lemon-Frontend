@@ -24,7 +24,7 @@ const ListOfRecipes = ({ data }) => (
 
 ListOfRecipes.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default ListOfRecipes;
