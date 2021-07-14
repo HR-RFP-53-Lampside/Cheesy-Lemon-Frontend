@@ -18,7 +18,7 @@ const ChangeFields = ({
 }) => {
   // eslint-disable-next-line no-unused-vars
   const [logStatus] = useContext(LogStatus);
-  const [editValues, setEditValues] = useState(logStatus[accountSettings]);
+  const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -29,7 +29,7 @@ const ChangeFields = ({
       setEditValues(formData);
     }
   };
-  const handleSubmit = (event) => {
+  const handleClick = (event) => {
     if (accountSettings !== 'photoURL') {
       firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
     } else {
@@ -105,7 +105,7 @@ const ChangeFields = ({
             style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
             variant="contained"
             color="primary"
-            onClick={handleSubmit}
+            onClick={handleClick}
           >
             <Typography>
               Elevate changes
