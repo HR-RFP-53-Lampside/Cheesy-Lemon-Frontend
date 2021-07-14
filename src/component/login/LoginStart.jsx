@@ -33,6 +33,16 @@ const LoginStart = () => {
     }
   };
 
+  const updateFormUser = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setUsername(event.target.value);
+  };
+
+  const updateFormPass = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setPassword(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -44,8 +54,11 @@ const LoginStart = () => {
         });
       })
       .catch((error) => {
-        validationMessage(error.code);
-        throw error;
+        const { code } = error;
+        event.target.reset();
+        setUsername('');
+        setPassword('');
+        validationMessage(code);
       });
   };
 
@@ -59,11 +72,10 @@ const LoginStart = () => {
           aboutMe: '',
           dietaryPrefs: '',
           email: user.email,
-          favRecipes: {},
           firstName: '',
           lastName: '',
-          pantry: {},
           photoURL: user.photoURL || '',
+          uid: user.uid,
           username: user.displayName || user.email.split('@')[0],
           yummyPoints: 0,
         };
@@ -138,7 +150,7 @@ const LoginStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => { setUserMessage(''); setUsername(event.target.value); }}
+              onChange={updateFormUser}
             />
             <TextField
               label="Password"
@@ -148,7 +160,7 @@ const LoginStart = () => {
               inputProps={{ minLength: 3 }}
               type="password"
               style={{ width: '100%' }}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={updateFormPass}
             />
             <Box align="right">
               <Button

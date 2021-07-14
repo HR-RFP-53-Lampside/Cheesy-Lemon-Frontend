@@ -1,10 +1,14 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import {
   TextField, Button, Typography,
   Box, Icon, Avatar,
 } from '@material-ui/core';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
@@ -13,10 +17,29 @@ const ChangeFields = ({
   label, accountSettings, multiline, rows,
 }) => {
   // eslint-disable-next-line no-unused-vars
-  const [editValues, setEditValues] = useState(accountSettings);
   const [logStatus] = useContext(LogStatus);
+  const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
   const handleChange = (event) => {
-    setEditValues(event.target.value);
+    if (accountSettings !== 'photoURL') {
+      setEditValues(event.target.value);
+    } else {
+      const formData = new FormData();
+      const files = Array.from(event.target.files);
+      formData.append('file', files[0]);
+      setEditValues(formData);
+    }
+  };
+  const handleClick = (event) => {
+    if (accountSettings !== 'photoURL') {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
+    } else {
+      axios.post('http://localhost:8000/api/image', editValues)
+        .then((result) => {
+          const url = result.data[0].url;
+          firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch((error) => console.error(error));
+        })
+        .catch(console.error);
+    }
   };
   let display = ('');
   const settleDisplay = () => {
@@ -26,7 +49,7 @@ const ChangeFields = ({
           label={label}
           variant="outlined"
           style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
-          value={logStatus[accountSettings]}
+          value={editValues}
           multiline={multiline}
           rows={rows}
           onChange={handleChange}
@@ -53,17 +76,22 @@ const ChangeFields = ({
             variant="outlined"
             component="label"
             style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
+            htmlFor="profile-image"
           >
-            <Typography variant="subtitle" color="textAction">
+            <Typography variant="body2" color="textAction">
               change profile
             </Typography>
             <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
-            <input type="file" hidden />
+            <input type="file" id="profile-image" onChange={(event) => handleChange(event)} hidden />
           </Button>
         </>
       );
     }
   };
+
+  useEffect(() => {
+    setEditValues(logStatus[accountSettings]);
+  }, [accountSettings])
 
   settleDisplay();
 
@@ -77,6 +105,7 @@ const ChangeFields = ({
             style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
             variant="contained"
             color="primary"
+            onClick={handleClick}
           >
             <Typography>
               Elevate changes

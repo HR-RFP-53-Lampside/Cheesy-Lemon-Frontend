@@ -5,6 +5,7 @@ import {
 import Image from 'material-ui-image';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
+// import axios from 'axios';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
@@ -16,14 +17,42 @@ import RecipeReviewList from './RecipeReviewList';
 
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
-// import ImageListItemBar from '@material-ui/core/ImageListItemBar';
-// import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const RecipeFocusStart = () => {
 
   const themeDesign = useTheme();
   const hardCodePic = "https://spoonacular.com/recipeImages/654901-556x370.jpg";
+
+  // this is where i make a query to the backend and get all of the things, in regards to this particular recipe
+  const [recipeDeets, setRecipeDeets] = useState([]);
+
+  const getRecipeData = () => {
+    axios.get(`api/recipe/${id}`)
+      .then((res) =>{
+        setRecipeDeets(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const [reviewDeets, setReviewDeets] = useState([]);
+
+  const getReviewsData = () => {
+    axios.get(`/local/${recipeId}/reviews/`)
+      .then((res) =>{
+        setRewiewsDeets(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  // useEffect(() => {
+  //   getReviewsData();
+  //   getRecipeData();
+  // });
 
   return (
     <Paper
@@ -32,8 +61,6 @@ const RecipeFocusStart = () => {
       <Image
         src={hardCodePic}
         cover
-        // imageStyle={{ width: '100%', height: 'auto', overflow: 'hidden' }}
-        // // style={{ height: '10%' }}
       />
         <Typography variant="h6" align="center" style={{ color: themeDesign.custom.muted.grey }}>
         RECIPE TITLE and put fav add/remove button here
