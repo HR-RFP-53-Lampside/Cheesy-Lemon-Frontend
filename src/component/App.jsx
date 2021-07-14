@@ -96,7 +96,6 @@ function App() {
                     social/reviewId
                   </Route>
                   <Route exact path="/recipe/:reviewId">
-                    Recipe Overview
                     <RecipeFocusStart />
                   </Route>
                   {/* More routes for later */}

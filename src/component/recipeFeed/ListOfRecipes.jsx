@@ -11,7 +11,7 @@ const listOfRecipes = ({data, selected}) => {
     const handleClick = () => {
         // on click of title redirect to card of recipe reviews
     }
-    // filter results by selected 
+    // filter results by selected
         // if most reviewed === selected filter first
             // if most favorited === selected filter
             //or my reviews === selected filter
