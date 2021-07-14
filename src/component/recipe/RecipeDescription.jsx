@@ -14,7 +14,7 @@ const RecipeDescription = () => {
 
   return (
     <div>
-      <div>this is where the description goes</div>
+      <div>Fancy BowTie Pasta, Tiny little trees Delicious, Delicious Bacon and a dusting of Parmasean cheese. Also that may or may not be a chunk of chicken in the middle of the picture there...Bon appetite!</div>
     </div>
   );
 };
