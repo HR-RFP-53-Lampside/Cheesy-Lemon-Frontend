@@ -12,14 +12,31 @@ import backgroundBG from '../../assets/lowpoly2.png';
 
 const RecipeIngredient = () => {
 
+  const faykeIngeredients = ['potato', 'bacon', 'cheese', 'broccoli', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla'];
+  const firstHalfFaykeIng = faykeIngeredients.slice(0, Math.ceil(faykeIngeredients.length / 2));
+  const secondHalfFaykeDataIng = faykeIngeredients.slice(Math.ceil(faykeIngeredients.length / 2));
+  // 50% width max height
   return (
-    <div>
-      {/* <div>Ingredients</div> */}
-      <div>ingredients go here</div>
-      <div>ingredients go here</div>
-      <div>ingredients go here</div>
-    </div>
+
+    <Box
+    display="flex"
+    flexDirection="col"
+    flexWrap="nowrap"
+
+    style={SpacingDesign.padding(3)}
+    >
+    <div style={{width: '50%'}}>{firstHalfFaykeIng.map((item) => (
+  <p style={{flexDirection: "col"}}>{item}</p>
+))}</div>
+    <div style={{width: '50%'}}>{secondHalfFaykeDataIng.map((item) => (
+  <p style={{flexDirection: "col"}}>{item}</p>
+))}</div>
+      </Box>
   );
 };
 
 export default RecipeIngredient;
+
+// {faykeIngeredients.map((item) => (
+//   <p style={{flexDirection: "col"}}>{item}</p>
+// ))}

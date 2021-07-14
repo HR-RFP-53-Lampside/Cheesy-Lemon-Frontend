@@ -14,10 +14,39 @@ const RecipeInstruction = () => {
 
   return (
     <div>
-      {/* <div>Instructions</div> */}
-      <div>instructions go here</div>
-      <div>instructions go here</div>
-      <div>instructions go here</div>
+      <div style={SpacingDesign.padding(1)}>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+        allWorkNoPlayMakesJackADullBoy<br></br>
+      </div>
     </div>
   );
 };
