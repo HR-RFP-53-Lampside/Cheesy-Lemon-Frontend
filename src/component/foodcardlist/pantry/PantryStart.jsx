@@ -23,44 +23,57 @@ const data = [
   {
     "name": "Lemons",
     "image": lemonImg,
-    "selected": false
+    "select": false
   },
   {
     "name": "Cheese",
     "image": cheeseImg,
-    "selected": false
+    "select": false
   }
 ]
-
-// const selected = {
-//   Lemons: lemons,
-//   Cheese: cheese
-// }
 
 const PantryStart = () => {
   const themeDesign = useTheme();
   const [ingredients, setIngredients] = useState(data);
-  const [selected, setSelected] = useState({});
+  const [select, setSelect] = useState({});
   const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
   }
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    let index = e.currentTarget.value;
+    let hold = [...ingredients];
+    let obj = select;
+    let name = hold[index].name;
+
+    //if selected remove from select
+    if(obj[name]) {
+      delete obj[name];
+      setSelect(obj);
+    }
+
+    //remove from ingredients list and set new list
+    hold.splice(index, 1);
+    setIngredients([...hold]);
+    console.log(select);
+  }
+
   const handleSelect = (e) => {
     let name = e.target.name;
-    let obj = {...selected};
+    let obj = select;
 
     if (!obj[name]) {
-      //if undefined - add to list
       obj[name] = name;
-      setSelected({...obj});
+      setSelect(obj);
+      console.log('add', select)
     } else {
-      //if defined remove from the list
-      delete obj[name];
-      setSelected({...obj});
+      delete obj[name]
+      setSelect(obj);
+      console.log('delete', select);
     }
-    console.log(obj);
   }
 
   const handleSubmit = (e) => {
@@ -77,18 +90,17 @@ const PantryStart = () => {
           let obj = {
             "name": name,
             "image": img,
-            "selected": false
+            "select": false
           }
 
           setIngredients([...ingredients, obj]);
         })
         .catch((e) => { console.log(e) })
     }
-
   }
 
   useEffect(() => {
-    //watch for change in ingredients list and update selected list
+    //watch for change in ingredients list and update select list
   }, [ingredients])
 
   return (
@@ -129,8 +141,8 @@ const PantryStart = () => {
         {ingredients.filter(main => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
-            .map((item) =>
-            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.name}>
+            .map((item, index) =>
+            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={index}>
               <CardContent>
                 {/* <CardMedia
                   style={{ ...SpacingDesign.height(40) }}
@@ -152,8 +164,8 @@ const PantryStart = () => {
                     <FormControlLabel
                       control={<Checkbox onClick={handleSelect} name={item.name} style={{ transform: 'scale(1.5)' }} />}
                     />
-                    <IconButton >
-                      <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }}></HighlightOffIcon>
+                    <IconButton onClick={handleDelete} value={index}>
+                      <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
                     </IconButton>
                   </Box>
                 </Box>
