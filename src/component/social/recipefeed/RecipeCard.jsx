@@ -14,7 +14,7 @@ import { RateReview } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 
-import SpacingDesign from '../context/design/SpacingDesign';
+import SpacingDesign from '../../context/design/SpacingDesign';
 
 const RecipeCard = ({
   id, title, body, favorite, reviews,
