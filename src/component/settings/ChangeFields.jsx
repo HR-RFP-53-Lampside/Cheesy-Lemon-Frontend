@@ -29,13 +29,13 @@ const ChangeFields = ({
       setEditValues(formData);
     }
   };
-  const handleClick = (event) => {
+  const handleClick = () => {
     if (accountSettings !== 'photoURL') {
       firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
     } else {
       axios.post('http://localhost:8000/api/image', editValues)
         .then((result) => {
-          const url = result.data[0].url;
+          const { url } = result.data[0];
           firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch((error) => console.error(error));
         })
         .catch(console.error);
@@ -58,7 +58,7 @@ const ChangeFields = ({
     } else {
       display = (
         <>
-          <Box display="flex" justifyContent="center" style={SpacingDesign.marginy(3)}>
+          <Box display="flex" style={SpacingDesign.marginy(3)}>
             {[1, 2, 3].map((row) => (
               <Avatar
                 key={`photo-card${row}`}
@@ -78,7 +78,7 @@ const ChangeFields = ({
             style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
             htmlFor="profile-image"
           >
-            <Typography variant="body2" color="textAction">
+            <Typography variant="body2">
               change profile
             </Typography>
             <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
@@ -91,7 +91,7 @@ const ChangeFields = ({
 
   useEffect(() => {
     setEditValues(logStatus[accountSettings]);
-  }, [accountSettings])
+  }, [accountSettings]);
 
   settleDisplay();
 
@@ -99,7 +99,7 @@ const ChangeFields = ({
     <>
       {label
       && (
-        <Box display="flex" flexDirection="column" justifyContent>
+        <Box display="flex" flexDirection="column">
           {display}
           <Button
             style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}

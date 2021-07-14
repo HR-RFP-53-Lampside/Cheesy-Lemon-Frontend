@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import RecipeCard from './RecipeCard';
 
-const listOfRecipes = ({ data }) => (
+const ListOfRecipes = ({ data }) => (
   <Box style={{ width: '100%' }}>
     {data.map((item) => (
       <RecipeCard
@@ -22,9 +22,9 @@ const listOfRecipes = ({ data }) => (
   </Box>
 );
 
-listOfRecipes.propTypes = {
+ListOfRecipes.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
-export default listOfRecipes;
+export default ListOfRecipes;
