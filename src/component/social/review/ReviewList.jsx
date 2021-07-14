@@ -20,6 +20,7 @@ const ReviewList = (props) => {
       });
   };
 
+  // Need to figure out end point documentation first, also the id
   // useEffect(() => {
   //   getReviews();
   // }, [props]);
@@ -31,6 +32,7 @@ const ReviewList = (props) => {
         return a.upvotes - b.upvotes;
       }
       if (sort === 'recent') {
+        // May need to change depending on data format
         return a.date - b.date;
       }
     };
