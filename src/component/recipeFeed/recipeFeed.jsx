@@ -1,10 +1,9 @@
 /* eslint-disable import/no-unresolved */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
   Select,
-  MenuItem,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import ListOfRecipes from './ListOfRecipes';
@@ -13,15 +12,10 @@ const RecipeFeed = () => {
   const themeDesign = useTheme();
   // user data will be data about recipes and display the title, body and favorite/#ofreviews
   // be able to filter recipe info from select tag by most liked or most commented or my reviews
-  const [filterOptions] = useState([
+  const filterOptions = [
     'Most Reviews',
-    'My Reviewed',
     'Most Favorites',
-  ]);
-  const [selected, setSelected] = useState(filterOptions[0]);
-  const handleNewFilter = (e) => {
-    setSelected(e.target.value);
-  };
+  ];
 
   const test = [
     {
@@ -61,6 +55,28 @@ const RecipeFeed = () => {
     },
   ];
 
+  const [data, setData] = useState(test);
+
+  const [selected, setSelected] = useState(filterOptions[0]);
+  const handleChange = (e) => {
+    setSelected(e.target.value);
+  };
+
+  useEffect(() => {
+    const copy = data.slice();
+    const sortFunc = (a, b) => {
+      if (selected === filterOptions[0]) {
+        return b.reviews - a.reviews;
+      }
+      if (selected === filterOptions[1]) {
+        return b.favorite - a.favorite;
+      }
+      return b.reviews - a.reviews;
+    };
+    copy.sort(sortFunc);
+    setData(copy);
+  }, [selected]);
+
   return (
     <Box>
       <Typography
@@ -70,14 +86,22 @@ const RecipeFeed = () => {
       >
         Recipe Feed
       </Typography>
-      <Select value={selected} onChange={handleNewFilter} fullWidth variant="outlined" native>
-        {filterOptions.map((item) => (
-          <MenuItem value={item} key={item}>
-            {item}
-          </MenuItem>
+      <Select
+        native
+        value={selected}
+        onChange={handleChange}
+        variant="outlined"
+        fullWidth
+      >
+        {filterOptions.map((rows) => (
+          <option key={rows} value={rows}>{rows}</option>
         ))}
       </Select>
-      <ListOfRecipes selected={selected} test={test} />
+      {data.length > 0 && (
+      <ListOfRecipes
+        data={data}
+      />
+      )}
     </Box>
   );
 };

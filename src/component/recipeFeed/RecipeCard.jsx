@@ -17,24 +17,26 @@ import ShowMoreText from 'react-show-more-text';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 
-const RecipeCard = ({ item }) => (
+const RecipeCard = ({
+  id, title, body, favorite, reviews,
+}) => (
   <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
-    <CardActionArea component={Link} to={`recipe/${item.id}`} style={SpacingDesign.padding(2)}>
-      <CardContent>
-        <Typography variant="h4" style={SpacingDesign.marginBottom(2)}>
-          {item.title}
+    <CardContent>
+      <Button component={Link} to={`recipe/${id}`}>
+        <Typography variant="h4">
+          {title}
         </Typography>
-        <ShowMoreText
-          more={<Icon className="fas fa-caret-down" color="primary" />}
-          less={<Icon className="fas fa-caret-up" color="secondary" />}
-          lines={4}
-        >
-          <Typography variant="body">
-            {item.body}
-          </Typography>
-        </ShowMoreText>
-      </CardContent>
-    </CardActionArea>
+      </Button>
+      <ShowMoreText
+        more={<Icon className="fas fa-caret-down" color="primary" />}
+        less={<Icon className="fas fa-caret-up" color="secondary" />}
+        lines={4}
+      >
+        <Typography variant="body">
+          {body}
+        </Typography>
+      </ShowMoreText>
+    </CardContent>
     <Box
       display="flex"
       justifyContent="space-between"
@@ -44,13 +46,13 @@ const RecipeCard = ({ item }) => (
       <Button>
         <Icon className="far fa-heart" />
         <Typography style={SpacingDesign.marginLeft(1)}>
-          {item.favorite}
+          {favorite}
         </Typography>
       </Button>
-      <Button component={Link} to={`/recipe/${item.id}/reviews`}>
+      <Button component={Link} to={`/recipe/${id}/reviews`}>
         <RateReview />
         <Typography style={SpacingDesign.marginLeft(1)}>
-          {item.reviews}
+          {reviews}
         </Typography>
       </Button>
     </Box>
@@ -58,6 +60,10 @@ const RecipeCard = ({ item }) => (
 );
 
 RecipeCard.propTypes = {
-  item: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  favorite: PropTypes.number.isRequired,
+  reviews: PropTypes.number.isRequired,
 };
 export default RecipeCard;

@@ -3,26 +3,28 @@ import React from 'react';
 import {
   Box,
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 
 import RecipeCard from './RecipeCard';
 
-const listOfRecipes = ({ data, selected, test }) => {
-  const themeDesign = useTheme();
+const listOfRecipes = ({ data }) => (
+  <Box style={{ width: '100%' }}>
+    {data.map((item) => (
+      <RecipeCard
+        id={item.id}
+        title={item.title}
+        body={item.body}
+        favorite={item.favorite}
+        reviews={item.reviews}
+        key={item.title}
+      />
+    ))}
+  </Box>
+);
 
-  // filter results by selected
-  // if most reviewed === selected filter first
-  // if most favorited === selected filter
-  // or my reviews === selected filter
-
-  // add buttons for reviews and favorites. Route to go to all reviews when onClick
-  return (
-    <Box style={{ width: '100%' }}>
-      {test.map((item) => (
-        <RecipeCard item={item} key={item.title} />
-      ))}
-    </Box>
-  );
+listOfRecipes.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  data: PropTypes.object.isRequired,
 };
 
 export default listOfRecipes;

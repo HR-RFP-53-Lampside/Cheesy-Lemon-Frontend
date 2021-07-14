@@ -6,12 +6,10 @@ import {
   Box,
   Typography,
   Button,
-  Container,
   Card,
   CardContent,
   CardActionArea,
   Icon,
-  Chip,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
