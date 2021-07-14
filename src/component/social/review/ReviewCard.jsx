@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -8,7 +9,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardActionArea,
   Icon,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -16,7 +16,9 @@ import { Link } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import SpacingDesign from '../../context/design/SpacingDesign';
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({
+  id, title, authorName, body, upvotes, downvotes, recipeId, date,
+}) => {
   const handleUpvote = () => {
 
   };
@@ -25,14 +27,16 @@ const ReviewCard = ({ review }) => {
 
   };
 
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
   return (
     <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }}>
       <CardContent>
         <Typography variant="h4">
-          {review.title}
+          {title}
         </Typography>
         <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
-          {review.authorName}
+          {authorName}
         </Typography>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
@@ -40,9 +44,12 @@ const ReviewCard = ({ review }) => {
           lines={4}
         >
           <Typography variant="body">
-            {review.body}
+            {body}
           </Typography>
         </ShowMoreText>
+        <Typography variant="subtitle">
+          {date.toLocaleDateString(undefined, dateOptions)}
+        </Typography>
       </CardContent>
       <Box
         display="flex"
@@ -53,19 +60,19 @@ const ReviewCard = ({ review }) => {
         <Button onClick={handleUpvote}>
           <ThumbUp />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {review.upvotes}
+            {upvotes}
           </Typography>
         </Button>
-        <Button component={Link} to={`/recipe/${review.recipeId}/review/${review.id}`}>
+        <Button component={Link} to={`/recipe/${recipeId}/review/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {review.upvotes}
+            {upvotes}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
           <ThumbDown />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {review.downvotes}
+            {downvotes}
           </Typography>
         </Button>
       </Box>
@@ -74,7 +81,14 @@ const ReviewCard = ({ review }) => {
 };
 
 ReviewCard.propType = {
-  review: PropTypes.object.isRequired,
+  id: PropTypes.number.isRequired,
+  recipeId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  authorName: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  upvotes: PropTypes.number.isRequired,
+  downvotes: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
 };
 
 export default ReviewCard;

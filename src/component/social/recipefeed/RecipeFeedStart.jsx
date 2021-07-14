@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   Box,
   Typography,
@@ -62,18 +62,14 @@ const RecipeFeed = () => {
     setSelected(e.target.value);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     const copy = data.slice();
-    const sortFunc = (a, b) => {
-      if (selected === filterOptions[0]) {
-        return b.reviews - a.reviews;
-      }
-      if (selected === filterOptions[1]) {
-        return b.favorite - a.favorite;
-      }
-      return b.reviews - a.reviews;
-    };
-    copy.sort(sortFunc);
+    if (selected === filterOptions[0]) {
+      copy.sort((a, b) => b.reviews - a.reviews);
+    }
+    if (selected === filterOptions[1]) {
+      copy.sort((a, b) => b.favorite - a.favorite);
+    }
     setData(copy);
   }, [selected]);
 

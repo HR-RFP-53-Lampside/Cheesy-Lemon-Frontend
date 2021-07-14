@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -8,45 +8,10 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { useTheme } from '@material-ui/core/styles';
-import ReviewCard from './ReviewCard.jsx';
+import ReviewCard from './ReviewCard';
 
 const ReviewList = () => {
   const themeDesign = useTheme();
-  const [reviews, setReviews] = useState([]);
-  const [sort, setSort] = useState('yummies');
-
-  const getReviews = () => {
-    const id = '2';
-    axios({
-      method: 'GET',
-      url: `http://localhost:8000/local/${id}/reviews`,
-    })
-      .then(({ data }) => {
-        console.log(data);
-        // setReviews(data);
-      });
-  };
-
-  useEffect(() => {
-    getReviews();
-  }, []);
-
-  useEffect(() => {
-    const copy = reviews.slice();
-    const sortFunction = (a, b) => {
-      if (sort === 'yummies') {
-        return a.upvotes - b.upvotes;
-      }
-      if (sort === 'recent') {
-        // May need to change depending on data format
-        return a.date - b.date;
-      }
-      return a.upvotes - b.upvotes;
-    };
-    copy.sort(sortFunction);
-    setReviews(copy);
-  }, [sort]);
-
   const mockReviews = [
     {
       id: 1,
@@ -58,6 +23,7 @@ const ReviewList = () => {
       body: 'I\'m baby scenester typewriter fashion axe irony. Health goth live-edge brooklyn hexagon, fam small batch leggings brunch palo santo offal narwhal freegan four loko wolf. Pok pok live-edge chambray, chicharrones seitan 90\'s adaptogen pickled post-ironic. La croix poutine offal XOXO af thundercats glossier chartreuse direct trade irony fam occupy kombucha. Fanny pack hoodie organic deep v artisan street art, mixtape chartreuse photo booth banh mi green juice. Godard intelligentsia DIY shaman twee hashtag man braid affogato mustache ennui 8-bit.',
       upvotes: 20,
       downvotes: 5,
+      date: new Date((new Date()).valueOf() - 1000 * 60 * 60 * (24 * 1)),
     },
     {
       id: 2,
@@ -67,8 +33,10 @@ const ReviewList = () => {
       authorName: 'Tarrin',
       authorUrl: 'https://i.imgur.com/qnoy291.png',
       body: 'Drinking vinegar normcore banh mi, seitan bitters ennui austin helvetica jean shorts master cleanse adaptogen lomo franzen. Cardigan activated charcoal mlkshk, letterpress mixtape bushwick selfies ennui kickstarter live-edge. Wolf tofu cronut, 8-bit artisan sriracha bespoke glossier. Echo park cornhole man braid, vice activated charcoal chambray jianbing la croix copper mug jean shorts migas unicorn lumbersexual bitters. Beard health goth trust fund roof party distillery bespoke portland wayfarers direct trade paleo locavore. Dreamcatcher irony messenger bag woke four dollar toast poutine quinoa tote bag flannel tofu distillery.',
-      upvotes: 20,
+      upvotes: 30,
       downvotes: 5,
+      date: new Date((new Date()).valueOf() - 1000 * 60 * 60 * (24 * 7)),
+
     },
     {
       id: 3,
@@ -78,10 +46,44 @@ const ReviewList = () => {
       authorName: 'Tarrin',
       authorUrl: 'https://i.imgur.com/qnoy291.png',
       body: 'Snackwave sustainable wayfarers, meditation af pinterest marfa poke ramps hella taiyaki chambray sriracha street art. Man braid cornhole poutine gentrify. Lo-fi cornhole shaman, copper mug listicle cliche 90\'s paleo tacos hoodie farm-to-table leggings. Fingerstache tumeric synth flexitarian fixie you probably haven\'t heard of them pork belly iceland master cleanse offal.',
-      upvotes: 20,
+      upvotes: 5,
       downvotes: 5,
+      date: new Date((new Date()).valueOf() - 1000 * 60 * 60 * (24 * 3)),
+
     },
   ];
+
+  const [reviews, setReviews] = useState(mockReviews);
+  const [sort, setSort] = useState('yummies');
+
+  const getReviews = () => {
+    const id = '2';
+    axios({
+      method: 'GET',
+      url: `http://localhost:8000/local/${id}/reviews`,
+    })
+      .then(({ data }) => {
+        console.log('data', data);
+        // setReviews(data);
+      });
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, []);
+
+  useMemo(() => {
+    if (reviews) {
+      const copy = reviews.slice();
+      if (sort === 'yummies') {
+        copy.sort((a, b) => (b.upvotes - a.upvotes));
+      }
+      if (sort === 'recent') {
+        copy.sort((a, b) => (a.date.getTime() - b.date.getTime()));
+      }
+      setReviews(copy);
+    }
+  }, [sort]);
 
   const handleChange = (e) => {
     setSort(e.target.value);
@@ -117,7 +119,19 @@ const ReviewList = () => {
         <option value="yummies">Most Yummies</option>
         <option value="recent">Most Recent</option>
       </Select>
-      {mockReviews.map((review) => <ReviewCard key={review.id} review={review} />)}
+      {reviews.map((review) => (
+        <ReviewCard
+          key={review.id}
+          id={review.id}
+          title={review.title}
+          authorName={review.authorName}
+          body={review.body}
+          upvotes={review.upvotes}
+          downvotes={review.downvotes}
+          recipeId={review.recipeId}
+          date={review.date}
+        />
+      ))}
     </Box>
   );
 };

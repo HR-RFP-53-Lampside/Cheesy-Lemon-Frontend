@@ -24,7 +24,7 @@ import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerSta
 import ReviewList from './social/review/ReviewList';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
-import RecipeFeed from './recipeFeed/RecipeFeed';
+import RecipeFeedStart from './social/recipefeed/RecipeFeedStart';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
 import RecipeFocusStart from './recipe/RecipeFocusStart';
@@ -104,7 +104,7 @@ function App() {
                     add ingredient
                   </Route>
                   <Route exact path="/social">
-                    <RecipeFeed />
+                    <RecipeFeedStart />
                   </Route>
                   <Route exact path="/settings">
                     <SettingsStart />
