@@ -28,12 +28,12 @@ const listOfRecipes = ({ data, selected, test }) => {
   // if most reviewed === selected filter first
   // if most favorited === selected filter
   //or my reviews === selected filter
-  
+
 
   //add buttons for reviews and favorites. Route to go to all reviews when onClick
   return (
     <Container>
-      
+
       {test.map((item, i) => (
         selected === 'Most Reviews' &&
         <Card style={{ ...SpacingDesign.margin(3) }} elevation={5}>
@@ -52,7 +52,7 @@ const listOfRecipes = ({ data, selected, test }) => {
               >
                 {item.title}
               </Typography>
-             
+
               <Typography
                 variant="h5"
                 align="center"
