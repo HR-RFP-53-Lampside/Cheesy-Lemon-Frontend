@@ -77,8 +77,8 @@ const ReviewFocus = () => {
           <option value="recent">Most Recent</option>
         </Select>
       </Box>
-      {[1, 2, 3, 4, 5].map(() => (
-        <ReviewFocusComment />
+      {[1, 2, 3, 4, 5].map((row) => (
+        <ReviewFocusComment key={row} />
       ))}
     </>
   );
