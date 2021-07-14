@@ -55,6 +55,9 @@ const SpacingDesign = {
   width: (factor) => ({
     width: `${8 * factor}px`,
   }),
+  fontSize: (factor) => ({
+    fontSize: `${8 * factor}px`,
+  })
 };
 
 export default SpacingDesign;
