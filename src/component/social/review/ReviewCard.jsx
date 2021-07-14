@@ -30,7 +30,7 @@ const ReviewCard = ({
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
   return (
-    <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }}>
+    <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }} elevation={3}>
       <CardContent>
         <Typography variant="h4">
           {title}
