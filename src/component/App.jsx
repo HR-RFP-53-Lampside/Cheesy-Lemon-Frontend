@@ -23,7 +23,7 @@ import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
 import DekstopSideBar from './DesktopSideBar';
 import SideBar from './SideBar';
-import RecipeFeed from './recipeFeed/recipeFeed';
+import RecipeFeed from './recipeFeed/RecipeFeed';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
 import RecipeFocusStart from './recipe/RecipeFocusStart';
