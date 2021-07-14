@@ -11,6 +11,7 @@ import lemonImg from './lemon-img.jpeg';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+
 // import { AddCircleOutlineOutlinedIcon, CameraAltOutlinedIcon, HighlightOffIcon} from '@material-ui/icons';
 
 
@@ -51,22 +52,22 @@ const PantryStart = () => {
     if(filter.length < 3) {
       console.log('not long enough');
     } else {
-      // console.log(filter);
+      console.log(filter);
 
-      // axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
-      //   .then((result) => {
-      //     let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
-      //     let name = result.data.status.results[0].name;
+      axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
+        .then((result) => {
+          let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
+          let name = result.data.status.results[0].name;
 
-      //     let obj = {
-      //       "name": name,
-      //       "image": img,
-      //       "selected": false
-      //     }
+          let obj = {
+            "name": name,
+            "image": img,
+            "selected": false
+          }
 
-      //     setIngredients([...ingredients, obj]);
-      //   })
-      //   .catch((e) => { console.log(e) })
+          setIngredients([...ingredients, obj]);
+        })
+        .catch((e) => { console.log(e) })
     }
 
   }
@@ -111,17 +112,21 @@ const PantryStart = () => {
           My Pantry
         </Typography>
 
-        {data.filter(main => {
+        {ingredients.filter(main => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
             .map((item) =>
             <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
               <CardContent>
-                <CardMedia
+                {/* <CardMedia
                   style={{ ...SpacingDesign.height(40) }}
                   image={item.image}
                   title={item.name}
-                />
+                /> */}
+                <Image
+                  src={item.image}
+                  cover
+                ></Image>
                 <Box display='flex' flexDirection='column'>
                   <Typography variant='h5' align='center' style={{ ...SpacingDesign.marginTop(3) }}>
                     {item.name}
