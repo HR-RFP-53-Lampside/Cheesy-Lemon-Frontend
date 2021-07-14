@@ -124,7 +124,7 @@ function App() {
                   <Route exact path="/recipe/:recipeId/reviews">
                     <ReviewList />
                   </Route>
-                  <Route exact path="/recipe/:recipeId/review/:reviewId">
+                  <Route exact path="/recipes/:recipeId/reviews/:reviewId">
                     <ReviewFocus />
                   </Route>
                   {/* More routes for later */}

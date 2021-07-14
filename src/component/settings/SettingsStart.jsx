@@ -18,19 +18,6 @@ const SettingsStart = () => {
     setSettingsFocus(newValue);
   };
 
-  /*
-      <Button
-        variant="outlined"
-        component="label"
-      >
-        <Typography variant="subtitle" color="textAction">
-          change profile
-        </Typography>
-        <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
-        <input type="file" hidden />
-      </Button>
-  */
-
   useEffect(() => {
     if (settingsFocus === 'account') {
       setGoToPage(<AccountSettings />);
