@@ -1,72 +1,63 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react';
 import {
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Paper,
   Box,
   Typography,
-  TextField,
-  Button,
-  IconButton,
-  Container,
-  Hidden,
   Select,
   MenuItem,
 } from '@material-ui/core';
-import Image from 'material-ui-image';
-import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
-import axios from 'axios';
 import ListOfRecipes from './ListOfRecipes';
 
-const RecipeFeed = ({ userData }) => {
+const RecipeFeed = () => {
   const themeDesign = useTheme();
   // user data will be data about recipes and display the title, body and favorite/#ofreviews
   // be able to filter recipe info from select tag by most liked or most commented or my reviews
-  const [filterOptions, setFilterOptions] = useState([
+  const [filterOptions] = useState([
     'Most Reviews',
     'My Reviewed',
     'Most Favorites',
   ]);
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState(filterOptions[0]);
   const handleNewFilter = (e) => {
     setSelected(e.target.value);
   };
 
   const test = [
     {
-      title: 'banana',
-      body: 'this banana is the wworst in the world I hate bananas besides this one',
+      title: 'Banana on a plate',
+      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum justo nisl, eget tempor augue iaculis ut. Quisque tincidunt, purus vel volutpat congue, tellus massa hendrerit leo, in gravida ex urna vel nisl. Sed ac est id sapien pretium pretium. Duis quis orci sed sem posuere tempor sit amet quis turpis. Ut auctor, dui in condimentum dictum, justo neque congue nisl, in vehicula nisi nisi quis augue. Mauris fringilla nisl in dui suscipit egestas. Ut blandit accumsan neque, gravida faucibus erat malesuada ut. Integer fringilla hendrerit magna, id sodales lorem condimentum at.',
       favorite: 1,
       reviews: 3,
+      id: 1,
     },
     {
-      title: 'grapes',
-      body: 'this banana is the wworst in the world I hate bananas besides this one',
+      title: 'Grape Post Surgery',
+      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum justo nisl, eget tempor augue iaculis ut. Quisque tincidunt, purus vel volutpat congue, tellus massa hendrerit leo, in gravida ex urna vel nisl. Sed ac est id sapien pretium pretium. Duis quis orci sed sem posuere tempor sit amet quis turpis. Ut auctor, dui in condimentum dictum, justo neque congue nisl, in vehicula nisi nisi quis augue. Mauris fringilla nisl in dui suscipit egestas. Ut blandit accumsan neque, gravida faucibus erat malesuada ut. Integer fringilla hendrerit magna, id sodales lorem condimentum at.',
       favorite: 15,
       reviews: 5,
+      id: 3,
     },
     {
-      title: 'steak dinner',
-      body: 'this banana is the wworst in the world I hate bananas besides this one tgere us ou reason to east meant',
+      title: 'High Steak Dinner',
+      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum justo nisl, eget tempor augue iaculis ut. Quisque tincidunt, purus vel volutpat congue, tellus massa hendrerit leo, in gravida ex urna vel nisl. Sed ac est id sapien pretium pretium. Duis quis orci sed sem posuere tempor sit amet quis turpis. Ut auctor, dui in condimentum dictum, justo neque congue nisl, in vehicula nisi nisi quis augue. Mauris fringilla nisl in dui suscipit egestas. Ut blandit accumsan neque, gravida faucibus erat malesuada ut. Integer fringilla hendrerit magna, id sodales lorem condimentum at.',
       favorite: 0,
       reviews: 12,
+      id: 7,
     },
     {
-      title: 'hariy peanuts',
-      body: 'this banana is the wworst in the world I hate bananas besides this one I love peanuts bc I am an eleeghan',
+      title: 'Bumpy Peanut Butter',
+      body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc fermentum justo nisl, eget tempor augue iaculis ut. Quisque tincidunt, purus vel volutpat congue, tellus massa hendrerit leo, in gravida ex urna vel nisl. Sed ac est id sapien pretium pretium. Duis quis orci sed sem posuere tempor sit amet quis turpis. Ut auctor, dui in condimentum dictum, justo neque congue nisl, in vehicula nisi nisi quis augue. Mauris fringilla nisl in dui suscipit egestas. Ut blandit accumsan neque, gravida faucibus erat malesuada ut. Integer fringilla hendrerit magna, id sodales lorem condimentum at.',
       favorite: 9,
       reviews: 30,
+      id: 50,
     },
     {
-      title: 'my guy is so good',
-      body: 'this banana is the wworst in the world I hate bananas besides this one and I cant wait to eat this banana',
+      title: 'Parmesan to Dance',
+      body: 'Inspired by the latest BTS song, Permission to dance.',
       favorite: 5,
       reviews: 3,
+      id: 20,
     },
   ];
 
@@ -79,14 +70,14 @@ const RecipeFeed = ({ userData }) => {
       >
         Recipe Feed
       </Typography>
-      <Select value={selected} onChange={handleNewFilter}>
-        {filterOptions.map((item, i) => (
-          <MenuItem value={item} key={i}>
+      <Select value={selected} onChange={handleNewFilter} fullWidth variant="outlined">
+        {filterOptions.map((item) => (
+          <MenuItem value={item} key={item}>
             {item}
           </MenuItem>
         ))}
       </Select>
-      <ListOfRecipes data={userData} selected={selected} test={test} />
+      <ListOfRecipes selected={selected} test={test} />
     </Box>
   );
 };
