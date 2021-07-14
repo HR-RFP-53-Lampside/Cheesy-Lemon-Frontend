@@ -42,10 +42,12 @@ const RegisterStart = () => {
   const updateFormPass = (event) => {
     if (userMessage) { setUserMessage(''); }
     setPassword(event.target.value);
+    passwordValidity();
   };
 
   const updateFormPassVerify = (event) => {
     if (userMessage) { setUserMessage(''); }
+    passwordValidity();
   };
 
   const handleSubmit = (event) => {
@@ -100,7 +102,7 @@ const RegisterStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => updateFormUser(event)}
+              onChange={updateFormUser}
             />
             <TextField
               label="Password"
@@ -111,18 +113,18 @@ const RegisterStart = () => {
               type="password"
               id="password1"
               style={{ width: '100%' }}
-              onChange={(event) => { setPassword(event.target.value); passwordValidity(); }}
+              onChange={updateFormPass}
             />
             <TextField
               label="Re-password"
-              helperText="re enter password"
+              helperText="re-enter password"
               variant="filled"
               required
               inputProps={{ minLength: 6 }}
               type="password"
               id="password2"
               style={{ width: '100%' }}
-              onChange={(event) => { setPassword(event.target.value); passwordValidity(); }}
+              onChange={updateFormPassVerify}
             />
             <Box align="right" style={SpacingDesign.marginy(1.5)}>
               <Button

@@ -151,7 +151,7 @@ const LoginStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => updateFormUser(event)}
+              onChange={updateFormUser}
             />
             <TextField
               label="Password"
@@ -161,7 +161,7 @@ const LoginStart = () => {
               inputProps={{ minLength: 3 }}
               type="password"
               style={{ width: '100%' }}
-              onChange={(event) => updateFormPass(event)}
+              onChange={updateFormPass}
             />
             <Box align="right">
               <Button
