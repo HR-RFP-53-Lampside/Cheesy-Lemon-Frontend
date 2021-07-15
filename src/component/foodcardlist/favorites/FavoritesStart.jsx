@@ -51,8 +51,6 @@ const FavoritesStart = () => {
     e.preventDefault();
     let index = e.currentTarget.value;
     let copy = favorites.slice();
-
-    //remove from ingredients list and set new list
     copy.splice(index, 1);
     setFavorites(copy);
 
@@ -66,50 +64,54 @@ const FavoritesStart = () => {
 
   return (
     <Box style={{...SpacingDesign.marginBottom(1)}}>
-        <form noValidate autoComplete="off" onChange={handleFilter}>
-          <TextField
-            id="search"
-            label="Filter"
-            fullWidth
-            variant='outlined'
-          />
-        </form>
+      <form noValidate autoComplete="off" onChange={handleFilter}>
+        <TextField
+          id="search"
+          label="Filter"
+          fullWidth
+          variant='outlined'
+        />
+      </form>
 
-        <Container
-          style={{
-            height: 'auto',
-            ...SpacingDesign.marginTop(3),
-            ...SpacingDesign.marginBottom(1),
-            ...SpacingDesign.paddingx(0)
-          }}
-          elevation={1}>
-          <Typography variant='h4' align='center'>
-            Favorites
-          </Typography>
+      <Container
+        style={{
+          height: 'auto',
+          ...SpacingDesign.marginTop(3),
+          ...SpacingDesign.marginBottom(1),
+          ...SpacingDesign.paddingx(0)
+        }}
+        elevation={1}>
+        <Typography variant='h4' align='center'>
+          Favorites
+        </Typography>
 
-          {favorites.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
-            .map((item, index) =>
-              <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
-                <CardActionArea
-                  component={Link} to={`recipe/${item.id}`}
-                  >
-                  <CardContent>
-                  <IconButton onClick={removeFavorite} value={index}>
-                    <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
-                  </IconButton>
+        {favorites.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
+          .map((item, index) =>
+            <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
+              <CardActionArea
+                component={Link} to={`recipe/${item.id}`}
+                >
+                <CardContent>
                   <CardMedia
                     style={{ ...SpacingDesign.height(40)}}
                     image={item.image}
                     title={item.title}
                   />
-                    <Typography variant='h5' align='center' style={{...SpacingDesign.marginTop(3)}}>
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-          )}
-        </Container>
+                  <Typography variant='h5' align='center' style={{...SpacingDesign.marginTop(3)}}>
+                    {item.title}
+                  </Typography>
+                  <Box display="flex">
+                    <Box m="auto">
+                      <IconButton onClick={removeFavorite} value={index}>
+                        <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
+                      </IconButton>
+                    </Box>
+                  </Box>
+              </CardContent>
+              </CardActionArea>
+            </Card>
+        )}
+      </Container>
     </Box>
  )
 }
