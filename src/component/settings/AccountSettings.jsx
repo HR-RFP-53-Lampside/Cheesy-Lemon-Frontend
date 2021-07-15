@@ -17,6 +17,7 @@ const AccountSettings = () => {
     firstName: 'First Name',
     lastName: 'Last Name',
     aboutMe: 'About Me',
+    dietaryPrefs: 'Dietary Preferences',
     photoURL: 'Profile Pic',
   };
 
