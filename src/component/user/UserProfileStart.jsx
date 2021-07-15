@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Paper, Box, Typography, Avatar, Icon,
 } from '@material-ui/core';
@@ -9,6 +9,21 @@ import LogStatus from '../context/auth/LogStatus';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
+  const [dietPref, setDietPref] = useState(logStatus.dietaryPrefs);
+  const [displayPrefs, setDisplayPrefs] = useState('');
+
+  useEffect(() => {
+    if (dietPref) {
+      const preferences = Object.keys(dietPref);
+      const dietList = preferences.filter((item) => dietPref[item]);
+      const display = dietList.map((name) => {
+        const split = name.split(/(?=[A-Z])/);
+        const newname = split.map((nn) => nn.charAt(0).toUpperCase() + nn.slice(1));
+        return newname.join(' ');
+      });
+      setDisplayPrefs(display.join(', '));
+    }
+  }, [dietPref]);
 
   return (
     <Paper style={SpacingDesign.padding(2)}>
@@ -51,7 +66,7 @@ const UserProfileStart = () => {
               Dietary Preference
             </Typography>
             <Typography variant="body1">
-              {logStatus.dietaryPrefs || 'No preferences, a food enjoyer'}
+              {displayPrefs}
             </Typography>
           </Box>
           <Box style={SpacingDesign.marginTop(2)}>
