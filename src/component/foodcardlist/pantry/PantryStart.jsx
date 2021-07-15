@@ -35,7 +35,7 @@ const data = [
 const PantryStart = () => {
   const themeDesign = useTheme();
   const [ingredients, setIngredients] = useState(data);
-  const [select, setSelect] = useState({});
+  const [select, setSelect] = useState([]);
   const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
@@ -46,13 +46,15 @@ const PantryStart = () => {
     e.preventDefault();
     let index = e.currentTarget.value;
     let hold = [...ingredients];
-    let obj = select;
     let name = hold[index].name;
 
     //if selected remove from select
-    if(obj[name]) {
-      delete obj[name];
-      setSelect(obj);
+    // if(obj[name]) {
+    //   delete obj[name];
+    //   setSelect(obj);
+    // }
+    if (select.indexOf(name) !== -1) {
+      setSelect(select.filter(item => item !== name))
     }
 
     //remove from ingredients list and set new list
@@ -62,16 +64,20 @@ const PantryStart = () => {
   }
 
   const handleSelect = (e) => {
+    // console.log(e.currentTarget);
     let name = e.target.name;
-    let obj = select;
+    // let obj = select;
 
-    if (!obj[name]) {
-      obj[name] = name;
-      setSelect(obj);
+
+    if (select.indexOf(name) === -1) {
+      // obj[name] = name;
+      // setSelect(obj);
+      setSelect([...select, name]);
       console.log('add', select)
     } else {
-      delete obj[name]
-      setSelect(obj);
+      // delete obj[name]
+      // setSelect(obj);
+      setSelect(select.filter(item => item !== name));
       console.log('delete', select);
     }
   }
@@ -162,7 +168,7 @@ const PantryStart = () => {
                     ...SpacingDesign.marginRight(2.5),
                   }}>
                     <FormControlLabel
-                      control={<Checkbox onClick={handleSelect} name={item.name} style={{ transform: 'scale(1.5)' }} />}
+                      control={<Checkbox onClick={handleSelect} name={item.name} checked={select.indexOf(item.name) > -1} style={{ transform: 'scale(1.5)' }} />}
                     />
                     <IconButton onClick={handleDelete} value={index}>
                       <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
