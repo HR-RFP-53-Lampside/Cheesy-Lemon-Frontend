@@ -9,21 +9,22 @@ import LogStatus from '../context/auth/LogStatus';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
-  const dietPref = logStatus && logStatus.dietaryPrefs;
-  const [displayPrefs, setDisplayPrefs] = useState('');
+  const dietPref = logStatus && logStatus.dietaryPrefs || '';
+  const prefText = dietPref.split(/(?=[A-Z])/).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const [displayPrefs, setDisplayPrefs] = useState(prefText);
 
-  useEffect(() => {
-    if (dietPref) {
-      const preferences = Object.keys(dietPref);
-      const dietList = preferences.filter((item) => dietPref[item]);
-      const display = dietList.map((name) => {
-        const split = name.split(/(?=[A-Z])/);
-        const newname = split.map((nn) => nn.charAt(0).toUpperCase() + nn.slice(1));
-        return newname.join(' ');
-      });
-      setDisplayPrefs(display.join(', '));
-    }
-  }, [dietPref]);
+  // useEffect(() => {
+  //   if (dietPref) {
+  //     const preferences = Object.keys(dietPref);
+  //     const dietList = preferences.filter((item) => dietPref[item]);
+  //     const display = dietList.map((name) => {
+  //       const split = name.split(/(?=[A-Z])/);
+  //       const newname = split.map((nn) => nn.charAt(0).toUpperCase() + nn.slice(1));
+  //       return newname.join(' ');
+  //     });
+  //     setDisplayPrefs(display.join(', '));
+  //   }
+  // }, [dietPref]);
 
   return (
     <Paper style={SpacingDesign.padding(2)}>
