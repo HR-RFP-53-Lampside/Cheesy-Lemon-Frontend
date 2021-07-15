@@ -92,8 +92,7 @@ const ChangeFields = ({
           </Button>
         </Box>
       );
-    }
-    if (accountSettings === 'dietaryPrefs') {
+    } else if (accountSettings === 'dietaryPrefs') {
       //
       display = (
         <ToggleButtonGroup orientation="vertical" value={selected} onChange={changeDiet}>
