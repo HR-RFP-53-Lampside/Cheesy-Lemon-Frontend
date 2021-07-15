@@ -26,11 +26,6 @@ const DekstopSideBar = () => {
       icon: (<Icon className="fas fa-utensils" style={SpacingDesign.marginx(2)} />),
     },
     {
-      message: 'Add Ingredients',
-      link: '/addingredients',
-      icon: (<Icon className="fas fa-egg" style={SpacingDesign.marginx(2)} />),
-    },
-    {
       message: 'My Pantry',
       link: '/pantry',
       icon: (<Kitchen style={SpacingDesign.marginx(2)} />),

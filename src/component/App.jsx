@@ -30,6 +30,7 @@ import RecipeFeedStart from './social/recipefeed/RecipeFeedStart';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
 import RecipeFocusStart from './recipe/RecipeFocusStart';
+import PantryStart from './foodcardlist/pantry/PantryStart';
 
 function App() {
   // Establish dark or light mode
@@ -124,7 +125,7 @@ function App() {
                   <Route exact path="/recipe/:recipeId/reviews">
                     <ReviewList />
                   </Route>
-                  <Route exact path="/recipe/:recipeId/review/:reviewId">
+                  <Route exact path="/recipes/:recipeId/reviews/:reviewId">
                     <ReviewFocus />
                   </Route>
                   {/* More routes for later */}
