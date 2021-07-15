@@ -19,6 +19,7 @@ const ChangeFields = ({
   // eslint-disable-next-line no-unused-vars
   const [logStatus] = useContext(LogStatus);
   const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
+  const [userMessage, setUserMessage] = useState('')
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -26,20 +27,22 @@ const ChangeFields = ({
       const formData = new FormData();
       const files = Array.from(event.target.files);
       formData.append('file', files[0]);
-      setEditValues(formData);
-    }
-  };
-  const handleClick = () => {
-    if (accountSettings !== 'photoURL') {
-      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
-    } else {
-      axios.post('http://localhost:8000/api/image', editValues)
+      // setEditValues(formData);
+      axios.post('http://localhost:8000/api/image', formData)
         .then((result) => {
           const { url } = result.data[0];
-          firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch((error) => console.error(error));
+          firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch(console.error);
         })
         .catch(console.error);
     }
+  };
+  const handleClick = () => {
+    firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+      .then(() => {
+        setUserMessage('Profile Updated');
+        setTimeout(setUserMessage, 2000, '');
+      })
+      .catch((error) => console.error(error));
   };
   let display = ('');
   const settleDisplay = () => {
@@ -55,6 +58,16 @@ const ChangeFields = ({
             onChange={handleChange}
             fullWidth
           />
+          { userMessage
+            ? (
+              <Box bgcolor="info.main" align="center" borderRadius={5} style={{...SpacingDesign.padding(1), ...SpacingDesign.marginTop(2)}}>
+                <Typography color="textPrimary" >
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null
+          }
           <Button
             style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
             variant="contained"
