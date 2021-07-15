@@ -19,6 +19,7 @@ const ChangeFields = ({
   // eslint-disable-next-line no-unused-vars
   const [logStatus] = useContext(LogStatus);
   const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
+  const [userMessage, setUserMessage] = useState('')
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -26,39 +27,63 @@ const ChangeFields = ({
       const formData = new FormData();
       const files = Array.from(event.target.files);
       formData.append('file', files[0]);
-      setEditValues(formData);
-    }
-  };
-  const handleClick = () => {
-    if (accountSettings !== 'photoURL') {
-      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues).catch((error) => console.error(error));
-    } else {
-      axios.post('http://localhost:8000/api/image', editValues)
+      // setEditValues(formData);
+      axios.post('http://localhost:8000/api/image', formData)
         .then((result) => {
           const { url } = result.data[0];
-          firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch((error) => console.error(error));
+          firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch(console.error);
         })
         .catch(console.error);
     }
+  };
+  const handleClick = () => {
+    firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+      .then(() => {
+        setUserMessage('Profile Updated');
+        setTimeout(setUserMessage, 2000, '');
+      })
+      .catch((error) => console.error(error));
   };
   let display = ('');
   const settleDisplay = () => {
     if (accountSettings !== 'photoURL') {
       display = (
-        <TextField
-          label={label}
-          variant="outlined"
-          style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
-          value={editValues}
-          multiline={multiline}
-          rows={rows}
-          onChange={handleChange}
-        />
+        <>
+          <TextField
+            label={label}
+            variant="outlined"
+            value={editValues}
+            multiline={multiline}
+            rows={rows}
+            onChange={handleChange}
+            fullWidth
+          />
+          { userMessage
+            ? (
+              <Box bgcolor="info.main" align="center" borderRadius={5} style={{...SpacingDesign.padding(1), ...SpacingDesign.marginTop(2)}}>
+                <Typography color="textPrimary" >
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null
+          }
+          <Button
+            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
+            <Typography>
+              Elevate changes
+            </Typography>
+          </Button>
+        </>
       );
     } else {
       display = (
-        <>
-          <Box display="flex" style={SpacingDesign.marginy(3)}>
+        <Box fullWidth display="flex" style={{ flexDirection: 'column' }}>
+          <Box display="flex" style={{ ...SpacingDesign.marginy(3), width: '100%' }} justifyContent="center">
             {[1, 2, 3].map((row) => (
               <Avatar
                 key={`photo-card${row}`}
@@ -67,7 +92,6 @@ const ChangeFields = ({
                 style={{
                   ...SpacingDesign.square(row * 3),
                   alignSelf: 'center',
-                  ...SpacingDesign.marginx(1),
                 }}
               />
             ))}
@@ -75,16 +99,16 @@ const ChangeFields = ({
           <Button
             variant="outlined"
             component="label"
-            style={{ ...SpacingDesign.marginLeft(1), ...SpacingDesign.width(45) }}
             htmlFor="profile-image"
+            style={{ alignSelf: 'center', ...SpacingDesign.marginy(2) }}
           >
             <Typography variant="body2">
               change profile
             </Typography>
-            <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
+            <Icon className="fas fa-camera" />
             <input type="file" id="profile-image" onChange={(event) => handleChange(event)} hidden />
           </Button>
-        </>
+        </Box>
       );
     }
   };
@@ -96,24 +120,14 @@ const ChangeFields = ({
   settleDisplay();
 
   return (
-    <>
+    <Box style={{ width: '100%' }}>
       {label
       && (
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" fullWidth>
           {display}
-          <Button
-            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-          >
-            <Typography>
-              Elevate changes
-            </Typography>
-          </Button>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 
