@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, ImageListItemBar, Icon
 } from '@material-ui/core';
@@ -24,15 +24,23 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const RecipeFocusStart = () => {
-
+  const [id, setId] = useState()
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
+  const [reviewDeets, setReviewDeets] = useState([]);
   const [clicked, setClicked] = useState(false);
   const themeDesign = useTheme();
+
+  useEffect(() => {
+    setId(window.location.href.split('/')[4])
+    // getReviewsData();
+    // getRecipeData();
+  });
+
   const faykeRecipeData = {
     "status": {
-        "title": "Pasta With Chicken and Broccoli",
-        "id": 654901,
+      "title": "Pasta With Chicken and Broccoli",
+      "id": 654901,
         "summary": "Pasta With Chicken and Broccoli might be a good recipe to expand your main course repertoire. This recipe makes 4 servings with <b>332 calories</b>, <b>19g of protein</b>, and <b>18g of fat</b> each. For <b>$1.46 per serving</b>, this recipe <b>covers 16%</b> of your daily requirements of vitamins and minerals. 3 people found this recipe to be flavorful and satisfying. A mixture of wine, parmesan cheese, basil leaves, and a handful of other ingredients are all it takes to make this recipe so yummy. It is brought to you by Foodista. From preparation to the plate, this recipe takes approximately <b>approximately 45 minutes</b>. Taking all factors into account, this recipe <b>earns a spoonacular score of 55%</b>, which is solid. Similar recipes are <a href=\"https://spoonacular.com/recipes/pasta-house-pasta-con-broccoli-this-is-an-alfredo-based-sauce-that-combines-pasta-fresh-mushrooms-and-fresh-broccoli-601199\">Pasta House Pasta con Broccoli – This is an Alfredo based sauce that combines pasta, fresh mushrooms, and fresh broccoli</a>, <a href=\"https://spoonacular.com/recipes/broccoli-and-pasta-with-chicken-479320\">Broccoli and Pasta with Chicken</a>, and <a href=\"https://spoonacular.com/recipes/pasta-with-chicken-and-broccoli-110475\">Pasta With Chicken and Broccoli</a>.",
         "instructions": "In a large skillet, heat oil over medium heat. Sautee garlic for about one minute, stirring constantly. DO NOT BURN.\nAdd the chicken and cook until well done. Add the broccoli and cook until crisp but tender. Add basil; red pepper; salt and pepper to taste; wine and chicken broth. cook for about 5 minutes.\nAdd the cooked and drained pasta to the skillet and toss to combine.\nHeat for 1 to 2 minutes Serve.\nTop with grated Parmesan cheese if desired.",
         "extendedIngredients": [
@@ -51,11 +59,10 @@ const RecipeFocusStart = () => {
         "diets": []
     }
 }
-  //
+
   const lastIndexOfPercent = faykeRecipeData.status.summary.lastIndexOf('%');
   const parsedRecipeSummary = faykeRecipeData.status.summary.slice(0, lastIndexOfPercent);
 
-  // this is where i make a query to the backend and get all of the things, in regards to this particular recipe
 
   const getRecipeData = () => {
     axios.get(`api/recipe/${id}`)
@@ -67,8 +74,6 @@ const RecipeFocusStart = () => {
       })
   }
 
-  const [reviewDeets, setReviewDeets] = useState([]);
-
   const getReviewsData = () => {
     axios.get(`/local/${recipeId}/reviews/`)
       .then((res) =>{
@@ -79,30 +84,23 @@ const RecipeFocusStart = () => {
       })
   }
 
-  // useEffect(() => {
-  //   getReviewsData();
-  //   getRecipeData();
-  // });
 
   const handleFavorite = () => {
-    // addToFavRecipes
-// if clicked set to false
-// iterate over the logStatus.favorites
-    if (!logStatus.favRecipes.includes("currentIDwhatvertheheckthatcomesfrom")) {
-      if (!clicked) {
-        //if logstatus.favorites !include then add it
-        const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
-        const updates = {};
-        updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = {id: newRecipeKey, backendId: faykeRecipeData.status.id}
-        firebase.database().ref().update(updates).catch((error) => console.error(error));
-        setClicked(true)
-      } else {
-        firebase.database().ref(`users/${logStatus.uid}/favRecipes/${newRecipeKey}`).remove().catch((error) => console.error(error));
-        setClicked(false)
+    if (!clicked) {
+      const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
+      const updates = {};
+      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = {id: newRecipeKey, backendId: faykeRecipeData.status.id}
+      firebase.database().ref().update(updates).then(() => setClicked(true)).catch(console.error);
+    } else {
+      for (let key in logStatus.favRecipes) {
+        if (logStatus.favRecipes[key].backendId === faykeRecipeData.status.id ) {
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).catch(console.error);
+          break;
+        }
       }
-
- // so this will be the function that posts the recipie id to firebase db ^^
+    }
   }
+
 
   return (
     <Paper
