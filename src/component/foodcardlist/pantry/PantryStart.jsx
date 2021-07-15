@@ -11,6 +11,7 @@ import lemonImg from './lemon-img.jpeg';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+
 // import { AddCircleOutlineOutlinedIcon, CameraAltOutlinedIcon, HighlightOffIcon} from '@material-ui/icons';
 
 
@@ -21,58 +22,70 @@ import theme from '../../context/design/ThemeDesign';
 const data = [
   {
     "name": "Lemons",
-    "image": lemonImg,
-    "selected": false
+    "image": lemonImg
   },
   {
     "name": "Cheese",
-    "image": cheeseImg,
-    "selected": false
+    "image": cheeseImg
   }
 ]
-
-
 
 const PantryStart = () => {
   const themeDesign = useTheme();
   const [ingredients, setIngredients] = useState(data);
-  const [selected, setSelected] = useState([])
+  const [select, setSelect] = useState([]);
   const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
   }
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    let index = e.currentTarget.value;
+    let hold = [...ingredients];
+    let name = hold[index].name;
+
+    if (select.indexOf(name) !== -1) {
+      setSelect(select.filter(item => item !== name))
+    }
+
+    //remove from ingredients list and set new list
+    hold.splice(index, 1);
+    setIngredients([...hold]);
+  }
+
   const handleSelect = (e) => {
-    console.log(e.target.name)
+    let name = e.target.name;
+
+
+    if (select.indexOf(name) === -1) {
+      setSelect([...select, name]);
+    } else {
+      setSelect(select.filter(item => item !== name));
+    }
   }
 
   const handleSubmit = (e) => {
-    if(filter.length < 3) {
-      console.log('not long enough');
-    } else {
-      // console.log(filter);
+    if(filter.length >= 3) {
+      axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
+        .then((result) => {
+          let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
+          let name = result.data.status.results[0].name;
 
-      // axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
-      //   .then((result) => {
-      //     let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
-      //     let name = result.data.status.results[0].name;
+          let obj = {
+            "name": name,
+            "image": img
+          }
 
-      //     let obj = {
-      //       "name": name,
-      //       "image": img,
-      //       "selected": false
-      //     }
-
-      //     setIngredients([...ingredients, obj]);
-      //   })
-      //   .catch((e) => { console.log(e) })
+          setIngredients([...ingredients, obj]);
+        })
+        .catch((e) => { throw e; })
     }
-
   }
 
   useEffect(() => {
-    //watch for change in ingredients list and update selected list
+    //watch for change in ingredients list and update select list
   }, [ingredients])
 
   return (
@@ -80,10 +93,9 @@ const PantryStart = () => {
       <form noValidate autoComplete="off" onChange={handleFilter}>
         <TextField
           id="search"
-          label="Filter"
+          label="Filter/Add"
           fullWidth
           variant='outlined'
-          borderRadius='50%'
         />
       </form>
 
@@ -111,41 +123,35 @@ const PantryStart = () => {
           My Pantry
         </Typography>
 
-        {data.filter(main => {
+        {ingredients.filter(main => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
-            .map((item) =>
-            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
+            .map((item, index) =>
+            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.name}>
               <CardContent>
-                <CardMedia
-                  style={{ ...SpacingDesign.height(40) }}
-                  image={item.image}
-                  title={item.name}
-                />
+                <Image
+                  src={item.image}
+                  cover
+                ></Image>
                 <Box display='flex' flexDirection='column'>
                   <Typography variant='h5' align='center' style={{ ...SpacingDesign.marginTop(3) }}>
                     {item.name}
                   </Typography>
                   <Box display='flex' justifyContent='space-between' style={{
-                    // ...SpacingDesign.marginx(1),
                     ...SpacingDesign.marginLeft(4.5),
                     ...SpacingDesign.marginRight(2.5),
                   }}>
                     <FormControlLabel
-                      control={<Checkbox onClick={handleSelect} name={item.name} style={{ transform: 'scale(1.5)' }} />}
+                      control={<Checkbox onClick={handleSelect} name={item.name} checked={select.indexOf(item.name) > -1} style={{ transform: 'scale(1.5)' }} />}
                     />
-                    <IconButton >
-                      <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }}></HighlightOffIcon>
+                    <IconButton onClick={handleDelete} value={index}>
+                      <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
                     </IconButton>
                   </Box>
                 </Box>
               </CardContent>
             </Card>
           )}
-
-
-
-
       </Container>
     </Box>
  )

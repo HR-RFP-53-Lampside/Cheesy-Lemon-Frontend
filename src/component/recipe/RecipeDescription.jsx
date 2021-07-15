@@ -10,11 +10,11 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeDescription = () => {
+const RecipeDescription = ({summary}) => {
 
   return (
     <div>
-      <div>Fancy BowTie Pasta, Tiny little trees Delicious, Delicious Bacon and a dusting of Parmasean cheese. Also that may or may not be a chunk of chicken in the middle of the picture there...Bon appetite!</div>
+      <div  dangerouslySetInnerHTML={{ __html: summary + '%.' }}></div>
     </div>
   );
 };
