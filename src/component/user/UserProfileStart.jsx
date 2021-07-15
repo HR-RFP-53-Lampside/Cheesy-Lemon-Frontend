@@ -9,7 +9,7 @@ import LogStatus from '../context/auth/LogStatus';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
-  const [dietPref, setDietPref] = useState(logStatus && logStatus.dietaryPrefs);
+  const dietPref = logStatus && logStatus.dietaryPrefs;
   const [displayPrefs, setDisplayPrefs] = useState('');
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const UserProfileStart = () => {
               Dietary Preference
             </Typography>
             <Typography variant="body1">
-              {displayPrefs}
+              {displayPrefs || 'No preferences, a food enjoyer' }
             </Typography>
           </Box>
           <Box style={SpacingDesign.marginTop(2)}>
