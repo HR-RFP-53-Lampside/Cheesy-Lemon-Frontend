@@ -5,6 +5,7 @@ import {
 import Image from 'material-ui-image';
 import { Link, useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
 
@@ -46,6 +47,19 @@ const FavoritesStart = () => {
     setFavorites(data);
   }, [data]);
 
+  const removeFavorite = (e) => {
+    e.preventDefault();
+    let index = e.currentTarget.value;
+    let copy = favorites.slice();
+
+    //remove from ingredients list and set new list
+    copy.splice(index, 1);
+    setFavorites(copy);
+
+    //UPDATE USER FAVORITES ON FIREBASE
+
+  }
+
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
   }
@@ -74,12 +88,15 @@ const FavoritesStart = () => {
           </Typography>
 
           {favorites.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
-            .map((item) =>
+            .map((item, index) =>
               <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
                 <CardActionArea
                   component={Link} to={`recipe/${item.id}`}
                   >
                   <CardContent>
+                  <IconButton onClick={removeFavorite} value={index}>
+                    <HighlightOffIcon style={{ ...SpacingDesign.fontSize(5) }} ></HighlightOffIcon>
+                  </IconButton>
                   <CardMedia
                     style={{ ...SpacingDesign.height(40)}}
                     image={item.image}
