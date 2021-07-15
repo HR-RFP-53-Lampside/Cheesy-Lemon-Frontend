@@ -29,6 +29,17 @@ const data = [
   }
 ]
 
+// const data = {
+//   "Lemons": {
+//     "image": lemonImg,
+//     "num": 1
+//   },
+//   "Cheese": {
+//     "image": cheeseImg,
+//     "num": 1
+//   }
+// }
+
 const PantryStart = () => {
   const themeDesign = useTheme();
   const [ingredients, setIngredients] = useState(data);
