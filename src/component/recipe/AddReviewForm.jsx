@@ -12,7 +12,6 @@ import endPoint from '../../routing';
 
 const AddReviewForm = ({ recipeId }) => {
   const [logStatus] = useContext(LogStatus);
-  const [opened, setOpened] = useState(false);
   const [images, setImages] = useState([]);
   const [headline, setHeadline] = useState('');
   const [body, setBody] = useState('');
@@ -53,31 +52,17 @@ const AddReviewForm = ({ recipeId }) => {
   };
 
   const handleSubmit = () => {
-    // axios({
-    //   method: 'post',
-    //   // url: `http://localhost:8000/local/${props.recipeId}/reviews`,
-    //   url: 'http://localhost:8000/local/123456789/reviews',
-    //   data: {
-    //     authorId: logStatus.uid,
-    //     authorImageURL: logStatus.photoURL,
-    //     headline,
-    //     body,
-    //     images,
-    //   },
-    // })
-    //   .then(() => setOpened(!opened));
-    // Will be an object of recipeId, authorName, authorImageURL, headline, body, images[0], images[1]
-
-    endPoint.reviews.postRecipeReview({
+    endPoint.reviews.postRecipeReview(
       recipeId,
-      authorName: logStatus.username,
-      authorImageURL: logStatus.photoURL,
+      logStatus.uid,
+      logStatus.photoURL,
       headline,
       body,
       images,
-    })
-      .then(() => {
-        console.log('review posted');
+    )
+      .then(({ data }) => {
+        console.log('success!');
+        console.log(data);
       });
   };
 
