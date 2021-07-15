@@ -17,7 +17,7 @@ import ShowMoreText from 'react-show-more-text';
 import SpacingDesign from '../../context/design/SpacingDesign';
 
 const ReviewCard = ({
-  id, title, authorName, body, upvotes, downvotes, recipeId, date,
+  id, title, authorId, body, upvotes, downvotes, recipeId, date,
 }) => {
   const handleUpvote = () => {
 
@@ -36,7 +36,7 @@ const ReviewCard = ({
           {title}
         </Typography>
         <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
-          {authorName}
+          {authorId}
         </Typography>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
@@ -48,7 +48,8 @@ const ReviewCard = ({
           </Typography>
         </ShowMoreText>
         <Typography variant="subtitle">
-          {date.toLocaleDateString(undefined, dateOptions)}
+          {/* {date.toLocaleDateString(undefined, dateOptions)} */}
+          {new Date(date).toLocaleDateString(undefined, dateOptions)}
         </Typography>
       </CardContent>
       <Box
@@ -84,7 +85,7 @@ ReviewCard.propType = {
   id: PropTypes.number.isRequired,
   recipeId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  authorName: PropTypes.string.isRequired,
+  authorId: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   upvotes: PropTypes.number.isRequired,
   downvotes: PropTypes.number.isRequired,

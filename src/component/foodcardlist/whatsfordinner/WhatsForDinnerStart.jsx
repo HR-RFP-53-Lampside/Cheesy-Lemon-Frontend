@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
+import LogStatus from '../../context/auth/LogStatus';
 
 const data = [
   {
@@ -45,6 +46,7 @@ const data = [
 
 const WhatsForDinnerStart = () => {
   const themeDesign = useTheme();
+  const [logStatus] = useContext(LogStatus);
   const [filter, setFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
 
@@ -78,7 +80,7 @@ const WhatsForDinnerStart = () => {
         elevation={1}
       >
         <Typography variant="h4" align="center">
-          What&lsquo;s For Dinner
+          What&apos;s For Dinner
         </Typography>
 
         {recipes.filter((main) => main.title.toLowerCase().indexOf(filter) !== -1)
