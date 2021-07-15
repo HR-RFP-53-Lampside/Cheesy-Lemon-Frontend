@@ -9,7 +9,7 @@ import LogStatus from '../context/auth/LogStatus';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
-  const [dietPref, setDietPref] = useState(logStatus.dietaryPrefs);
+  const [dietPref, setDietPref] = useState(logStatus && logStatus.dietaryPrefs);
   const [displayPrefs, setDisplayPrefs] = useState('');
 
   useEffect(() => {
