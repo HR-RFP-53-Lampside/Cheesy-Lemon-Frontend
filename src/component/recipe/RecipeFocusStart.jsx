@@ -51,6 +51,7 @@ const RecipeFocusStart = () => {
         "diets": []
     }
 }
+  //
   const lastIndexOfPercent = faykeRecipeData.status.summary.lastIndexOf('%');
   const parsedRecipeSummary = faykeRecipeData.status.summary.slice(0, lastIndexOfPercent);
 
@@ -86,16 +87,20 @@ const RecipeFocusStart = () => {
   const handleFavorite = () => {
     // addToFavRecipes
 // if clicked set to false
-  if (!clicked) {
-    const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
-    const updates = {};
-    updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = {id: newRecipeKey, backendId: faykeRecipeData.status.id}
-    firebase.database().ref().update(updates).catch((error) => console.error(error));
-    setClicked(true)
-  } else {
-    firebase.database().ref(`users/${logStatus.uid}/favRecipes/${newRecipeKey}`).remove().catch((error) => console.error(error));
-    setClicked(false)
-  }
+// iterate over the logStatus.favorites
+    if (!logStatus.favRecipes.includes("currentIDwhatvertheheckthatcomesfrom")) {
+      if (!clicked) {
+        //if logstatus.favorites !include then add it
+        const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
+        const updates = {};
+        updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = {id: newRecipeKey, backendId: faykeRecipeData.status.id}
+        firebase.database().ref().update(updates).catch((error) => console.error(error));
+        setClicked(true)
+      } else {
+        firebase.database().ref(`users/${logStatus.uid}/favRecipes/${newRecipeKey}`).remove().catch((error) => console.error(error));
+        setClicked(false)
+      }
+
  // so this will be the function that posts the recipie id to firebase db ^^
   }
 
