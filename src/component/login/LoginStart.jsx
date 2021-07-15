@@ -70,7 +70,7 @@ const LoginStart = () => {
       if (!snap.val()) {
         const dbUser = {
           aboutMe: '',
-          dietaryPrefs: { vegan: false, vegetarian: false, pescatarian: false, ketogenic: false, glutenFree: false, dairyFree: false },
+          dietaryPrefs: '',
           downReviews: '',
           favRecipes: '',
           email: user.email,
