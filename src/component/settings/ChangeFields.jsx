@@ -50,12 +50,21 @@ const ChangeFields = ({
     }
   };
   const handleClick = () => {
-    firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+    if (accountSettings === 'username' && editValues === '') {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(logStatus.email.split('@')[0])
       .then(() => {
         setUserMessage('Profile Updated');
         setTimeout(setUserMessage, 2000, '');
       })
       .catch((error) => console.error(error));
+    } else {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+        .then(() => {
+          setUserMessage('Profile Updated');
+          setTimeout(setUserMessage, 2000, '');
+        })
+        .catch((error) => console.error(error));
+    }
   };
   const changeDiet = (event, newVal) => {
     setSelected(newVal);
