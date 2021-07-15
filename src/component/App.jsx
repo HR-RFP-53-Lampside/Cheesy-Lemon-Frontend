@@ -21,6 +21,7 @@ import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
+import PantryStart from './foodcardlist/pantry/PantryStart';
 import ReviewList from './social/review/ReviewList';
 import ReviewFocus from './social/review/ReviewFocus';
 import DekstopSideBar from './DesktopSideBar';
@@ -29,7 +30,6 @@ import RecipeFeedStart from './social/recipefeed/RecipeFeedStart';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
 import RecipeFocusStart from './recipe/RecipeFocusStart';
-import PantryStart from './foodcardlist/pantry/PantryStart';
 
 function App() {
   // Establish dark or light mode
