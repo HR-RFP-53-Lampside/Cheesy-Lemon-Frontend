@@ -22,13 +22,18 @@ const RegisterStart = () => {
   const setDbUser = (user) => {
     const dbUser = {
       aboutMe: '',
-      dietaryPrefs: '',
+      dietaryPrefs: { vegan: false, vegetarian: false, pescatarian: false, ketogenic: false, glutenFree: false, dairyFree: false },
+      downReviews: '',
+      favRecipes: '',
       email: user.email,
       firstName: '',
       lastName: '',
+      pantry: '',
       photoURL: user.photoURL || '',
+      myReviews: '',
       uid: user.uid,
-      username: user.email.split('@')[0],
+      upReviews: '',
+      username: user.displayName || user.email.split('@')[0],
       yummyPoints: 0,
     };
     firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));

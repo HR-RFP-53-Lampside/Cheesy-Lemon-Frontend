@@ -31,7 +31,7 @@ const RecipeCard = ({
         less={<Icon className="fas fa-caret-up" color="secondary" />}
         lines={4}
       >
-        <Typography variant="body">
+        <Typography>
           {body}
         </Typography>
       </ShowMoreText>

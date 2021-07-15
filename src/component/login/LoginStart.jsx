@@ -70,12 +70,17 @@ const LoginStart = () => {
       if (!snap.val()) {
         const dbUser = {
           aboutMe: '',
-          dietaryPrefs: '',
+          dietaryPrefs: { vegan: false, vegetarian: false, pescatarian: false, ketogenic: false, glutenFree: false, dairyFree: false },
+          downReviews: '',
+          favRecipes: '',
           email: user.email,
           firstName: '',
           lastName: '',
+          pantry: '',
           photoURL: user.photoURL || '',
+          myReviews: '',
           uid: user.uid,
+          upReviews: '',
           username: user.displayName || user.email.split('@')[0],
           yummyPoints: 0,
         };
