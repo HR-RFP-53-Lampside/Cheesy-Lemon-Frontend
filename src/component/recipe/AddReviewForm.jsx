@@ -13,7 +13,6 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 const AddReviewForm = () => {
   const themeDesign = useTheme();
   const [logStatus] = useContext(LogStatus);
-  const [opened, setOpened] = useState(false);
   const [images, setImages] = useState([]);
   const [headline, setHeadline] = useState('')
   const [body, setBody] = useState('')
