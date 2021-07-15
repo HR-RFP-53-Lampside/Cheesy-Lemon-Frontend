@@ -61,7 +61,7 @@ const PantryCard = (props) => {
               control={<Checkbox onClick={props.select} name={item.name} checked={select.indexOf(item.name) > -1} style={{ transform: 'scale(1.5)' }} />}
             />
 
-            <ButtonGroup variant='outlined'>
+            <ButtonGroup variant='outlined' style={{ ...SpacingDesign.marginy(1), ...SpacingDesign.marginTop(2)}}>
               <Button onClick={handleDecrement}>-</Button>
               <Button disabled>{count}</Button>
               <Button onClick={handleIncrement}>+</Button>
@@ -75,7 +75,7 @@ const PantryCard = (props) => {
         </Box>
       </CardContent>
     </Card>
- )
+  )
 }
 
 export default PantryCard;

@@ -138,7 +138,6 @@ const PantryStart = () => {
             </label>
         </Box>
 
-
         <Typography variant='h4' align='center' >
           My Pantry
         </Typography>
