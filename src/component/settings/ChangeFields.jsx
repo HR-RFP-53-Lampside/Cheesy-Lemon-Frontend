@@ -32,6 +32,8 @@ const ChangeFields = ({
     vegetarian: 'Vegetarian',
   };
 
+  const maxLength = accountSettings === 'aboutMe' ? 250 : 15;
+
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -109,6 +111,9 @@ const ChangeFields = ({
             label={label}
             variant="outlined"
             value={editValues}
+            inputProps={{
+              maxLength,
+            }}
             multiline={multiline}
             rows={rows}
             onChange={handleChange}
