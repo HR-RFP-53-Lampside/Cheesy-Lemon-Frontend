@@ -10,44 +10,16 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeInstruction = () => {
+const RecipeInstruction = ({instructions}) => {
+
+  const instructionsArr = instructions.split('.');
 
   return (
-    <div>
-      <div style={SpacingDesign.padding(1)}>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-        allWorkNoPlayMakesJackADullBoy<br></br>
-      </div>
-    </div>
+    <ol>
+      {instructionsArr.slice(0, instructionsArr.length - 1).map((inst) => (
+        <li>{inst + '.'}</li>
+      ))}
+    </ol>
   );
 };
 

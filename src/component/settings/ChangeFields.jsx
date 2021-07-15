@@ -6,6 +6,7 @@ import {
   TextField, Button, Typography,
   Box, Icon, Avatar,
 } from '@material-ui/core';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
@@ -19,7 +20,18 @@ const ChangeFields = ({
   // eslint-disable-next-line no-unused-vars
   const [logStatus] = useContext(LogStatus);
   const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
-  const [userMessage, setUserMessage] = useState('')
+  const [userMessage, setUserMessage] = useState('');
+  const [selected, setSelected] = useState([]);
+
+  const status = {
+    dairyFree: 'Dairy Free',
+    glutenFree: 'Gluten Free',
+    ketogenic: 'Ketogenic',
+    pescatarian: 'Pescatarian',
+    vegan: 'Vegan',
+    vegetarian: 'Vegetarian',
+  };
+
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -43,43 +55,13 @@ const ChangeFields = ({
       })
       .catch((error) => console.error(error));
   };
+  const changeDiet = (event, newVal) => {
+    setSelected(newVal);
+    // Alec, change on firebase.
+  };
   let display = ('');
   const settleDisplay = () => {
-    if (accountSettings !== 'photoURL') {
-      display = (
-        <>
-          <TextField
-            label={label}
-            variant="outlined"
-            value={editValues}
-            multiline={multiline}
-            rows={rows}
-            onChange={handleChange}
-            fullWidth
-          />
-          { userMessage
-            ? (
-              <Box bgcolor="info.main" align="center" borderRadius={5} style={{...SpacingDesign.padding(1), ...SpacingDesign.marginTop(2)}}>
-                <Typography color="textPrimary" >
-                  {userMessage}
-                </Typography>
-              </Box>
-            )
-            : null
-          }
-          <Button
-            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
-            variant="contained"
-            color="primary"
-            onClick={handleClick}
-          >
-            <Typography>
-              Elevate changes
-            </Typography>
-          </Button>
-        </>
-      );
-    } else {
+    if (accountSettings === 'photoURL') {
       display = (
         <Box fullWidth display="flex" style={{ flexDirection: 'column' }}>
           <Box display="flex" style={{ ...SpacingDesign.marginy(3), width: '100%' }} justifyContent="center">
@@ -108,6 +90,50 @@ const ChangeFields = ({
             <input type="file" id="profile-image" onChange={(event) => handleChange(event)} hidden />
           </Button>
         </Box>
+      );
+    } else if (accountSettings === 'dietaryPrefs') {
+      //
+      display = (
+        <ToggleButtonGroup orientation="vertical" value={selected} onChange={changeDiet}>
+          { Object.keys(logStatus.dietaryPrefs).map((key) => (
+            <ToggleButton key={key} value={key} aria-label={`account-${status[key]}`}>
+              {status[key]}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
+      );
+    } else {
+      display = (
+        <>
+          <TextField
+            label={label}
+            variant="outlined"
+            value={editValues}
+            multiline={multiline}
+            rows={rows}
+            onChange={handleChange}
+            fullWidth
+          />
+          { userMessage
+            ? (
+              <Box bgcolor="info.main" align="center" borderRadius={5} style={{ ...SpacingDesign.padding(1), ...SpacingDesign.marginTop(2) }}>
+                <Typography color="textPrimary">
+                  {userMessage}
+                </Typography>
+              </Box>
+            )
+            : null}
+          <Button
+            style={{ alignSelf: 'flex-end', ...SpacingDesign.marginy(2) }}
+            variant="contained"
+            color="primary"
+            onClick={handleClick}
+          >
+            <Typography>
+              Elevate changes
+            </Typography>
+          </Button>
+        </>
       );
     }
   };
