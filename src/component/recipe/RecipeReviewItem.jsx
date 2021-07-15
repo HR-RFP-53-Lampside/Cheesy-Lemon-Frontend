@@ -12,8 +12,8 @@ import backgroundBG from '../../assets/lowpoly2.png';
 
 const RecipeReviewItem = () => {
 
-  // const themeDesign = useTheme();
-
+  const themeDesign = useTheme();
+  // place holder  until we get actual review data...
   const faykeReviewsList = [
     {
      title: 'No more Onions!',
@@ -33,18 +33,17 @@ const RecipeReviewItem = () => {
 ];
 
   return (
-    <Card style={{ ...SpacingDesign.margin(2)}} elevation={5}>
-      <Box
-        display="flex"
-        flexDirection="col"
-        flexWrap="wrap"
-      >
+    <Card
+      style={{ ...SpacingDesign.margin(2), border: "none"}}
+      elevation={0}
+    >
         <div
         style={{width: 'auto'} }
         >
           {faykeReviewsList.map((item) => (
               <Paper
-              style={SpacingDesign.padding(1)}
+              style={{...SpacingDesign.padding(1), ...SpacingDesign.marginBottom(2), border: "1px solid lightgrey", color: themeDesign.custom.muted.grey}}
+              elevation={3}
               >
                 <Typography component="div">
                   <Box
@@ -71,7 +70,6 @@ const RecipeReviewItem = () => {
                 </Typography>
           </Paper>
         ))}</div>
-      </Box>
     </Card>
   );
 };
