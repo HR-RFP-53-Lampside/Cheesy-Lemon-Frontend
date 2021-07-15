@@ -1,34 +1,18 @@
-import React, { useContext, useState } from 'react';
-import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
-} from '@material-ui/core';
-import Image from 'material-ui-image';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
-
-import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
-import backgroundBG from '../../assets/lowpoly2.png';
+/* eslint-disable import/no-unresolved */
+import React from 'react';
+import PropTypes from 'prop-types';
 import RecipeReviewItem from './RecipeReviewItem';
-import AddReviewForm from './AddReviewForm'
+import AddReviewForm from './AddReviewForm';
 
-const RecipeReviewList = () => {
-  const themeDesign = useTheme();
+const RecipeReviewList = ({ recipeId }) => (
+  <>
+    <AddReviewForm recipeId={recipeId} />
+    <RecipeReviewItem />
+  </>
+);
 
-
-  return (
-    <div>
-      <AddReviewForm
-        // Expects current recipeId as a prop
-        // recipeId={recipeId}
-      />
-      <div>
-        <RecipeReviewItem />
-      </div>
-      <div style={{ align: "center" }}>
-      </div>
-    </div>
-  );
+RecipeReviewList.propTypes = {
+  recipeId: PropTypes.number.isRequired,
 };
 
 export default RecipeReviewList;

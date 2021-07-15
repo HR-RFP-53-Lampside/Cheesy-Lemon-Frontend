@@ -1,100 +1,109 @@
+/* eslint-disable import/no-unresolved */
 import React, { useContext, useState, useEffect } from 'react';
 import {
- Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Box,
+  Typography,
+  TextField,
+  Container,
 } from '@material-ui/core';
-import Image from 'material-ui-image';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 
-
 import SpacingDesign from '../../context/design/SpacingDesign';
+
 const data = [
   {
-     "id":715594,
-     "title":"Homemade Garlic and Basil French Fries",
-     "image":"https://spoonacular.com/recipeImages/715594-312x231.jpg"
+    id: 715594,
+    title: 'Homemade Garlic and Basil French Fries',
+    image: 'https://spoonacular.com/recipeImages/715594-312x231.jpg',
   },
   {
-     "id":644387,
-     "title":"Garlicky Kale",
-     "image":"https://spoonacular.com/recipeImages/644387-312x231.jpg"
+    id: 644387,
+    title: 'Garlicky Kale',
+    image: 'https://spoonacular.com/recipeImages/644387-312x231.jpg',
   },
   {
-     "id":794349,
-     "title":"Broccoli and Chickpea Rice Salad",
-     "image":"https://spoonacular.com/recipeImages/794349-312x231.jpg"
+    id: 794349,
+    title: 'Broccoli and Chickpea Rice Salad',
+    image: 'https://spoonacular.com/recipeImages/794349-312x231.jpg',
   },
   {
-     "id":782600,
-     "title":"Quinoa Salad with Vegetables and Cashews",
-     "image":"https://spoonacular.com/recipeImages/782600-312x231.jpg"
+    id: 782600,
+    title: 'Quinoa Salad with Vegetables and Cashews',
+    image: 'https://spoonacular.com/recipeImages/782600-312x231.jpg',
   },
   {
-     "id":640062,
-     "title":"Corn Avocado Salsa",
-     "image":"https://spoonacular.com/recipeImages/640062-312x231.jpg"
-  }
-]
+    id: 640062,
+    title: 'Corn Avocado Salsa',
+    image: 'https://spoonacular.com/recipeImages/640062-312x231.jpg',
+  },
+];
 
 const WhatsForDinnerStart = () => {
   const themeDesign = useTheme();
   const [filter, setFilter] = useState('');
   const [recipes, setRecipes] = useState([]);
 
-  //ADJUST FOR LIVE DATA
+  // ADJUST FOR LIVE DATA
   useEffect(() => {
     setRecipes(data);
   }, [data]);
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
-  }
+  };
 
   return (
-    <Box style={{...SpacingDesign.marginBottom(1)}}>
-        <form noValidate autoComplete="off" onChange={handleFilter}>
-          <TextField
-            id="search"
-            label="Filter"
-            fullWidth
-            variant='outlined'
-          />
-        </form>
+    <Box style={{ ...SpacingDesign.marginBottom(1) }}>
+      <form noValidate autoComplete="off" onChange={handleFilter}>
+        <TextField
+          id="search"
+          label="Filter"
+          fullWidth
+          variant="outlined"
+        />
+      </form>
 
-        <Container
-          style={{
-            height: 'auto',
-            ...SpacingDesign.marginTop(3),
-            ...SpacingDesign.marginBottom(1),
-            ...SpacingDesign.paddingx(0)
-          }}
-          elevation={1}>
-          <Typography variant='h4' align='center'>
-            What's For Dinner
-          </Typography>
+      <Container
+        style={{
+          height: 'auto',
+          ...SpacingDesign.marginTop(3),
+          ...SpacingDesign.marginBottom(1),
+          ...SpacingDesign.paddingx(0),
+        }}
+        elevation={1}
+      >
+        <Typography variant="h4" align="center">
+          What&lsquo;s For Dinner
+        </Typography>
 
-          {recipes.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
-            .map((item) =>
-              <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
-                <CardActionArea
-                  component={Link} to={`recipe/${item.id}`}
-                  >
-                  <CardContent>
+        {recipes.filter((main) => main.title.toLowerCase().indexOf(filter) !== -1)
+          .map((item) => (
+            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.id}>
+              <CardActionArea
+                component={Link}
+                to={`recipe/${item.id}`}
+              >
+                <CardContent>
                   <CardMedia
-                    style={{ ...SpacingDesign.height(40)}}
+                    style={{ ...SpacingDesign.height(40) }}
                     image={item.image}
                     title={item.title}
                   />
-                    <Typography variant='h5' align='center' style={{...SpacingDesign.marginTop(3)}}>
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-          )}
-        </Container>
+                  <Typography variant="h5" align="center" style={{ ...SpacingDesign.marginTop(3) }}>
+                    {item.title}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+      </Container>
     </Box>
- )
-}
+  );
+};
 
 export default WhatsForDinnerStart;
