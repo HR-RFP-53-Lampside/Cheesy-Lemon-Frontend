@@ -27,7 +27,7 @@ const SettingsStart = () => {
   }, [settingsFocus]);
 
   return (
-    <Box elevation={3} style={{ ...SpacingDesign.height(100), ...SpacingDesign.padding(3) }}>
+    <Box elevation={3} style={{ ...SpacingDesign.height(100) }}>
       <Typography variant="h4" align="center">
         Settings
       </Typography>

@@ -30,7 +30,6 @@ import RecipeFeedStart from './social/recipefeed/RecipeFeedStart';
 import UserProfileStart from './user/UserProfileStart';
 import SettingsStart from './settings/SettingsStart';
 import RecipeFocusStart from './recipe/RecipeFocusStart';
-import PantryStart from './foodcardlist/pantry/PantryStart';
 
 function App() {
   // Establish dark or light mode

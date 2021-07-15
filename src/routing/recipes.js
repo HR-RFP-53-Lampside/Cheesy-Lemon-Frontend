@@ -4,12 +4,6 @@ import endpoint from '../config/configrouting';
 
 const entry = `${endpoint.backendPort}/api`;
 
-/*
-  {
-    ingredients: [blah, blah],
-  }
-
-*/
 export default {
   getRecipeById: (recipeId) => axios.get(`${entry}/recipes/${recipeId}`),
   getRecipeIngredients: (ingredients) => axios.post(`${entry}/recipes`, ingredients),
