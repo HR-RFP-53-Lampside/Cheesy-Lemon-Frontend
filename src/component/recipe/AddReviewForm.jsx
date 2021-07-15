@@ -1,22 +1,20 @@
+/* eslint-disable import/no-unresolved */
 import React, { useContext, useState } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, Icon
+  Typography, TextField, Button, Icon, Box,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import endPoint from '../../routing';
 
-const AddReviewForm = () => {
-  const themeDesign = useTheme();
+const AddReviewForm = ({ recipeId }) => {
   const [logStatus] = useContext(LogStatus);
-  const [opened, setOpened] = useState(false);
   const [images, setImages] = useState([]);
-  const [headline, setHeadline] = useState('')
-  const [body, setBody] = useState('')
+  const [headline, setHeadline] = useState('');
+  const [body, setBody] = useState('');
 
   const handleTextInputChange = (event) => {
     if (event.target.id === 'headline') {
@@ -24,86 +22,83 @@ const AddReviewForm = () => {
     } else if (event.target.id === 'body') {
       setBody(event.target.value);
     }
-  }
+  };
 
   const handleImageChange = (event) => {
     let files = Array.from(event.target.files);
-    //Limits total number of images to 3
+    // Limits total number of images to 3
     const limit = 3 - images.length;
     files = files.slice(0, limit);
 
     const formData = new FormData();
-    files.forEach((file, i) => {
+    files.forEach((file) => {
       formData.append('file', file);
     });
 
-    axios.post('http://localhost:8000/api/image', formData)
+    // axios.post('http://localhost:8000/api/image', formData)
+    //   .then((result) => {
+    //     const newImages = result.data.map((pic) => pic.url);
+    //     setImages([...images, ...newImages]);
+    //   })
+    //   .catch(console.error);
+    endPoint.recipes.getImageUrl(formData)
       .then((result) => {
-        const newImages = result.data.map((pic) => pic.url)
+        const newImages = result.data.map((pic) => pic.url);
         setImages([...images, ...newImages]);
       })
-      .catch(console.error);
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const handleSubmit = () => {
-    axios({
-      method: 'post',
-      // url: `http://localhost:8000/local/${props.recipeId}/reviews`,
-      url: `http://localhost:8000/local/123456789/reviews`,
-      data: {
-        authorId: logStatus.uid,
-        authorImageURL: logStatus.photoURL,
-        headline: headline,
-        body: body,
-        images: images
-      }
-    })
-      .then(() => setOpened(!opened));
-  }
+    endPoint.reviews.postRecipeReview(
+      recipeId,
+      logStatus.uid,
+      logStatus.photoURL,
+      headline,
+      body,
+      images,
+    )
+      .then(({ data }) => {
+        console.log('success!');
+        console.log(data);
+      });
+  };
 
   const removeImage = (i) => {
-    setImages(images.filter((url, number) => i !== number))
-  }
+    setImages(images.filter((url, number) => i !== number));
+  };
 
   const imageContainterStyle = {
     display: 'flex',
-    marginBottom: images.length ? '25px' : '0'
-  }
+    marginBottom: images.length ? '32px' : '0',
+  };
 
   const imageStyle = {
-    width: 100,
-    height: 100,
-    marginRight: '15px',
+    ...SpacingDesign.square(13),
     flexDirection: 'column',
-    'justify-content': 'flex-start'
-  }
+    justifyContent: 'flex-start',
+  };
 
   const deleteIconStyle = {
     cursor: 'pointer',
-    marginBottom: '-10px',
-    marginRight: '-10px',
-    position: 'relative',
-    background: 'white',
-    borderRadius: '10px',
-    zIndex: '5'
-  }
+    alignSelft: 'center',
+    zIndex: '5',
+    ...SpacingDesign.square(4),
+  };
 
   const deleteContainerStyle = {
-    display: 'flex',
-    alignContent: 'flex-end',
-    alignItems: 'baseline',
-    justifyContent: 'flex-end',
-    marginBottom: '-10px'
-  }
+    ...SpacingDesign.marginBottom(-2),
+  };
 
   return (
     <>
-      <br></br>
       <TextField
         id="headline"
         label="Headline"
-        variant='outlined'
-        borderRadius='50%'
+        variant="outlined"
+        borderRadius="50%"
         style={{ ...SpacingDesign.marginBottom(1) }}
         onChange={handleTextInputChange}
       />
@@ -111,26 +106,29 @@ const AddReviewForm = () => {
         id="body"
         label="Body"
         fullWidth
-        variant='outlined'
-        borderRadius='50%'
+        variant="outlined"
+        borderRadius="50%"
         style={{ ...SpacingDesign.marginBottom(1) }}
         onChange={handleTextInputChange}
       />
-      <div style={imageContainterStyle}>
-        {images.map((image, i) =>
-          <div style={imageStyle}>
-            <div
+      <Box style={imageContainterStyle}>
+        {images.map((image, i) => (
+          <Box style={imageStyle} key={image}>
+            <Button
               style={deleteContainerStyle}
               onClick={() => removeImage(i)}
-              className="delete">
+              fullWidth
+              className="delete"
+            >
               {/* <Icon className="fas fa-times-circle" style={deleteIconStyle} /> */}
               <HighlightOffIcon style={deleteIconStyle} />
-            </div>
-            <Image src={image} />
-          </div>
-        )}
-      </div>
-      {images.length < 3 && <Button
+            </Button>
+            <Image src={image} imageStyle={{ borderRadius: '8px' }} style={{ backgroundColor: 'transparent' }} cover />
+          </Box>
+        ))}
+      </Box>
+      {images.length < 3 && (
+      <Button
         variant="outlined"
         component="label"
         style={{ ...SpacingDesign.marginLeft(0) }}
@@ -141,8 +139,8 @@ const AddReviewForm = () => {
         </Typography>
         <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
         <input type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
-      </Button>}
-      <br></br>
+      </Button>
+      )}
       <Button
         variant="contained"
         color="primary"
@@ -152,11 +150,15 @@ const AddReviewForm = () => {
         onClick={handleSubmit}
       >
         <Typography color="textPrimary">
-          Submit
+          Leave a review
         </Typography>
       </Button>
     </>
   );
-}
+};
+
+AddReviewForm.propTypes = {
+  recipeId: PropTypes.number.isRequired,
+};
 
 export default AddReviewForm;
