@@ -66,7 +66,19 @@ const AddReviewForm = ({ recipeId }) => {
     //   },
     // })
     //   .then(() => setOpened(!opened));
-    endPoint.reviews.postRecipeReview({});
+    // Will be an object of recipeId, authorName, authorImageURL, headline, body, images[0], images[1]
+
+    endPoint.reviews.postRecipeReview({
+      recipeId,
+      authorName: logStatus.username,
+      authorImageURL: logStatus.photoURL,
+      headline,
+      body,
+      images,
+    })
+      .then(() => {
+        console.log('review posted');
+      });
   };
 
   const removeImage = (i) => {

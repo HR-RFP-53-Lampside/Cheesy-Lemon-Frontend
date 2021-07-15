@@ -21,8 +21,9 @@ export default {
    */
   postRecipeReview: (information) => new Promise((resolve, reject) => {
     // returns newly created review's ID
-    axios.post(`${entry}/${information.recipeId}`, information)
+    axios.post(`${entry}/${information.recipeId}/reviews`, information)
       .then((/* reviewId */) => {
+        console.log('attempting to post review');
         /* post to current user's firebase data
         firebase.dostuff()
           .then(() => {
