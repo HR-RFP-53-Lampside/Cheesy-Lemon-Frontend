@@ -27,7 +27,6 @@ const ChangeFields = ({
       const formData = new FormData();
       const files = Array.from(event.target.files);
       formData.append('file', files[0]);
-      // setEditValues(formData);
       axios.post('http://localhost:8000/api/image', formData)
         .then((result) => {
           const { url } = result.data[0];
