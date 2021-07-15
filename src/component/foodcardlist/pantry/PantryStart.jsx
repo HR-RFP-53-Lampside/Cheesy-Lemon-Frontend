@@ -40,7 +40,6 @@ const PantryStart = () => {
   const [filter, setFilter] = useState('');
 
   const handleFilter = (e) => {
-
     setFilter(e.target.value.toLowerCase());
   }
 
@@ -59,7 +58,6 @@ const PantryStart = () => {
 
   const handleSubmit = (e) => {
     if(filter.length >= 3) {
-      console.log(e.target)
       axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
         .then((result) => {
           setFilter('');
@@ -74,6 +72,16 @@ const PantryStart = () => {
           setIngredients([...ingredients, obj]);
         })
         .catch((e) => { throw e; })
+    }
+  }
+
+  const handleSelect = (e) => {
+    let name = e.target.name;
+
+    if (select.indexOf(name) === -1) {
+      setSelect([...select, name]);
+    } else {
+      setSelect(select.filter(item => item !== name));
     }
   }
 
@@ -123,7 +131,7 @@ const PantryStart = () => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
             .map((item, index) =>
-            <PantryCard item={item} name={item.name} delete={handleDelete}/>
+            <PantryCard item={item} name={item.name} delete={handleDelete} select={handleSelect} selected={select}/>
 
           )}
       </Container>

@@ -19,38 +19,15 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpacingDesign from '../../context/design/SpacingDesign';
 import theme from '../../context/design/ThemeDesign';
 
-const data = [
-  {
-    "name": "Lemons",
-    "image": lemonImg,
-    "num": 1
-  },
-  {
-    "name": "Cheese",
-    "image": cheeseImg,
-    "num": 1
-  }
-]
 
 const PantryCard = (props) => {
   const themeDesign = useTheme();
   const [count, setCount] = useState(1);
-  const [select, setSelect] = useState([]);
 
+  // const [select, setSelect] = useState([]);
+  const select = props.selected;
   const item = props.item;
   const index = props.name;
-
-
-  const handleSelect = (e) => {
-    let name = e.target.name;
-
-    if (select.indexOf(name) === -1) {
-      setSelect([...select, name]);
-    } else {
-      setSelect(select.filter(item => item !== name));
-    }
-  }
-
 
   let handleIncrement = (e) => {
     e.preventDefault();
@@ -67,7 +44,6 @@ const PantryCard = (props) => {
       setCount(temp);
     }
   }
-
 
 
   return (
@@ -87,7 +63,7 @@ const PantryCard = (props) => {
           }}>
 
             <FormControlLabel
-              control={<Checkbox onClick={handleSelect} name={item.name} checked={select.indexOf(item.name) > -1} style={{ transform: 'scale(1.5)' }} />}
+              control={<Checkbox onClick={props.select} name={item.name} checked={select.indexOf(item.name) > -1} style={{ transform: 'scale(1.5)' }} />}
             />
 
             <ButtonGroup variant='outlined'>
