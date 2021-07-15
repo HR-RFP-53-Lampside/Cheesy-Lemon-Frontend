@@ -141,7 +141,6 @@ const AddReviewForm = ({ recipeId }) => {
         <input type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
       </Button>
       )}
-      <br />
       <Button
         variant="contained"
         color="primary"
