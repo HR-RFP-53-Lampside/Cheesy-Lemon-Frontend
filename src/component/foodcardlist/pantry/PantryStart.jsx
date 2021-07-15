@@ -13,10 +13,6 @@ import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import PantryCard from './PantryCard';
 
-// import { AddCircleOutlineOutlinedIcon, CameraAltOutlinedIcon, HighlightOffIcon} from '@material-ui/icons';
-
-
-
 import SpacingDesign from '../../context/design/SpacingDesign';
 import theme from '../../context/design/ThemeDesign';
 
@@ -75,6 +71,15 @@ const PantryStart = () => {
     }
   }
 
+  const handlePhoto = (e) => {
+    let obj = {}
+    const file = [...e.target.files];
+    obj['file'] = file;
+
+    //photo doesn't currently go anywhere
+    //send to veryfi to get ingredients
+  }
+
   const handleSelect = (e) => {
     let name = e.target.name;
 
@@ -114,9 +119,12 @@ const PantryStart = () => {
             <AddCircleOutlineOutlinedIcon style={{ ...SpacingDesign.fontSize(5)}}></AddCircleOutlineOutlinedIcon>
           </IconButton>
 
-          <IconButton>
-            <CameraAltOutlinedIcon style={{ ...SpacingDesign.fontSize(5)}}></CameraAltOutlinedIcon>
-          </IconButton>
+            <input accept="image/*"  id="icon-button-file" type="file" hidden onChange={(e) => {handlePhoto(e)}}/>
+            <label htmlFor="icon-button-file">
+              <IconButton  aria-label="upload picture" component="span">
+                <CameraAltOutlinedIcon style={{ ...SpacingDesign.fontSize(5)}}></CameraAltOutlinedIcon>
+              </IconButton>
+            </label>
         </Box>
 
 
@@ -124,15 +132,13 @@ const PantryStart = () => {
           My Pantry
         </Typography>
 
-        <input  type='file' accept="image/*;capture=camera" />
 
 
         {ingredients.filter(main => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
             .map((item, index) =>
-            <PantryCard item={item} name={item.name} delete={handleDelete} select={handleSelect} selected={select}/>
-
+            <PantryCard key={item.name} item={item} name={item.name} delete={handleDelete} select={handleSelect} selected={select}/>
           )}
       </Container>
     </Box>

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import {
- Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, FormLabel, FormControl, FormGroup, FormControlLabel, FormHelperText, Checkbox, ButtonGroup
+  Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden, FormLabel, FormControl,  FormGroup, FormControlLabel, FormHelperText, Checkbox, ButtonGroup
 } from '@material-ui/core';
 import Image from 'material-ui-image';
 import { Link, useHistory } from 'react-router-dom';
@@ -12,10 +12,6 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-// import { AddCircleOutlineOutlinedIcon, CameraAltOutlinedIcon, HighlightOffIcon} from '@material-ui/icons';
-
-
-
 import SpacingDesign from '../../context/design/SpacingDesign';
 import theme from '../../context/design/ThemeDesign';
 
@@ -24,7 +20,6 @@ const PantryCard = (props) => {
   const themeDesign = useTheme();
   const [count, setCount] = useState(1);
 
-  // const [select, setSelect] = useState([]);
   const select = props.selected;
   const item = props.item;
   const index = props.name;
@@ -47,7 +42,7 @@ const PantryCard = (props) => {
 
 
   return (
-    <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.name}>
+    <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
       <CardContent>
         <Image
           src={item.image}
@@ -67,9 +62,9 @@ const PantryCard = (props) => {
             />
 
             <ButtonGroup variant='outlined'>
-              <Button onClick={handleIncrement}>+</Button>
-              <Button disabled>{count}</Button>
               <Button onClick={handleDecrement}>-</Button>
+              <Button disabled>{count}</Button>
+              <Button onClick={handleIncrement}>+</Button>
             </ButtonGroup>
 
             <IconButton onClick={props.delete} value={index}>
@@ -80,7 +75,6 @@ const PantryCard = (props) => {
         </Box>
       </CardContent>
     </Card>
-
  )
 }
 
