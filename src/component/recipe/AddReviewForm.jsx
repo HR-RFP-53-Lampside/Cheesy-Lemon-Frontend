@@ -51,7 +51,7 @@ const AddReviewForm = () => {
       // url: `http://localhost:8000/local/${props.recipeId}/reviews`,
       url: `http://localhost:8000/local/123456789/reviews`,
       data: {
-        authorName: logStatus.username,
+        authorId: logStatus.uid,
         authorImageURL: logStatus.photoURL,
         headline: headline,
         body: body,
@@ -124,13 +124,13 @@ const AddReviewForm = () => {
               onClick={() => removeImage(i)}
               className="delete">
               {/* <Icon className="fas fa-times-circle" style={deleteIconStyle} /> */}
-              <HighlightOffIcon style={deleteIconStyle}/>
+              <HighlightOffIcon style={deleteIconStyle} />
             </div>
             <Image src={image} />
           </div>
         )}
       </div>
-      <Button
+      {images.length < 3 && <Button
         variant="outlined"
         component="label"
         style={{ ...SpacingDesign.marginLeft(0) }}
@@ -141,7 +141,7 @@ const AddReviewForm = () => {
         </Typography>
         <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
         <input type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
-      </Button>
+      </Button>}
       <br></br>
       <Button
         variant="contained"
