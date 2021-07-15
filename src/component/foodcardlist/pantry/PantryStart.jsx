@@ -22,13 +22,11 @@ import theme from '../../context/design/ThemeDesign';
 const data = [
   {
     "name": "Lemons",
-    "image": lemonImg,
-    "select": false
+    "image": lemonImg
   },
   {
     "name": "Cheese",
-    "image": cheeseImg,
-    "select": false
+    "image": cheeseImg
   }
 ]
 
@@ -48,11 +46,6 @@ const PantryStart = () => {
     let hold = [...ingredients];
     let name = hold[index].name;
 
-    //if selected remove from select
-    // if(obj[name]) {
-    //   delete obj[name];
-    //   setSelect(obj);
-    // }
     if (select.indexOf(name) !== -1) {
       setSelect(select.filter(item => item !== name))
     }
@@ -60,34 +53,21 @@ const PantryStart = () => {
     //remove from ingredients list and set new list
     hold.splice(index, 1);
     setIngredients([...hold]);
-    console.log(select);
   }
 
   const handleSelect = (e) => {
-    // console.log(e.currentTarget);
     let name = e.target.name;
-    // let obj = select;
 
 
     if (select.indexOf(name) === -1) {
-      // obj[name] = name;
-      // setSelect(obj);
       setSelect([...select, name]);
-      console.log('add', select)
     } else {
-      // delete obj[name]
-      // setSelect(obj);
       setSelect(select.filter(item => item !== name));
-      console.log('delete', select);
     }
   }
 
   const handleSubmit = (e) => {
-    if(filter.length < 3) {
-      console.log('not long enough');
-    } else {
-      console.log(filter);
-
+    if(filter.length >= 3) {
       axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
         .then((result) => {
           let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
@@ -95,13 +75,12 @@ const PantryStart = () => {
 
           let obj = {
             "name": name,
-            "image": img,
-            "select": false
+            "image": img
           }
 
           setIngredients([...ingredients, obj]);
         })
-        .catch((e) => { console.log(e) })
+        .catch((e) => { throw e; })
     }
   }
 
@@ -114,7 +93,7 @@ const PantryStart = () => {
       <form noValidate autoComplete="off" onChange={handleFilter}>
         <TextField
           id="search"
-          label="Filter"
+          label="Filter/Add"
           fullWidth
           variant='outlined'
         />
@@ -148,13 +127,8 @@ const PantryStart = () => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
         })
             .map((item, index) =>
-            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={index}>
+            <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.name}>
               <CardContent>
-                {/* <CardMedia
-                  style={{ ...SpacingDesign.height(40) }}
-                  image={item.image}
-                  title={item.name}
-                /> */}
                 <Image
                   src={item.image}
                   cover
@@ -178,10 +152,6 @@ const PantryStart = () => {
               </CardContent>
             </Card>
           )}
-
-
-
-
       </Container>
     </Box>
  )
