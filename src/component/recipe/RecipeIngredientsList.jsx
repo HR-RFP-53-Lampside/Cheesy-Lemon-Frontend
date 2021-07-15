@@ -11,11 +11,11 @@ import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 import RecipeIngredient from './RecipeIngredient';
 
-const RecipeIngredientsList = () => {
+const RecipeIngredientsList = ({ingredients}) => {
 
   return (
     <div>
-    <RecipeIngredient />
+    <RecipeIngredient ingredients={ingredients}/>
     </div>
   );
 };

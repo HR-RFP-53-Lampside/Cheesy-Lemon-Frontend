@@ -52,7 +52,6 @@ const WhatsForDinnerStart = () => {
             label="Filter"
             fullWidth
             variant='outlined'
-            borderRadius='50%'
           />
         </form>
 
@@ -70,7 +69,7 @@ const WhatsForDinnerStart = () => {
 
           {data.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
             .map((item) =>
-              <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5}>
+              <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
                 <CardActionArea
                   component={Link} to={`recipe/${item.id}`}
                   >

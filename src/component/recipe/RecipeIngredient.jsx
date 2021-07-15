@@ -10,11 +10,10 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeIngredient = () => {
+const RecipeIngredient = ({ingredients}) => {
 
-  const faykeIngeredients = ['potato', 'bacon', 'cheese', 'broccoli', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla', 'farfalla'];
-  const firstHalfFaykeIng = faykeIngeredients.slice(0, Math.ceil(faykeIngeredients.length / 2));
-  const secondHalfFaykeDataIng = faykeIngeredients.slice(Math.ceil(faykeIngeredients.length / 2));
+  const firstHalfFaykeIng = ingredients.slice(0, Math.ceil(ingredients.length / 2));
+  const secondHalfFaykeDataIng = ingredients.slice(Math.ceil(ingredients.length / 2));
   // 50% width max height
   return (
 
