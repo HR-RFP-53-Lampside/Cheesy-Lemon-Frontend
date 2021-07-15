@@ -110,7 +110,6 @@ const FavoritesStart = () => {
               </Card>
           )}
         </Container>
-      {/* </Container> */}
     </Box>
  )
 }

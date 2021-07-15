@@ -93,7 +93,6 @@ const WhatsForDinnerStart = () => {
               </Card>
           )}
         </Container>
-      {/* </Container> */}
     </Box>
  )
 }
