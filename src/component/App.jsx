@@ -21,6 +21,7 @@ import BottomBar from './BottomBar';
 import LoginStart from './login/LoginStart';
 import RegisterStart from './register/RegisterStart';
 import WhatsForDinnerStart from './foodcardlist/whatsfordinner/WhatsForDinnerStart';
+import FavoritesStart from './foodcardlist/favorites/FavoritesStart';
 import PantryStart from './foodcardlist/pantry/PantryStart';
 import ReviewList from './social/review/ReviewList';
 import ReviewFocus from './social/review/ReviewFocus';
@@ -94,7 +95,7 @@ function App() {
                 <DekstopSideBar />
                 <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
                   <Route exact path="/favorites">
-                    your fave
+                    <FavoritesStart />
                   </Route>
                   <Route exact path="/wfd">
                     <WhatsForDinnerStart />

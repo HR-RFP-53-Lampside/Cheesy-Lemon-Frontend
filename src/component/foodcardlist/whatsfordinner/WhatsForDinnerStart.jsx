@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
  Card, CardActionArea, CardActions, CardContent, CardMedia, Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
 } from '@material-ui/core';
@@ -37,8 +37,14 @@ const data = [
 ]
 
 const WhatsForDinnerStart = () => {
- const themeDesign = useTheme();
- const [filter, setFilter] = useState('');
+  const themeDesign = useTheme();
+  const [filter, setFilter] = useState('');
+  const [recipes, setRecipes] = useState([]);
+
+  //ADJUST FOR LIVE DATA
+  useEffect(() => {
+    setRecipes(data);
+  }, [data]);
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
@@ -67,7 +73,7 @@ const WhatsForDinnerStart = () => {
             What's For Dinner
           </Typography>
 
-          {data.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
+          {recipes.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
             .map((item) =>
               <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
                 <CardActionArea
@@ -87,7 +93,6 @@ const WhatsForDinnerStart = () => {
               </Card>
           )}
         </Container>
-      {/* </Container> */}
     </Box>
  )
 }
