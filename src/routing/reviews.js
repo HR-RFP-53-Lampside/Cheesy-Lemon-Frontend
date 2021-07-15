@@ -13,16 +13,34 @@ export default {
   getRecipeReviews: (recipeId) => axios.get(`${entry}/${recipeId}/reviews`),
   /**
    * Posting a review of the recipe.
-   * @param {object} information - Will be an object of recipeId,
+   * @param {number} recipeId - ID of recipe,
+   * @param {string} authorId - ID of author,
+   * @param {string} authorImageURL - Image url,
+   * @param {string} headline - Review title,
+   * @param {string} body - Review body,
+   * @param {array} images - Array of string urls,
+   * @returns {string} reviewId - returns ID of the review
    * authorName, authorImageURL, headline, body, images[0], images[1]
    *
    * This will commit changes to both the mongoDB and also to the firebase
    * If the firebase fails, the mongoDB will revert back the changes
    */
-  postRecipeReview: (information) => new Promise((resolve, reject) => {
+  postRecipeReview: (
+    recipeId,
+    authorId,
+    authorImageURL,
+    headline,
+    body,
+    images,
+  ) => new Promise((resolve, reject) => {
     // returns newly created review's ID
-    axios.post(`${entry}/${information.recipeId}`, information)
-      .then((/* reviewId */) => {
+    axios.post(`${entry}/${recipeId}/reviews`, {
+      recipeId, authorId, authorImageURL, headline, body, images,
+    })
+      .then((reviewID) => {
+        console.log('attempting to post review');
+        resolve(reviewID);
+        // Alec, add the reviewID to the Firebase store
         /* post to current user's firebase data
         firebase.dostuff()
           .then(() => {
