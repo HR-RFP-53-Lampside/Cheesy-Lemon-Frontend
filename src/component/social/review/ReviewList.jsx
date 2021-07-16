@@ -18,7 +18,7 @@ const ReviewList = () => {
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
     const reviewsData = data[0].reviews;
-    console.log(reviewsData);
+    console.log('reviewData', reviewsData);
     setReviews(reviewsData);
   };
 

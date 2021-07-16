@@ -38,6 +38,10 @@ const ReviewCard = ({
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);
     });
+    endPoint.reviews.getSingleReview(recipeId, id)
+      .then((hello) => {
+        console.log('what is', hello);
+      });
   }, []);
 
   const handleUpvote = () => {
@@ -72,7 +76,7 @@ const ReviewCard = ({
           less={<Icon className="fas fa-caret-up" color="secondary" />}
           lines={4}
         >
-          <Typography >
+          <Typography>
             {body}
           </Typography>
         </ShowMoreText>
@@ -96,7 +100,7 @@ const ReviewCard = ({
         <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {comments.length}
+            {comments.length} {id}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>

@@ -29,7 +29,7 @@ const ReviewFocus = () => {
   const getReviews = async () => {
     console.log('focus:' ,recipeId, reviewId);
     const { data } = await endPoint.reviews.getSingleReview(recipeId, reviewId);
-    data.comments.reverse();
+    // data.comments.reverse();
     if (data.images) {
       setPicture(data.images[0]);
     }
