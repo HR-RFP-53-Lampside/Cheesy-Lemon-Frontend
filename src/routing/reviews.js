@@ -8,6 +8,13 @@ export default {
   /**
    * Retrieve all the reviews of a given recipe
    * @param {number} recipeId - Id of the recipe
+   * @param {number} reviewId - Id of the review
+   */
+  getSingleReview: (recipeId, reviewId) => axios.get(`${entry}/${recipeId}/reviews/${reviewId}`),
+
+  /**
+   * Retrieve all the reviews of a given recipe
+   * @param {number} recipeId - Id of the recipe
    *
    */
   getRecipeReviews: (recipeId) => axios.get(`${entry}/${recipeId}/reviews`),
@@ -95,7 +102,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putUpvoteRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()
@@ -124,7 +131,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putDownRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()
@@ -157,6 +164,7 @@ export default {
     // reviewData
     axios.post(`${entry}/${recipeId}/reviews/${reviewId}/comment`, { authorId, body })
       .then(() => {
+        resolve('nice');
         /* post to current user's firebase data
           firebase.dostuff()
             .then(() => {

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThumbUp, ThumbDown, RateReview } from '@material-ui/icons';
 import {
@@ -13,14 +13,41 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 import ShowMoreText from 'react-show-more-text';
 import SpacingDesign from '../../context/design/SpacingDesign';
+import endPoint from '../../../routing';
+import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  id, title, authorName, body, upvotes, downvotes, recipeId, date,
+  id, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
 }) => {
-  const handleUpvote = () => {
+  const [authorName, setAuthorName] = useState('');
+  const [logStatus] = useContext(LogStatus);
+  const [voted, setVoted] = useState('none');
+  const [upvoted, setUpvoted] = useState(upvotes);
+  const [downvoted, setDownvoted] = useState(downvotes);
 
+  useEffect(() => {
+    firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
+      const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
+      setAuthorName(username);
+    });
+  }, []);
+
+  const handleUpvote = () => {
+    // need help
+    // firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
+    //   const upvoted = (snapshot.val() && snapshot.val().upReviews) || 0;
+    //   console.log(upvoted);
+    // });
+    // endPoint.reviews.putUpvoteRecipeReview(recipeId, id, true)
+    //   .then((result) => {
+    //     setUpvoted(upvoted + 1);
+    //   });
   };
 
   const handleDownvote = () => {
@@ -47,8 +74,9 @@ const ReviewCard = ({
             {body}
           </Typography>
         </ShowMoreText>
-        <Typography variant="subtitle">
-          {date.toLocaleDateString(undefined, dateOptions)}
+        <Typography>
+          {/* {date.toLocaleDateString(undefined, dateOptions)} */}
+          {new Date(date).toLocaleDateString(undefined, dateOptions)}
         </Typography>
       </CardContent>
       <Box
@@ -60,13 +88,13 @@ const ReviewCard = ({
         <Button onClick={handleUpvote}>
           <ThumbUp />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {upvotes}
+            {upvoted}
           </Typography>
         </Button>
         <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {upvotes}
+            {downvoted}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
@@ -84,11 +112,12 @@ ReviewCard.propType = {
   id: PropTypes.number.isRequired,
   recipeId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  authorName: PropTypes.string.isRequired,
+  authorId: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   upvotes: PropTypes.number.isRequired,
   downvotes: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
 export default ReviewCard;

@@ -25,6 +25,13 @@ const testing = () => {
   //   .then(({ data }) => {
   //     console.log('what is bok choy', data);
   //   });
+  server.recipes.getAllRecipes()
+    .then(({ data }) => {
+      console.log('recipes: ', data);
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export default testing;
