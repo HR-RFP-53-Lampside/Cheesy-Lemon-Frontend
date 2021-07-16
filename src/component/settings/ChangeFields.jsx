@@ -13,6 +13,7 @@ import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
+import endPoint from '../../routing';
 
 const ChangeFields = ({
   label, accountSettings, multiline, rows,
@@ -21,7 +22,7 @@ const ChangeFields = ({
   const [logStatus] = useContext(LogStatus);
   const [editValues, setEditValues] = useState(logStatus ? logStatus[accountSettings] : '');
   const [userMessage, setUserMessage] = useState('');
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState((logStatus && logStatus.dietaryPrefs) || null);
 
   const status = {
     dairyFree: 'Dairy Free',
@@ -32,6 +33,8 @@ const ChangeFields = ({
     vegetarian: 'Vegetarian',
   };
 
+  const maxLength = accountSettings === 'aboutMe' ? 250 : 15;
+
   const handleChange = (event) => {
     if (accountSettings !== 'photoURL') {
       setEditValues(event.target.value);
@@ -39,8 +42,7 @@ const ChangeFields = ({
       const formData = new FormData();
       const files = Array.from(event.target.files);
       formData.append('file', files[0]);
-      // setEditValues(formData);
-      axios.post('http://localhost:8000/api/image', formData)
+      endPoint.recipes.getImageUrl(formData)
         .then((result) => {
           const { url } = result.data[0];
           firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch(console.error);
@@ -49,16 +51,36 @@ const ChangeFields = ({
     }
   };
   const handleClick = () => {
-    firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+    if (accountSettings === 'username' && editValues === '') {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(logStatus.email.split('@')[0])
       .then(() => {
         setUserMessage('Profile Updated');
         setTimeout(setUserMessage, 2000, '');
       })
       .catch((error) => console.error(error));
+    } else {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(editValues)
+        .then(() => {
+          setUserMessage('Profile Updated');
+          setTimeout(setUserMessage, 2000, '');
+        })
+        .catch((error) => console.error(error));
+    }
   };
   const changeDiet = (event, newVal) => {
-    setSelected(newVal);
-    // Alec, change on firebase.
+    if (newVal) {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(newVal)
+        .then(() => {
+          setSelected(newVal);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set('')
+      .then(() => {
+        setSelected(newVal);
+      })
+      .catch((error) => console.error(error));
+    }
   };
   let display = ('');
   const settleDisplay = () => {
@@ -95,8 +117,8 @@ const ChangeFields = ({
     } else if (accountSettings === 'dietaryPrefs') {
       //
       display = (
-        <ToggleButtonGroup orientation="vertical" value={selected} onChange={changeDiet}>
-          { Object.keys(logStatus.dietaryPrefs).map((key) => (
+        <ToggleButtonGroup orientation="vertical" value={selected} onChange={changeDiet} exclusive>
+          { Object.keys(status).map((key) => (
             <ToggleButton key={key} value={key} aria-label={`account-${status[key]}`}>
               {status[key]}
             </ToggleButton>
@@ -110,6 +132,9 @@ const ChangeFields = ({
             label={label}
             variant="outlined"
             value={editValues}
+            inputProps={{
+              maxLength,
+            }}
             multiline={multiline}
             rows={rows}
             onChange={handleChange}
