@@ -12,48 +12,21 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
-
+import PantryContext from '../../context/foodies/PantryContext';
 import SpacingDesign from '../../context/design/SpacingDesign';
 import LogStatus from '../../context/auth/LogStatus';
 
-const data = [
-  {
-    id: 715594,
-    title: 'Homemade Garlic and Basil French Fries',
-    image: 'https://spoonacular.com/recipeImages/715594-312x231.jpg',
-  },
-  {
-    id: 644387,
-    title: 'Garlicky Kale',
-    image: 'https://spoonacular.com/recipeImages/644387-312x231.jpg',
-  },
-  {
-    id: 794349,
-    title: 'Broccoli and Chickpea Rice Salad',
-    image: 'https://spoonacular.com/recipeImages/794349-312x231.jpg',
-  },
-  {
-    id: 782600,
-    title: 'Quinoa Salad with Vegetables and Cashews',
-    image: 'https://spoonacular.com/recipeImages/782600-312x231.jpg',
-  },
-  {
-    id: 640062,
-    title: 'Corn Avocado Salsa',
-    image: 'https://spoonacular.com/recipeImages/640062-312x231.jpg',
-  },
-];
 
 const WhatsForDinnerStart = () => {
   const themeDesign = useTheme();
   const [logStatus] = useContext(LogStatus);
   const [filter, setFilter] = useState('');
-  const [recipes, setRecipes] = useState([]);
-
+  const [recipes] = useContext(PantryContext);
+  // const [recipes] = useContext(PantryContext);
   // ADJUST FOR LIVE DATA
-  useEffect(() => {
-    setRecipes(data);
-  }, [data]);
+  // useEffect(() => {
+  //   setRecipes(data);
+  // }, [data]);
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
