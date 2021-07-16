@@ -69,7 +69,7 @@ const RecipeFocusStart = () => {
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
       const updates = {};
-      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: recipeId };
+      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: recipeId, image: recipeDeets.status.image, title: recipeDeets.status.title };
       firebase.database().ref().update(updates).then(() => setClicked(true)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, false)).catch(console.error);
     } else {
       for (const key in logStatus.favRecipes) {
