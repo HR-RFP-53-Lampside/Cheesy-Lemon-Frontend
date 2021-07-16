@@ -5737,11 +5737,7 @@ resolve@^2.0.0-next.3:
       optional: true
   bin:
     rollup: dist/bin/rollup
-<<<<<<< HEAD
-  checksum: 7c63a7251e87715795a4141371f4f7b31ce46c7dd8273a0f4b5240977eb7ecaddd1e8d0fdaf8eabfc7cf73075cc9d83e03c67b89e56f31a2e85cf1089e9fc34f
-=======
   checksum: 41d32b1d44066f3e8eeb5239013397e3df74dbb37489aaa77f8357059b5998cb4af0108fb72b048d265ae5d88de933b0732007c07e5d5687f5ee3ae44fab9eee
->>>>>>> 44147181e5ccecd83619dc083cbb4b48398adb04
   languageName: node
   linkType: hard
 
