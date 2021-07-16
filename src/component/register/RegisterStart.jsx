@@ -23,15 +23,36 @@ const RegisterStart = () => {
     const dbUser = {
       aboutMe: '',
       dietaryPrefs: '',
+      downReviews: '',
+      favRecipes: '',
       email: user.email,
       firstName: '',
       lastName: '',
+      pantry: '',
       photoURL: user.photoURL || '',
+      myReviews: '',
       uid: user.uid,
-      username: user.email.split('@')[0],
+      upReviews: '',
+      username: user.displayName || user.email.split('@')[0],
       yummyPoints: 0,
     };
     firebase.database().ref(`users/${user.uid}`).set(dbUser).catch((error) => new Error(error));
+  };
+
+  const updateFormUser = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setUsername(event.target.value);
+  };
+
+  const updateFormPass = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    setPassword(event.target.value);
+    passwordValidity();
+  };
+
+  const updateFormPassVerify = (event) => {
+    if (userMessage) { setUserMessage(''); }
+    passwordValidity();
   };
 
   const handleSubmit = (event) => {
@@ -45,6 +66,9 @@ const RegisterStart = () => {
       })
       .catch((error) => {
         const { message } = error;
+        event.target.reset();
+        setUsername('');
+        setPassword('');
         setUserMessage(message);
       });
   };
@@ -83,7 +107,7 @@ const RegisterStart = () => {
               type="email"
               required
               style={{ width: '100%' }}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={updateFormUser}
             />
             <TextField
               label="Password"
@@ -94,18 +118,18 @@ const RegisterStart = () => {
               type="password"
               id="password1"
               style={{ width: '100%' }}
-              onChange={(event) => { setPassword(event.target.value); passwordValidity(); }}
+              onChange={updateFormPass}
             />
             <TextField
               label="Re-password"
-              helperText="re enter password"
+              helperText="re-enter password"
               variant="filled"
               required
               inputProps={{ minLength: 6 }}
               type="password"
               id="password2"
               style={{ width: '100%' }}
-              onChange={(event) => { setPassword(event.target.value); passwordValidity(); }}
+              onChange={updateFormPassVerify}
             />
             <Box align="right" style={SpacingDesign.marginy(1.5)}>
               <Button

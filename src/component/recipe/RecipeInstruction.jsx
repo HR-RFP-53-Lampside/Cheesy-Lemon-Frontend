@@ -10,15 +10,15 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeInstruction = () => {
-
+const RecipeInstruction = ({instructions}) => {
+  if (instructions !== null) {
+     instructions = instructions.split('.');
+  }
   return (
-    <div>
-      {/* <div>Instructions</div> */}
-      <div>instructions go here</div>
-      <div>instructions go here</div>
-      <div>instructions go here</div>
-    </div>
+    <ol  dangerouslySetInnerHTML={{ __html: instructions !== null ? instructions.slice(0, instructions.length - 1).map((inst) => (
+      inst + '.'
+    )) : 'No instructions. Good Luck'}}>
+    </ol>
   );
 };
 

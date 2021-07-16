@@ -1,21 +1,55 @@
 /* eslint-disable import/no-unresolved */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Paper, Box, Typography, Avatar, Icon,
 } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
+  const { profileId } = useParams();
+  const [displayUser, setDisplayUser] = useState(logStatus);
+  const [displayPrefs, setDisplayPrefs] = useState('');
+
+  const setDiet = (account) => {
+    const dietPref = account ? account.dietaryPrefs : '';
+    const prefText = dietPref.split(/(?=[A-Z])/).map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    setDisplayPrefs(prefText);
+  };
+
+  useEffect(() => {
+    if (profileId) {
+      firebase.database().ref(`users/${profileId}`).once('value').then((snapshot) => {
+        const profile = (snapshot.val() && snapshot.val());
+        setDisplayUser(profile);
+      });
+    }
+  }, [profileId]);
+
+  useEffect(() => {
+    if (displayUser) {
+      setDiet(displayUser);
+    }
+  }, [displayUser]);
+
+  useEffect(() => {
+    if (logStatus) {
+      setDiet(logStatus);
+    }
+  }, [logStatus]);
 
   return (
     <Paper style={SpacingDesign.padding(2)}>
       <Box display="flex">
         <Avatar
           title="UserProfilePicture"
-          src={logStatus && logStatus.photoURL}
+          src={displayUser && displayUser.photoURL}
           style={{
             ...SpacingDesign.square(15),
             alignSelf: 'center',
@@ -23,27 +57,27 @@ const UserProfileStart = () => {
         />
         <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2), width: '100%' }}>
           <Typography variant="h4">
-            {logStatus && `${logStatus.firstName} ${logStatus.lastName}`}
+            {displayUser && `${displayUser.firstName} ${displayUser.lastName}`}
           </Typography>
           <Typography variant="h6" color="textSecondary">
-            {logStatus && `@${logStatus.username}`}
+            {displayUser && `@${displayUser.username}`}
           </Typography>
           <Box display="flex">
             <Icon className="fas fa-cookie" color="disabled" />
             <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }} color="textSecondary">
-              {logStatus && logStatus.yummyPoints}
+              {displayUser && displayUser.yummyPoints}
             </Typography>
           </Box>
         </Box>
       </Box>
-      {logStatus && (
+      {displayUser && (
         <>
           <Box style={SpacingDesign.marginTop(2)}>
             <Typography variant="h4">
               About Me
             </Typography>
             <Typography variant="body1">
-              {logStatus.aboutMe || 'I eat food, whole of course'}
+              {displayUser.aboutMe || 'I eat food, whole of course'}
             </Typography>
           </Box>
           <Box style={SpacingDesign.marginTop(2)}>
@@ -51,7 +85,7 @@ const UserProfileStart = () => {
               Dietary Preference
             </Typography>
             <Typography variant="body1">
-              {logStatus.dietaryPrefs || 'No preferences, a food enjoyer'}
+              {displayPrefs || 'No preferences, a food enjoyer' }
             </Typography>
           </Box>
           <Box style={SpacingDesign.marginTop(2)}>

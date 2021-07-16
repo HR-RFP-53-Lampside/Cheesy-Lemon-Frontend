@@ -10,11 +10,11 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeDescription = () => {
+const RecipeDescription = ({summary}) => {
 
   return (
     <div>
-      <div>this is where the description goes</div>
+      <div  dangerouslySetInnerHTML={{ __html: summary + '%.' }}></div>
     </div>
   );
 };

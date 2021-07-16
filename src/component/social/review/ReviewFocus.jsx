@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -9,58 +9,95 @@ import {
   CardActionArea,
 } from '@material-ui/core';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Image from 'material-ui-image';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
 import ReviewFocusComment from './ReviewFocusComment';
+import endPoint from '../../../routing';
+import AddCommentForm from './AddCommentForm';
+
+import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewFocus = () => {
-  useEffect(() => {
+  const [reviewData, setReviewData] = useState({});
+  const { recipeId, reviewId } = useParams();
+  const [picture, setPicture] = useState('');
+  const [makeUpdate, setUpdate] = useState(false);
+  const logStatus = useContext(LogStatus);
+  const history = useHistory();
 
-  }, []);
+  const getReviews = async () => {
+    const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
+    const [reviewsData] = data;
+    const review = reviewsData && reviewsData.reviews;
+    if (review) {
+      const [myData] = review.filter((fit) => fit._id === reviewId);
+      if (myData.images) {
+        setPicture(myData.images);
+      }
+      myData.comments.reverse();
+      firebase.database().ref(`users/${myData.authorId}`).once('value').then((snapshot) => {
+        const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
+        myData.authorName = username;
+        setReviewData(myData);
+      });
+    }
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, [recipeId]);
+
+  useEffect(() => {
+    getReviews();
+  }, [makeUpdate]);
 
   return (
     <>
       <Paper style={{ ...SpacingDesign.padding(2) }}>
         <Image
-          src="https://media.gettyimages.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?s=2048x2048"
+          src={picture}
           cover
         />
-        <CardActionArea component={Link} to="/recipe/1/reviews/">
+        <CardActionArea component={Link} to={`/recipes/${recipeId}/reviews/`}>
           <Typography variant="h3">
-            Review Title
+            {reviewData.headline}
           </Typography>
         </CardActionArea>
-        <Typography variant="h5" style={{ ...SpacingDesign.marginBottom(2), ...SpacingDesign.marginLeft(3) }}>
-          author name
-        </Typography>
+        <Button onClick={() => {
+          history.push(`/profile/${reviewData.authorId}`);
+        }}
+        >
+          <Typography variant="h5">
+            {reviewData.authorName}
+          </Typography>
+        </Button>
         <Typography variant="body1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-          et fringilla diam. Quisque vitae velit enim. Curabitur consequat
-          purus commodo nibh gravida laoreet. Nunc et congue lacus, eu mollis
-          felis. Fusce nec tellus feugiat, fermentum purus sed, commodo magna.
-          Quisque nec diam id est ornare placerat. Vivamus laoreet, purus sit amet
-          sodales congue, ex velit vestibulum lorem, sit amet convallis augue arcu eu
-          ipsum. Sed vehicula iaculis velit vel tincidunt. Sed commodo rutrum aliquet.
-          Vivamus nibh ligula, maximus vel auctor condimentum, ultrices non ipsum. Sed
-          accumsan nibh in justo vehicula, at volutpat tortor venenatis. Donec pulvinar
-          dolor sed sagittis posuere. Sed elementum urna nec lacus pretium, et sollicitudin
-          nibh ornare. Sed ut erat ac libero auctor lobortis vitae non lectus. Sed eleifend,
-          massa at sodales vestibulum, eros sapien volutpat lacus, sit amet fringilla mi felis
-          cursus ex. Aenean tincidunt at dolor aliquet tempus.
+          {reviewData.body}
         </Typography>
         <Box display="flex" justifyContent="space-between" style={{ ...SpacingDesign.marginx(1), ...SpacingDesign.marginy(2) }}>
-          <Button onClick={() => { console.log('I\'ve been clicked'); }}>
+          <Button onClick={() => {
+            // Alec do the thumbs up here
+            console.log('I\'ve been clicked');
+          }}
+          >
             <ThumbUp />
             <Typography style={SpacingDesign.marginLeft(1)}>
-              {10}
+              {reviewData.upvotes}
             </Typography>
           </Button>
-          <Button onClick={() => { console.log('I\'ve been clicked'); }}>
+          <Button onClick={() => {
+            // Alec do the thumbs down here
+            console.log('I\'ve been clicked');
+          }}
+          >
             <ThumbDown />
             <Typography style={SpacingDesign.marginLeft(1)}>
-              {1}
+              {reviewData.downvotes}
             </Typography>
           </Button>
         </Box>
@@ -69,16 +106,26 @@ const ReviewFocus = () => {
         <Typography variant="h6">
           Comments
         </Typography>
-        <Select
+        {/* <Select
           native
           variant="outlined"
         >
           <option value="yummies">Most Yummies</option>
           <option value="recent">Most Recent</option>
-        </Select>
+        </Select> */}
       </Box>
-      {[1, 2, 3, 4, 5].map((row) => (
-        <ReviewFocusComment key={row} />
+      <AddCommentForm
+        recipeId={recipeId}
+        reviewId={reviewId}
+        setUpdate={setUpdate}
+        makeUpdate={makeUpdate}
+      />
+      {reviewData.comments && reviewData.comments.map((row) => (
+        <ReviewFocusComment
+          key={`comment-${row._id}`}
+          author={row.authorId}
+          body={row.body}
+        />
       ))}
     </>
   );

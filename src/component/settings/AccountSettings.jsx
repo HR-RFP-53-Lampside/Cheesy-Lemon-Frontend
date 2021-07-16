@@ -17,6 +17,7 @@ const AccountSettings = () => {
     firstName: 'First Name',
     lastName: 'Last Name',
     aboutMe: 'About Me',
+    dietaryPrefs: 'Dietary Preferences',
     photoURL: 'Profile Pic',
   };
 
@@ -31,14 +32,14 @@ const AccountSettings = () => {
           label={textInputs[accountSettings]}
           accountSettings={accountSettings}
           multiline={accountSettings === 'aboutMe' && true}
-          rows={accountSettings === 'aboutMe' ? 8 : 1}
+          rows={accountSettings === 'aboutMe' ? 6 : 1}
         />,
       );
     }
   }, [accountSettings]);
 
   return (
-    <Box display="flex" style={SpacingDesign.marginTop(2)}>
+    <Box display="flex" style={{ ...SpacingDesign.marginTop(2) }}>
       <ToggleButtonGroup exclusive value={accountSettings} onChange={handleChange} orientation="vertical">
         {Object.keys(textInputs).map((key) => (
           <ToggleButton key={key} value={key} aria-label={`account-${textInputs[key]}`}>

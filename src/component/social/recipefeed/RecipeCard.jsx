@@ -18,45 +18,55 @@ import SpacingDesign from '../../context/design/SpacingDesign';
 
 const RecipeCard = ({
   id, title, body, favorite, reviews,
-}) => (
-  <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
-    <CardContent>
-      <Button component={Link} to={`recipe/${id}`}>
-        <Typography variant="h4">
-          {title}
-        </Typography>
-      </Button>
-      <ShowMoreText
-        more={<Icon className="fas fa-caret-down" color="primary" />}
-        less={<Icon className="fas fa-caret-up" color="secondary" />}
-        lines={4}
+}) => {
+  let parsedRecipeSummary = '';
+  if (body) {
+    const lastIndexOfPercent = body.lastIndexOf('%');
+    parsedRecipeSummary = body.slice(0, lastIndexOfPercent);
+  }
+  return (
+    <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
+      <CardContent>
+        <Button component={Link} to={`recipe/${id}`}>
+          <Typography variant="h4">
+            {title}
+          </Typography>
+        </Button>
+        <ShowMoreText
+          more={<Icon className="fas fa-caret-down" color="primary" />}
+          less={<Icon className="fas fa-caret-up" color="secondary" />}
+          lines={4}
+        >
+          <Typography dangerouslySetInnerHTML={{ __html: `${parsedRecipeSummary}%.` }}>
+            {/* {body} */}
+          </Typography>
+        </ShowMoreText>
+      </CardContent>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        bgcolor="primary"
+        style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.paddingy(2) }}
       >
-        <Typography variant="body">
-          {body}
-        </Typography>
-      </ShowMoreText>
-    </CardContent>
-    <Box
-      display="flex"
-      justifyContent="space-between"
-      bgcolor="primary"
-      style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.paddingy(2) }}
-    >
-      <Button>
-        <Icon className="far fa-heart" />
-        <Typography style={SpacingDesign.marginLeft(1)}>
-          {favorite}
-        </Typography>
-      </Button>
-      <Button component={Link} to={`/recipe/${id}/reviews`}>
-        <RateReview />
-        <Typography style={SpacingDesign.marginLeft(1)}>
-          {reviews}
-        </Typography>
-      </Button>
-    </Box>
-  </Card>
-);
+        <Button onClick={() => {
+          // Alec do favorite logic here please :)
+        }}
+        >
+          <Icon className="far fa-heart" />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {favorite}
+          </Typography>
+        </Button>
+        <Button component={Link} to={`/recipe/${id}/reviews`}>
+          <RateReview />
+          <Typography style={SpacingDesign.marginLeft(1)}>
+            {reviews}
+          </Typography>
+        </Button>
+      </Box>
+    </Card>
+  );
+};
 
 RecipeCard.propTypes = {
   id: PropTypes.number.isRequired,
