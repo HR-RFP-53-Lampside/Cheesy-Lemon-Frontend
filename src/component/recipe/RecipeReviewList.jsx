@@ -14,12 +14,11 @@ import AddReviewForm from './AddReviewForm';
 const RecipeReviewList = ({recipieId, reviewDeets}) => {
   const themeDesign = useTheme();
 
-
   return (
     <div>
       <AddReviewForm
         // Expects current recipeId as a prop
-        // recipeId={recipeId}
+        recipeId={recipieId}
       />
       <div>
         <RecipeReviewItem reviewDeets={reviewDeets}/>

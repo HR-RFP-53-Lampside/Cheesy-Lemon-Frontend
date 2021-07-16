@@ -4,17 +4,19 @@ import PropTypes from 'prop-types';
 import {
   Typography, TextField, Button, Icon, Box,
 } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
 import Image from 'material-ui-image';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import endPoint from '../../routing';
 
-const AddReviewForm = ({ recipeId }) => {
+const AddReviewForm = ({}) => {
   const [logStatus] = useContext(LogStatus);
   const [images, setImages] = useState([]);
   const [headline, setHeadline] = useState('');
   const [body, setBody] = useState('');
+  const { recipeId } = useParams();
 
   const handleTextInputChange = (event) => {
     if (event.target.id === 'headline') {
