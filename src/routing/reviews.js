@@ -8,6 +8,13 @@ export default {
   /**
    * Retrieve all the reviews of a given recipe
    * @param {number} recipeId - Id of the recipe
+   * @param {number} reviewId - Id of the review
+   */
+  getSingleReview: (recipeId, reviewId) => axios.get(`${entry}/${recipeId}/reviews/${reviewId}`),
+
+  /**
+   * Retrieve all the reviews of a given recipe
+   * @param {number} recipeId - Id of the recipe
    *
    */
   getRecipeReviews: (recipeId) => axios.get(`${entry}/${recipeId}/reviews`),

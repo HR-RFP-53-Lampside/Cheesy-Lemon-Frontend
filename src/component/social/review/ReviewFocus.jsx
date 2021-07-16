@@ -27,18 +27,20 @@ const ReviewFocus = () => {
   const logStatus = useContext(LogStatus);
 
   const getReviews = async () => {
-    const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
-    const [reviewsData] = data;
-    const review = reviewsData && reviewsData.reviews;
-    if (review) {
-      const [myData] = review.filter((fit) => fit._id === reviewId);
-      if (myData.images) {
-        setPicture(myData.images);
-      }
-      console.log(myData);
-      myData.comments.reverse();
-      setReviewData(myData);
-    }
+    const { data } = await endPoint.reviews.getSingleReview(recipeId, reviewId);
+    console.log(data);
+    setReviewData(data);
+    // const [reviewsData] = data;
+    // const review = reviewsData && reviewsData.reviews;
+    // if (review) {
+    //   const [myData] = review.filter((fit) => fit._id === reviewId);
+    //   if (myData.images) {
+    //     setPicture(myData.images);
+    //   }
+    //   console.log(myData);
+    //   myData.comments.reverse();
+    //   setReviewData(myData);
+    // }
   };
 
   useEffect(() => {
