@@ -23,7 +23,7 @@ import 'firebase/database';
 const RecipeFocusStart = () => {
   const isFaved = () => {
     let favorite = false;
-    const faves = logStatus && logStatus.favRecipes
+    const faves = logStatus && logStatus.favRecipes;
     if (faves) {
       for (let key in faves) {
         // need current recipe ID

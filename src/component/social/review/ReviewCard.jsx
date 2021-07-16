@@ -23,7 +23,7 @@ import endPoint from '../../../routing';
 import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  id, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
+  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
 }) => {
   const [authorName, setAuthorName] = useState('');
   const [logStatus] = useContext(LogStatus);
@@ -31,17 +31,19 @@ const ReviewCard = ({
   const [upvoted, setUpvoted] = useState(upvotes);
   const [downvoted, setDownvoted] = useState(downvotes);
   const [receivedRecipeId, setReceivedRecipeId] = useState(recipeId);
+  const [receivedReviewId] = useState(reviewId);
 
   useEffect(() => {
-    console.log('recipecard:', id, recipeId, receivedRecipeId, recipeId === receivedRecipeId);
+    console.log('recipecard:', reviewId, recipeId, receivedRecipeId, recipeId === receivedRecipeId);
     firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);
     });
-    endPoint.reviews.getSingleReview(recipeId, id)
-      .then((hello) => {
-        console.log('what is', hello);
-      });
+    console.log(reviewId === receivedReviewId);
+    // endPoint.reviews.getSingleReview(recipeId, id)
+    //   .then(({ data }) => {
+    //     console.log('what is', data);
+    //   });
   }, []);
 
   const handleUpvote = () => {
@@ -65,6 +67,7 @@ const ReviewCard = ({
   return (
     <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }} elevation={3}>
       <CardContent>
+        {receivedReviewId}
         <Typography variant="h4">
           {title}
         </Typography>
@@ -97,10 +100,11 @@ const ReviewCard = ({
             {upvoted}
           </Typography>
         </Button>
-        <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
+        <Button component={Link} to={`/recipes/${recipeId}/reviews/${receivedReviewId}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {comments.length} {id}
+            {comments.length}
+            {reviewId}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
@@ -115,7 +119,7 @@ const ReviewCard = ({
 };
 
 ReviewCard.propType = {
-  id: PropTypes.number.isRequired,
+  reviewId: PropTypes.number.isRequired,
   recipeId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   authorId: PropTypes.string.isRequired,

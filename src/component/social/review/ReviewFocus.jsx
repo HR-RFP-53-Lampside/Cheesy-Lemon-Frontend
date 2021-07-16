@@ -25,29 +25,25 @@ const ReviewFocus = () => {
   const [picture, setPicture] = useState('');
   const [makeUpdate, setUpdate] = useState(false);
   const logStatus = useContext(LogStatus);
+  console.log('focus:', recipeId, reviewId);
 
   const getReviews = async () => {
-    console.log('focus:' ,recipeId, reviewId);
-    const { data } = await endPoint.reviews.getSingleReview(recipeId, reviewId);
-    // data.comments.reverse();
-    if (data.images) {
-      setPicture(data.images[0]);
+    const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
+    const [reviewsData] = data;
+    const review = reviewsData && reviewsData.reviews;
+    if (review) {
+      const [myData] = review.filter((fit) => fit._id === reviewId);
+      if (myData.images) {
+        setPicture(myData.images);
+      }
+      console.log(myData);
+      myData.comments.reverse();
+      setReviewData(myData);
     }
-    setReviewData(data);
-    // const [reviewsData] = data;
-    // const review = reviewsData && reviewsData.reviews;
-    // if (review) {
-    //   const [myData] = review.filter((fit) => fit._id === reviewId);
-    //   if (myData.images) {
-    //     setPicture(myData.images);
-    //   }
-    //   console.log(myData);
-    //   myData.comments.reverse();
-    //   setReviewData(myData);
-    // }
   };
 
   useEffect(() => {
+    console.log(recipeId, reviewId);
     getReviews();
   }, [recipeId]);
 

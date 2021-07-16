@@ -76,10 +76,12 @@ const ReviewList = () => {
         <option value="recent">Most Recent</option>
         <option value="oldest">Oldest</option>
       </Select>
-      {reviews && reviews.map((review) => (
+      {reviews && reviews.map((review) => {
+        console.log('what am I', review);
+        return (
         <ReviewCard
           key={review._id}
-          id={review._id}
+          reviewId={review._id}
           title={review.headline}
           authorId={review.authorId}
           body={review.body}
@@ -89,7 +91,7 @@ const ReviewList = () => {
           date={review._createdAt}
           comments={review.comments}
         />
-      ))}
+      )})}
     </Box>
   );
 };
