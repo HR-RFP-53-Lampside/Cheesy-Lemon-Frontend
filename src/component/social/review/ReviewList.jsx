@@ -14,12 +14,15 @@ import endPoint from '../../../routing';
 const ReviewList = () => {
   const { recipeId } = useParams();
   const [reviews, setReviews] = useState();
+  const [recipeTitle, setRecipeTitle] = useState('');
   const [sort, setSort] = useState('yummies');
 
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
+    const recipeData = await endPoint.recipes.getRecipeById(recipeId);
     const reviewsData = data[0].reviews;
     setReviews(reviewsData);
+    setRecipeTitle(recipeData && recipeData.data.status.title);
   };
 
   useEffect(() => {
@@ -52,7 +55,7 @@ const ReviewList = () => {
         variant="h3"
         align="center"
       >
-        Recipe 1
+        {recipeTitle}
       </Typography>
       <Typography
         variant="h4"
