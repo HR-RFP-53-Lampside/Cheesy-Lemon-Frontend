@@ -12,43 +12,38 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import PantryCard from './PantryCard';
-
+import endPoint from '../../../routing'
 import SpacingDesign from '../../context/design/SpacingDesign';
 import theme from '../../context/design/ThemeDesign';
+import LogStatus from '../../context/auth/LogStatus';
+import PantryContext from '../../context/foodies/PantryContext';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
-const data = [
-  {
-    "name": "Lemons",
-    "image": lemonImg,
-    "num": 1
-  },
-  {
-    "name": "Cheese",
-    "image": cheeseImg,
-    "num": 1
-  }
-]
-
-// const data = {
-//   "Lemons": {
-//     "image": lemonImg,
-//     "num": 1
-//   },
-//   "Cheese": {
-//     "image": cheeseImg,
-//     "num": 1
-//   }
-// }
 
 const PantryStart = () => {
+  const history = useHistory();
   const themeDesign = useTheme();
-  const [ingredients, setIngredients] = useState(data);
   const [select, setSelect] = useState([]);
   const [filter, setFilter] = useState('');
+  const [logStatus] = useContext(LogStatus);
+  const [ingredients, setIngredients] = useState([]);
+  const [recipes, setRecipes] = useContext(PantryContext);
 
   const handleFilter = (e) => {
     setFilter(e.target.value.toLowerCase());
   }
+
+  useEffect(() => {
+    if(logStatus) {
+      const ing = [];
+      for(let i in logStatus.pantry) {
+        ing.push(logStatus.pantry[i]);
+      }
+      setIngredients(ing);
+    }
+  }, [logStatus]);
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -64,24 +59,34 @@ const PantryStart = () => {
   }
 
   const handleSubmit = (e) => {
+    // logic to handleingredient already in pantry
+    for (let ingredient of ingredients) {
+      if (ingredient.name.toLowerCase() === filter.toLowerCase()) {
+        setFilter('');
+        return;
+      }
+    }
     if(filter.length >= 3) {
-      axios.get(`http://localhost:8000/api/ingredients/${filter}/search`)
+      endPoint.recipes.getIngredient(filter)
         .then((result) => {
           setFilter('');
           let img = `https://spoonacular.com/cdn/ingredients_500x500/${result.data.status.results[0].image}`;
           let name = result.data.status.results[0].name;
-
+          // pantry should update when context changes, so shouldn't need to set filter
           let obj = {
             "name": name,
             "image": img,
             "num": 1
           }
           setIngredients([...ingredients, obj]);
+          const newIngredientKey = firebase.database().ref().child(`users/${logStatus.uid}/pantry`).push().key;
+          const updates = {};
+          updates[`users/${logStatus.uid}/pantry/${newIngredientKey}`] = { id: newIngredientKey, name, image:img, count: 1 }
+          firebase.database().ref().update(updates).catch(console.error);
         })
         .catch((e) => { throw e; })
     }
   }
-
   const handlePhoto = (e) => {
     let obj = {}
     const file = [...e.target.files];
@@ -99,6 +104,21 @@ const PantryStart = () => {
     } else {
       setSelect(select.filter(item => item !== name));
     }
+  }
+
+  const handleWFD = (e) => {
+    //implement firebase add ingredients too
+    endPoint.recipes.getRecipeIngredients({
+      ingredients: select,
+      diets: logStatus.diets
+    })
+    .then(async (response) => {
+      await setRecipes(response.data);
+      history.push('/wfd');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   useEffect(() => {
@@ -130,6 +150,8 @@ const PantryStart = () => {
             <AddCircleOutlineOutlinedIcon style={{ ...SpacingDesign.fontSize(5)}}></AddCircleOutlineOutlinedIcon>
           </IconButton>
 
+          <Button variant='outlined' onClick={handleWFD}>WFD</Button>
+
             <input accept="image/*"  id="icon-button-file" type="file" hidden onChange={(e) => {handlePhoto(e)}}/>
             <label htmlFor="icon-button-file">
               <IconButton  aria-label="upload picture" component="span">
@@ -137,7 +159,6 @@ const PantryStart = () => {
               </IconButton>
             </label>
         </Box>
-
 
         <Typography variant='h4' align='center' >
           My Pantry

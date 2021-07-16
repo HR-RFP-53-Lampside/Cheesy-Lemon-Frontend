@@ -103,7 +103,7 @@ const ReviewCard = ({
             {body}
           </Typography>
         </ShowMoreText>
-        <Typography>
+        <Typography variant="body2">
           {/* {date.toLocaleDateString(undefined, dateOptions)} */}
           {new Date(date).toLocaleDateString(undefined, dateOptions)}
         </Typography>
