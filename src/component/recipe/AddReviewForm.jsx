@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   Typography, TextField, Button, Icon, Box, Paper,
 } from '@material-ui/core';
@@ -10,7 +11,7 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import endPoint from '../../routing';
 
-const AddReviewForm = () => {
+const AddReviewForm = ({ setUpdateReview, updateReview }) => {
   const [logStatus] = useContext(LogStatus);
   const [images, setImages] = useState([]);
   const [headline, setHeadline] = useState('');
@@ -61,9 +62,11 @@ const AddReviewForm = () => {
       body,
       images,
     )
-      .then(({ data }) => {
-        console.log('success!');
-        console.log(data);
+      .then(() => {
+        setUpdateReview(!updateReview);
+      })
+      .catch(() => {
+        setUpdateReview(!updateReview);
       });
   };
 
@@ -160,6 +163,16 @@ const AddReviewForm = () => {
       </Button>
     </Paper>
   );
+};
+
+AddReviewForm.propTypes = {
+  setUpdateReview: PropTypes.func,
+  updateReview: PropTypes.bool,
+};
+
+AddReviewForm.defaultProps = {
+  updateReview: false,
+  setUpdateReview: () => {},
 };
 
 export default AddReviewForm;
