@@ -25,7 +25,6 @@ const ReviewFocus = () => {
   const [picture, setPicture] = useState('');
   const [makeUpdate, setUpdate] = useState(false);
   const logStatus = useContext(LogStatus);
-  console.log('focus:', recipeId, reviewId);
 
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
@@ -36,14 +35,12 @@ const ReviewFocus = () => {
       if (myData.images) {
         setPicture(myData.images);
       }
-      console.log(myData);
       myData.comments.reverse();
       setReviewData(myData);
     }
   };
 
   useEffect(() => {
-    console.log(recipeId, reviewId);
     getReviews();
   }, [recipeId]);
 
@@ -58,12 +55,12 @@ const ReviewFocus = () => {
           src={picture}
           cover
         />
-        <CardActionArea component={Link} to="/recipes/1/reviews/">
+        <CardActionArea component={Link} to={`/recipes/${recipeId}/reviews/`}>
           <Typography variant="h3">
             {reviewData.headline}
           </Typography>
         </CardActionArea>
-        <Typography variant="h5" style={{ ...SpacingDesign.marginBottom(2), ...SpacingDesign.marginLeft(3) }}>
+        <Typography component={Link} variant="h5" style={{ ...SpacingDesign.marginBottom(2), ...SpacingDesign.marginLeft(3) }}>
           {reviewData.authorName}
         </Typography>
         <Typography variant="body1">

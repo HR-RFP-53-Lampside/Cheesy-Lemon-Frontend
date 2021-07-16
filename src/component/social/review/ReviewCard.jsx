@@ -11,7 +11,7 @@ import {
   CardContent,
   Icon,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -32,14 +32,13 @@ const ReviewCard = ({
   const [downvoted, setDownvoted] = useState(downvotes);
   const [receivedRecipeId, setReceivedRecipeId] = useState(recipeId);
   const [receivedReviewId] = useState(reviewId);
+  const history = useHistory();
 
   useEffect(() => {
-    console.log('recipecard:', reviewId, recipeId, receivedRecipeId, recipeId === receivedRecipeId);
     firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);
     });
-    console.log(reviewId === receivedReviewId);
     // endPoint.reviews.getSingleReview(recipeId, id)
     //   .then(({ data }) => {
     //     console.log('what is', data);
@@ -70,9 +69,14 @@ const ReviewCard = ({
         <Typography variant="h4">
           {title}
         </Typography>
-        <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
-          {authorName}
-        </Typography>
+        <Button onClick={() => {
+          history.push(`/profile/${authorId}`);
+        }}
+        >
+          <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
+            {authorName}
+          </Typography>
+        </Button>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
           less={<Icon className="fas fa-caret-up" color="secondary" />}

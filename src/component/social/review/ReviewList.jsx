@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useMemo } from 'react';
@@ -18,7 +19,6 @@ const ReviewList = () => {
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
     const reviewsData = data[0].reviews;
-    console.log('reviewData', reviewsData);
     setReviews(reviewsData);
   };
 
@@ -76,23 +76,20 @@ const ReviewList = () => {
         <option value="recent">Most Recent</option>
         <option value="oldest">Oldest</option>
       </Select>
-      {reviews && reviews.map((review) => {
-        console.log('what am I', review);
-        return (
-          <ReviewCard
-            key={review._id}
-            reviewId={review._id}
-            title={review.headline}
-            authorId={review.authorId}
-            body={review.body}
-            upvotes={review.upvotes}
-            downvotes={review.downvotes}
-            recipeId={recipeId}
-            date={review._createdAt}
-            comments={review.comments}
-          />
-        );
-      })}
+      {reviews && reviews.map((review) => (
+        <ReviewCard
+          key={review._id}
+          reviewId={review._id}
+          title={review.headline}
+          authorId={review.authorId}
+          body={review.body}
+          upvotes={review.upvotes}
+          downvotes={review.downvotes}
+          recipeId={recipeId}
+          date={review._createdAt}
+          comments={review.comments}
+        />
+      ))}
     </Box>
   );
 };
