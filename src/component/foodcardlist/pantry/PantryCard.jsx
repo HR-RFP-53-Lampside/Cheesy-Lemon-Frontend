@@ -63,7 +63,7 @@ const PantryCard = (props) => {
 
             <ButtonGroup variant='outlined' style={{ ...SpacingDesign.marginy(1), ...SpacingDesign.marginTop(2)}}>
               <Button onClick={handleDecrement}>-</Button>
-              <Button disabled>{count}</Button>
+              <Button >{count}</Button>
               <Button onClick={handleIncrement}>+</Button>
             </ButtonGroup>
 
