@@ -85,8 +85,9 @@ const ReviewCard = ({
             {authorName}
           </Typography>
         </Button>
-        <div style={imageContainerStyle}>{images.map((image) => (
+        <div style={imageContainerStyle}>{images.map((image, i) => (
           <Image
+            key={i}
             src={image}
             style={{ padding: '60px' }}
             imageStyle={{ height: '100px', width: '100px' }}
