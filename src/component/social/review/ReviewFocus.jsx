@@ -29,6 +29,7 @@ const ReviewFocus = () => {
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getSingleReview(recipeId, reviewId);
     console.log(data);
+    data.comments.reverse();
     setReviewData(data);
     // const [reviewsData] = data;
     // const review = reviewsData && reviewsData.reviews;
