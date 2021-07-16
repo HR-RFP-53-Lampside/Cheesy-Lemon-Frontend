@@ -51,7 +51,8 @@ const RecipeFocusStart = () => {
   }
 
   const getRecipeData = () => {
-    axios.get(`http://localhost:8000/api/recipes/${recipeId}`)
+    // axios.get(`http://localhost:8000/api/recipes/${recipeId}`)
+    endPoint.recipes.getRecipeById(recipeId)
       .then((res) => {
         setRecipeDeets(res.data);
       })
