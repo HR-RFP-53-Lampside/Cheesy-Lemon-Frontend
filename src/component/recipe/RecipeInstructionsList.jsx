@@ -11,14 +11,10 @@ import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 import RecipeInstruction from './RecipeInstruction';
 
-const RecipeInstructionsList = ({instructions}) => {
-
-
-  return (
-    <div>
-    <RecipeInstruction instructions={instructions}/>
-    </div>
-  );
-};
+const RecipeInstructionsList = ({ instructions }) => (
+  <Box>
+    <RecipeInstruction instructions={instructions} />
+  </Box>
+);
 
 export default RecipeInstructionsList;

@@ -81,16 +81,16 @@ function App() {
             <TopBar darkMode={darkMode} setDarkMode={setDarkMode} />
             <Switch>
               <Route exact path="/">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                {logStatus ? <Redirect push to="/pantry" /> : <Redirect to="/login" />}
               </Route>
               <Route exact path="/login">
-                {logStatus ? <Redirect push to="/wfd" /> : <LoginStart />}
+                {logStatus ? <Redirect push to="/pantry" /> : <LoginStart />}
               </Route>
               <Route exact path="/register">
-                {logStatus ? <Redirect push to="/wfd" /> : <RegisterStart />}
+                {logStatus ? <Redirect push to="/pantry" /> : <RegisterStart />}
               </Route>
               <Box display="flex">
-                {logStatus ? <Redirect push to="/wfd" /> : <Redirect to="/login" />}
+                {logStatus ? <Redirect push to="/pantry" /> : <Redirect to="/login" />}
                 <SideBar sidebarShow={sidebarShow} setSidebarShow={setSidebarShow} />
                 <DekstopSideBar />
                 <Container maxWidth="sm" style={{ ...SpacingDesign.padding(3), marginBottom: '4em' }}>
