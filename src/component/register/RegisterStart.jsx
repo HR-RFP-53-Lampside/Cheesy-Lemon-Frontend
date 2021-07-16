@@ -22,7 +22,7 @@ const RegisterStart = () => {
   const setDbUser = (user) => {
     const dbUser = {
       aboutMe: '',
-      dietaryPrefs: { vegan: false, vegetarian: false, pescatarian: false, ketogenic: false, glutenFree: false, dairyFree: false },
+      dietaryPrefs: '',
       downReviews: '',
       favRecipes: '',
       email: user.email,

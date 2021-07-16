@@ -11,7 +11,7 @@ import AccountSettings from './AccountSettings';
 import PrivacySettings from './PrivacySetting';
 
 const SettingsStart = () => {
-  const [settingsFocus, setSettingsFocus] = useState('');
+  const [settingsFocus, setSettingsFocus] = useState('account');
   const [goToPage, setGoToPage] = useState();
 
   const handleChange = (event, newValue) => {

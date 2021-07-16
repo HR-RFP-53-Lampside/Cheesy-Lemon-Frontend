@@ -153,9 +153,9 @@ export default {
    * This will commit changes to both the mongoDB and also to the firebase
    * If the firebase fails, the mongoDB will revert back the changes
    */
-  postComment: (recipeId, reviewId, authorName, body) => new Promise((resolve, reject) => {
+  postComment: (recipeId, reviewId, authorId, body) => new Promise((resolve, reject) => {
     // reviewData
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/comment`, { authorName, body })
+    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/comment`, { authorId, body })
       .then(() => {
         /* post to current user's firebase data
           firebase.dostuff()

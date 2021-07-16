@@ -15,6 +15,7 @@ import Image from 'material-ui-image';
 import SpacingDesign from '../../context/design/SpacingDesign';
 import ReviewFocusComment from './ReviewFocusComment';
 import endPoint from '../../../routing';
+import AddCommentForm from './AddCommentForm';
 
 const ReviewFocus = () => {
   const [reviewData, setReviewData] = useState({});
@@ -84,7 +85,12 @@ const ReviewFocus = () => {
           <option value="recent">Most Recent</option>
         </Select>
       </Box>
+<<<<<<< HEAD
       {reviewData.comments && reviewData.comments.map((row) => (
+=======
+      <AddCommentForm recipeId={123456789} reviewId={'60f06d5a973b6050b9fa09e7'}/>
+      {[1, 2, 3, 4, 5].map((row) => (
+>>>>>>> main
         <ReviewFocusComment key={row} />
       ))}
     </>
