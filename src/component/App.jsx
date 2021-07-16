@@ -39,7 +39,7 @@ function App() {
   const palleteType = darkMode ? 'dark' : 'light';
   const bgColor = darkMode ? grey[900] : grey[200];
 
-  const [pantry, setPantry] = useState({});
+  const [pantry, setPantry] = useState([]);
   const [logStatus, setLogStatus] = useState();
   // eslint-disable-next-line no-unused-vars
   const [sidebarShow, setSidebarShow] = useState(false);
