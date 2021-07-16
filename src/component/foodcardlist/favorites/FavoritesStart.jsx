@@ -8,6 +8,7 @@ import { useTheme } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
+import LogStatus from '../../context/auth/LogStatus';
 import endPoint from '../../../routing';
 
 const data = [
@@ -42,12 +43,23 @@ const FavoritesStart = () => {
   const themeDesign = useTheme();
   const [filter, setFilter] = useState('');
   const [favorites, setFavorites] = useState([]);
+  const [logStatus] = useContext(LogStatus);
   // const [favorites, setFavorites] = useState(logStatus.favRecipes)
 
-  //ADJUST FOR LIVE DATA
+  // //ADJUST FOR LIVE DATA
+  // useEffect(() => {
+  //   setFavorites(data);
+  // }, [data]);
+
   useEffect(() => {
-    setFavorites(data);
-  }, [data]);
+    if(logStatus) {
+      const favs = [];
+      for(let i in logStatus.favRecipes) {
+        favs.push(logStatus.favRecipes[i]);
+      }
+      setFavorites(favs);
+    }
+  }, [logStatus]);
 
   const removeFavorite = (e) => {
     e.preventDefault();
