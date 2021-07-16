@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-unresolved */
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ThumbUp, ThumbDown, RateReview } from '@material-ui/icons';
 import {
@@ -13,14 +13,37 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 import ShowMoreText from 'react-show-more-text';
 import SpacingDesign from '../../context/design/SpacingDesign';
+import endPoint from '../../../routing';
+import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
   id, title, authorId, body, upvotes, downvotes, recipeId, date,
 }) => {
-  const handleUpvote = () => {
+  const [authorName, setAuthorName] = useState('');
+  const [logStatus] = useContext(LogStatus);
 
+  useEffect(() => {
+    firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
+      const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
+      setAuthorName(username);
+    });
+  }, []);
+
+  const handleUpvote = () => {
+    firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
+      const upvotes = (snapshot.val() && snapshot.val());
+      console.log(upvotes);
+    });
+    endPoint.reviews.putUpvoteRecipeReview(recipeId, id)
+      .then((result) => {
+
+      });
   };
 
   const handleDownvote = () => {
@@ -36,7 +59,7 @@ const ReviewCard = ({
           {title}
         </Typography>
         <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
-          {authorId}
+          {authorName}
         </Typography>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
