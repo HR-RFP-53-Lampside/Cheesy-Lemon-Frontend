@@ -36,7 +36,6 @@ const RecipeFocusStart = () => {
   };
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
-  const [reviewDeets, setReviewDeets] = useState([]);
   const [clicked, setClicked] = useState(isFaved());
   const themeDesign = useTheme();
   const { recipeId } = useParams();
@@ -64,16 +63,6 @@ const RecipeFocusStart = () => {
     getRecipeData();
   }, []);
 
-  const getReviewsData = () => {
-    axios.get(`/local/${recipeId}/reviews/`)
-      .then((res) => {
-        setRewiewsDeets(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleFavorite = () => {
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
@@ -98,48 +87,47 @@ const RecipeFocusStart = () => {
     <>
       {recipeDeets.status
         ? (
-          <Paper
-            style={SpacingDesign.padding(3)}
-          >
-            <Image
-              src={recipeDeets.status.image || null}
-              cover
-            />
-            <Typography variant="h6" align="center" style={{ color: themeDesign.custom.muted.grey }}>
-              {recipeDeets.status.title}
-              <Button onClick={(e) => handleFavorite()}>
-                {!clicked
-                  ? <Icon className="far fa-heart" allign="right" />
-                  : <FavoriteIcon />}
-              </Button>
+          <>
+            <Paper
+              style={SpacingDesign.padding(3)}
+            >
+              <Image
+                src={recipeDeets.status.image || null}
+                cover
+              />
+              <Typography variant="h6" align="center" style={{ color: themeDesign.custom.muted.grey }}>
+                {recipeDeets.status.title}
+                <Button onClick={(e) => handleFavorite()}>
+                  {!clicked
+                    ? <Icon className="far fa-heart" allign="right" />
+                    : <FavoriteIcon />}
+                </Button>
 
-            </Typography>
-            <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              Description
-            </Typography>
+              </Typography>
+              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                Description
+              </Typography>
+              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                {parsedRecipeSummary
+          && <RecipeDescription summary={parsedRecipeSummary} />}
+              </Typography>
+              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                Ingredients
+              </Typography>
+              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                <RecipeIngredientsList ingredients={recipeDeets.status.extendedIngredients} />
+              </Typography>
+              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                Instructions
+              </Typography>
+              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+                <RecipeInstructionsList instructions={recipeDeets.status.instructions} />
+              </Typography>
+            </Paper>
             <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              {parsedRecipeSummary
-        && <RecipeDescription summary={parsedRecipeSummary} />}
+              <RecipeReviewList recipeId={recipeDeets.status.id} />
             </Typography>
-            <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              Ingredients
-            </Typography>
-            <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              <RecipeIngredientsList ingredients={recipeDeets.status.extendedIngredients} />
-            </Typography>
-            <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              Instructions
-            </Typography>
-            <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              <RecipeInstructionsList instructions={recipeDeets.status.instructions} />
-            </Typography>
-            <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              Reviews
-            </Typography>
-            <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
-              <RecipeReviewList recipeId={recipeDeets.status.id} reviews={reviewDeets} />
-            </Typography>
-          </Paper>
+          </>
         )
         :
       // nah, his component, or does the stuff we need only work on his local copy?
