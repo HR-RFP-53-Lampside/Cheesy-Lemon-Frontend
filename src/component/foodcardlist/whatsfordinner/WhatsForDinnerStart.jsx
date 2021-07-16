@@ -55,7 +55,11 @@ const WhatsForDinnerStart = () => {
         <Typography variant="h4" align="center">
           What&apos;s For Dinner
         </Typography>
-
+        {recipes.length === 0 && (
+          <Typography align="center">
+            Add some ingredients in the pantry to see what is for dinner!
+          </Typography>
+        )}
         {recipes.filter((main) => main.title.toLowerCase().indexOf(filter) !== -1)
           .map((item) => (
             <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5} key={item.id}>
