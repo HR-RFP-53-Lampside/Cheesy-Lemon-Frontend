@@ -84,7 +84,7 @@ const RecipeFocusStart = () => {
       for (let key in logStatus.favRecipes) {
         // need the current recipe id
         if (logStatus.favRecipes[key].backendId === recipeId) {
-          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, true)).catch(console.error);
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, true)).catch(console.error);
         }
       }
     }
