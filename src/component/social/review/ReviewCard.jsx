@@ -12,6 +12,7 @@ import {
   Icon,
 } from '@material-ui/core';
 import { useHistory, Link } from 'react-router-dom';
+import Image from 'material-ui-image';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -23,7 +24,7 @@ import endPoint from '../../../routing';
 import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
+  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments, images
 }) => {
   const [authorName, setAuthorName] = useState('');
   const [logStatus] = useContext(LogStatus);
@@ -61,6 +62,11 @@ const ReviewCard = ({
 
   };
 
+  const imageContainerStyle = {
+    display: 'flex',
+    justifyContent: 'flex-start'
+  }
+
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
   return (
@@ -79,6 +85,14 @@ const ReviewCard = ({
             {authorName}
           </Typography>
         </Button>
+        <div style={imageContainerStyle}>{images.map((image) => (
+          <Image
+            src={image}
+            style={{ padding: '60px' }}
+            imageStyle={{ height: '100px', width: '100px' }}
+            cover
+          />)
+        )}</div>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
           less={<Icon className="fas fa-caret-up" color="secondary" />}

@@ -145,11 +145,7 @@ const AddReviewForm = () => {
         <input accept="image/*" type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
       </Button>
       )}
-<<<<<<< HEAD
-      <br></br>
-=======
       <br />
->>>>>>> ff7771ae7eac9064c0e63553ffbf2f09ee37c147
       <Button
         variant="contained"
         color="primary"

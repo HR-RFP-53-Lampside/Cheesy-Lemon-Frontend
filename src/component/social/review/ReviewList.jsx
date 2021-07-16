@@ -91,6 +91,7 @@ const ReviewList = () => {
           recipeId={recipeId}
           date={review._createdAt}
           comments={review.comments}
+          images={review.images}
         />
       ))}
     </Box>
