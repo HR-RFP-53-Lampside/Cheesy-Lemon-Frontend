@@ -14,14 +14,29 @@ import RecipeIngredientsList from './RecipeIngredientsList';
 import RecipeInstructionsList from './RecipeInstructionsList';
 import RecipeDescription from './RecipeDescription';
 import RecipeReviewList from './RecipeReviewList';
+import endPoint from '../../routing';
 
 import 'firebase/auth';
 import 'firebase/database';
 
+
 const RecipeFocusStart = () => {
+  const isFaved = () => {
+    let favorite = false;
+    const faves = logStatus && logStatus.favRecipes
+    if (faves) {
+      for (let key in faves) {
+        // need current recipe ID
+        if (faves[key].backendId === 654901) {
+         favorite = true;
+        }
+      }
+    }
+    return favorite;
+  };
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(isFaved());
   const themeDesign = useTheme();
   const faykeRecipeData = {
     status: {
@@ -79,19 +94,20 @@ const RecipeFocusStart = () => {
   // });
 
   const handleFavorite = () => {
-    // addToFavRecipes
-    // if clicked set to false
+    // still need to increment/decrement count of favorites on the backend
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
       const updates = {};
       updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: faykeRecipeData.status.id };
-      firebase.database().ref().update(updates).catch((error) => console.error(error));
-      setClicked(true);
+      firebase.database().ref().update(updates).then(() => setClicked(true)).then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, false)).catch(console.error);
     } else {
-      firebase.database().ref(`users/${logStatus.uid}/favRecipes/${newRecipeKey}`).remove().catch((error) => console.error(error));
-      setClicked(false);
+      for (let key in logStatus.favRecipes) {
+        // need the current recipe id
+        if (logStatus.favRecipes[key].backendId === faykeRecipeData.status.id) {
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, true)).catch(console.error);
+        }
+      }
     }
-    // so this will be the function that posts the recipie id to firebase db ^^
   };
 
   return (
