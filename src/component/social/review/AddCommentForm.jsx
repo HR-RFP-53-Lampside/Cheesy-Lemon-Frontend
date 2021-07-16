@@ -22,6 +22,7 @@ const AddCommentForm = (props) => {
     routing.postComment(props.recipeId, props.reviewId, logStatus.uid, body)
       .then(() => {
         props.setUpdate(!props.makeUpdate);
+        setBody('');
       })
       .catch(() => {
         props.setUpdate(!props.makeUpdate);
@@ -46,6 +47,7 @@ const AddCommentForm = (props) => {
         borderRadius="50%"
         style={{ ...SpacingDesign.marginBottom(1), ...SpacingDesign.marginTop(1) }}
         onChange={(e) => setBody(e.target.value)}
+        value={body}
       />
       <br />
       <Button
