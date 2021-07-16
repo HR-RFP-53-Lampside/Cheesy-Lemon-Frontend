@@ -30,8 +30,10 @@ const ReviewCard = ({
   const [voted, setVoted] = useState('none');
   const [upvoted, setUpvoted] = useState(upvotes);
   const [downvoted, setDownvoted] = useState(downvotes);
+  const [receivedRecipeId, setReceivedRecipeId] = useState(recipeId);
 
   useEffect(() => {
+    console.log('recipecard:', id, recipeId, receivedRecipeId, recipeId === receivedRecipeId);
     firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);
@@ -70,7 +72,7 @@ const ReviewCard = ({
           less={<Icon className="fas fa-caret-up" color="secondary" />}
           lines={4}
         >
-          <Typography>
+          <Typography >
             {body}
           </Typography>
         </ShowMoreText>
@@ -94,7 +96,7 @@ const ReviewCard = ({
         <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {downvoted}
+            {comments.length}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>

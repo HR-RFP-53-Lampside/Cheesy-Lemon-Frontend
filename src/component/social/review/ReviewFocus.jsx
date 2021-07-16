@@ -27,9 +27,12 @@ const ReviewFocus = () => {
   const logStatus = useContext(LogStatus);
 
   const getReviews = async () => {
+    console.log('focus:' ,recipeId, reviewId);
     const { data } = await endPoint.reviews.getSingleReview(recipeId, reviewId);
-    console.log(data);
     data.comments.reverse();
+    if (data.images) {
+      setPicture(data.images[0]);
+    }
     setReviewData(data);
     // const [reviewsData] = data;
     // const review = reviewsData && reviewsData.reviews;

@@ -31,8 +31,8 @@ const RecipeCard = ({
         less={<Icon className="fas fa-caret-up" color="secondary" />}
         lines={4}
       >
-        <Typography>
-          {body}
+        <Typography dangerouslySetInnerHTML={{ __html: body + '%.' }}>
+          {/* {body} */}
         </Typography>
       </ShowMoreText>
     </CardContent>

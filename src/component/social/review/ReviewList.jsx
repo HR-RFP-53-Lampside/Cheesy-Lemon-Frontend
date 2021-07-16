@@ -33,7 +33,10 @@ const ReviewList = () => {
         copy.sort((a, b) => (b.upvotes - a.upvotes));
       }
       if (sort === 'recent') {
-        copy.sort((a, b) => (a._createdAt.getTime() - b._createdAt.getTime()));
+        copy.sort((a, b) => (new Date(b._createdAt).getTime() - new Date(a._createdAt).getTime()));
+      }
+      if (sort === 'oldest') {
+        copy.sort((a, b) => (new Date(a._createdAt).getTime() - new Date(b._createdAt).getTime()));
       }
       setReviews(copy);
     }
@@ -71,6 +74,7 @@ const ReviewList = () => {
       >
         <option value="yummies">Most Yummies</option>
         <option value="recent">Most Recent</option>
+        <option value="oldest">Oldest</option>
       </Select>
       {reviews && reviews.map((review) => (
         <ReviewCard
