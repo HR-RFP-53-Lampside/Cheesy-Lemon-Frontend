@@ -138,9 +138,10 @@ const AddReviewForm = ({ recipeId }) => {
           Add Image
         </Typography>
         <Icon className="fas fa-camera" style={SpacingDesign.marginLeft(1.5)} />
-        <input type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
+        <input accept="image/*" type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
       </Button>
       )}
+      <br></br>
       <Button
         variant="contained"
         color="primary"
