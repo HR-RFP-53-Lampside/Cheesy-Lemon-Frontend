@@ -21,24 +21,26 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const RecipeFocusStart = () => {
+  let { recipeId } = useParams();
+  const [logStatus] = useContext(LogStatus);
   const isFaved = () => {
     let favorite = false;
     const faves = logStatus && logStatus.favRecipes;
     if (faves) {
       for (const key in faves) {
         // need current recipe ID
-        if (faves[key].backendId === 654901) {
+        if (faves[key].backendId === recipeId) {
           favorite = true;
         }
       }
     }
     return favorite;
   };
-  const [logStatus] = useContext(LogStatus);
-  const [recipeDeets, setRecipeDeets] = useState([]);
   const [clicked, setClicked] = useState(isFaved());
+  const [recipeDeets, setRecipeDeets] = useState([]);
+  const [reviewDeets, setReviewDeets] = useState([]);
   const themeDesign = useTheme();
-  const { recipeId } = useParams();
+
   // const recipeId = 716429; // loading circle looks nice!
 
   let parsedRecipeSummary = '';
@@ -67,17 +69,13 @@ const RecipeFocusStart = () => {
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
       const updates = {};
-      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: faykeRecipeData.status.id };
-      firebase.database().ref().update(updates).then(() => setClicked(true))
-        .then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, false))
-        .catch(console.error);
+      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: recipeId };
+      firebase.database().ref().update(updates).then(() => setClicked(true)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, false)).catch(console.error);
     } else {
       for (const key in logStatus.favRecipes) {
         // need the current recipe id
-        if (logStatus.favRecipes[key].backendId === faykeRecipeData.status.id) {
-          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false))
-            .then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, true))
-            .catch(console.error);
+        if (logStatus.favRecipes[key].backendId === recipeId) {
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, true)).catch(console.error);
         }
       }
     }
