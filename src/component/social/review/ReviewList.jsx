@@ -2,6 +2,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import {
   Box,
   Typography,
@@ -11,7 +12,7 @@ import { useParams } from 'react-router-dom';
 import ReviewCard from './ReviewCard';
 import endPoint from '../../../routing';
 
-const ReviewList = () => {
+const ReviewList = ({ updateReview }) => {
   const { recipeId } = useParams();
   const [reviews, setReviews] = useState();
   const [recipeTitle, setRecipeTitle] = useState('');
@@ -27,7 +28,7 @@ const ReviewList = () => {
 
   useEffect(() => {
     getReviews();
-  }, [recipeId]);
+  }, [recipeId, updateReview]);
 
   useMemo(() => {
     if (reviews) {
@@ -95,6 +96,14 @@ const ReviewList = () => {
       ))}
     </Box>
   );
+};
+
+ReviewList.propTypes = {
+  updateReview: PropTypes.bool,
+};
+
+ReviewList.defaultProps = {
+  updateReview: false,
 };
 
 export default ReviewList;
