@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import {
   Paper, Typography, Button, Icon, CircularProgress
 } from '@material-ui/core';
@@ -14,15 +15,29 @@ import RecipeIngredientsList from './RecipeIngredientsList';
 import RecipeInstructionsList from './RecipeInstructionsList';
 import RecipeDescription from './RecipeDescription';
 import RecipeReviewList from './RecipeReviewList';
-import { useParams } from "react-router-dom";
+import endPoint from '../../routing';
+
 import 'firebase/auth';
 import 'firebase/database';
 
 const RecipeFocusStart = () => {
+  const isFaved = () => {
+    let favorite = false;
+    const faves = logStatus && logStatus.favRecipes
+    if (faves) {
+      for (let key in faves) {
+        // need current recipe ID
+        if (faves[key].backendId === 654901) {
+         favorite = true;
+        }
+      }
+    }
+    return favorite;
+  };
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
   const [reviewDeets, setReviewDeets] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [clicked, setClicked] = useState(isFaved());
   const themeDesign = useTheme();
   let { recipeId } = useParams();
   // const recipeId = 716429; // loading circle looks nice!
@@ -37,7 +52,6 @@ const RecipeFocusStart = () => {
   if (recipeDeets.status) {
     const lastIndexOfPercent = recipeDeets.status.summary.lastIndexOf('%');
      parsedRecipeSummary = recipeDeets.status.summary.slice(0, lastIndexOfPercent);
-
   }
 
   const getRecipeData = () => {
@@ -64,13 +78,13 @@ const RecipeFocusStart = () => {
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
       const updates = {};
-      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = {id: newRecipeKey, backendId: recipeId}
-      firebase.database().ref().update(updates).then(() => setClicked(true)).catch(console.error);
+      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: faykeRecipeData.status.id };
+      firebase.database().ref().update(updates).then(() => setClicked(true)).then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, false)).catch(console.error);
     } else {
       for (let key in logStatus.favRecipes) {
-        if (logStatus.favRecipes[key].backendId === recipieId ) {
-          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).catch(console.error);
-          break;
+        // need the current recipe id
+        if (logStatus.favRecipes[key].backendId === faykeRecipeData.status.id) {
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, true)).catch(console.error);
         }
       }
     }

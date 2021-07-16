@@ -13,6 +13,7 @@ import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
+import endPoint from '../../routing';
 
 const ChangeFields = ({
   label, accountSettings, multiline, rows,
@@ -41,7 +42,7 @@ const ChangeFields = ({
       const formData = new FormData();
       const files = Array.from(event.target.files);
       formData.append('file', files[0]);
-      axios.post('http://localhost:8000/api/image', formData)
+      endPoint.recipes.getImageUrl(formData)
         .then((result) => {
           const { url } = result.data[0];
           firebase.database().ref(`users/${logStatus.uid}/${accountSettings}`).set(url).catch(console.error);
