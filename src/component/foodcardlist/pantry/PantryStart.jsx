@@ -36,6 +36,7 @@ const PantryStart = () => {
   const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useContext(PantryContext);
 
+
   const handleFilter = (e) => {
     e.preventDefault();
     setFilter(e.target.value.toLowerCase());
@@ -58,8 +59,12 @@ const PantryStart = () => {
     ingredients.forEach((item, index) => {
       let temp = ingredients;
       if(item.name === name) {
-        ingredients.splice(index, 1);
+        let test = ingredients.splice(index, 1);
         setIngredients([...ingredients]);
+        let id = test[0].id;
+
+        //update firebase
+        firebase.database().ref(`users/${logStatus.uid}/pantry/${id}`).remove().catch((error) => console.error(error));
       }
     })
   }
