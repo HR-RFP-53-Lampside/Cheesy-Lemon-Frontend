@@ -7,13 +7,15 @@ import {
   Box,
   Typography,
   Select,
+  Button,
 } from '@material-ui/core';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import ReviewCard from './ReviewCard';
 import endPoint from '../../../routing';
 
 const ReviewList = ({ updateReview }) => {
   const { recipeId } = useParams();
+  const history = useHistory();
   const [reviews, setReviews] = useState();
   const [recipeTitle, setRecipeTitle] = useState('');
   const [sort, setSort] = useState('yummies');
@@ -21,7 +23,7 @@ const ReviewList = ({ updateReview }) => {
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
     const recipeData = await endPoint.recipes.getRecipeById(recipeId);
-    const reviewsData = data[0].reviews;
+    const reviewsData = data[0] && data[0].reviews;
     setReviews(reviewsData);
     setRecipeTitle(recipeData && recipeData.data.status.title);
   };
@@ -52,12 +54,18 @@ const ReviewList = ({ updateReview }) => {
 
   return (
     <Box>
-      <Typography
-        variant="h3"
-        align="center"
+      <Button
+        onClick={() => {
+          history.push(`/recipe/${recipeId}`);
+        }}
       >
-        {recipeTitle}
-      </Typography>
+        <Typography
+          variant="h3"
+          align="center"
+        >
+          {recipeTitle}
+        </Typography>
+      </Button>
       <Typography
         variant="h4"
         align="center"

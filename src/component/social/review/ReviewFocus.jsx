@@ -9,6 +9,9 @@ import {
   CardActionArea,
 } from '@material-ui/core';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import Image from 'material-ui-image';
 import firebase from 'firebase/app';
@@ -25,7 +28,7 @@ import LogStatus from '../../context/auth/LogStatus';
 const ReviewFocus = () => {
   const [reviewData, setReviewData] = useState({});
   const { recipeId, reviewId } = useParams();
-  const [picture, setPicture] = useState('');
+  const [pictures, setPictures] = useState([]);
   const [makeUpdate, setUpdate] = useState(false);
   const logStatus = useContext(LogStatus);
   const history = useHistory();
@@ -37,7 +40,7 @@ const ReviewFocus = () => {
     if (review) {
       const [myData] = review.filter((fit) => fit._id === reviewId);
       if (myData.images) {
-        setPicture(myData.images);
+        setPictures(myData.images);
       }
       myData.comments.reverse();
       firebase.database().ref(`users/${myData.authorId}`).once('value').then((snapshot) => {
@@ -56,13 +59,25 @@ const ReviewFocus = () => {
     getReviews();
   }, [makeUpdate]);
 
+  const imageListStyle = {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-around'
+  }
+
   return (
     <>
       <Paper style={{ ...SpacingDesign.padding(2) }}>
-        <Image
-          src={picture}
-          cover
-        />
+        <div>
+          <ImageList cols={1.1} rowHeight={520} style={imageListStyle}>
+            {pictures.map((picUrl, i) => (
+              <ImageListItem key={i}>
+                {/* <Image src={picUrl} cover imageStyle={{ height: '520px', width: '520px' }} /> */}
+                <img src={picUrl} />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </div>
         <CardActionArea component={Link} to={`/recipes/${recipeId}/reviews/`}>
           <Typography variant="h3">
             {reviewData.headline}

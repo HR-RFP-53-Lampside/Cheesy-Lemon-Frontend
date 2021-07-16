@@ -42,12 +42,18 @@ const PantryCard = (props) => {
 
 
   return (
+
     <Card style={{ ...SpacingDesign.marginy(3) }} elevation={5}>
       <CardContent>
-        <Image
+        <CardMedia
+          image={item.image}
+          style={{...SpacingDesign.height(40)}}
+        />
+        {/* <Image
           src={item.image}
+          style={{height: 'auto'}}
           cover
-        ></Image>
+        ></Image> */}
         <Box display='flex' flexDirection='column'>
           <Typography variant='h5' align='center' style={{ ...SpacingDesign.marginTop(3) }}>
             {item.name}

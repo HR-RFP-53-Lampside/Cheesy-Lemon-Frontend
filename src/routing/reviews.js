@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import axios from 'axios';
-import endpoint from '../config/configrouting';
 import firebase from 'firebase/app';
+import endpoint from '../config/configrouting';
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -51,8 +51,10 @@ export default {
         const reviewId = result.data;
         const newReviewKey = firebase.database().ref().child(`users/${authorId}/myReviews`).push().key;
         const updates = {};
-        updates[`users/${authorId}/myReviews/${newReviewKey}`] = { id: newReviewKey, reviewId }
-        firebase.database().ref().update(updates).then(() => resolve(reviewId)).catch((error) => reject(error));
+        updates[`users/${authorId}/myReviews/${newReviewKey}`] = { id: newReviewKey, reviewId, recipeId };
+        firebase.database().ref().update(updates)
+          .then(() => resolve(reviewId))
+          .catch((error) => reject(error));
         // I can write logic to remove the review from mongo here if RTDB update fails
       })
       .catch((err) => {

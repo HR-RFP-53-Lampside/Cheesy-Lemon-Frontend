@@ -24,7 +24,7 @@ import endPoint from '../../../routing';
 import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments, images
+  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments, images,
 }) => {
   const [authorName, setAuthorName] = useState('');
   const [logStatus] = useContext(LogStatus);
@@ -64,8 +64,8 @@ const ReviewCard = ({
 
   const imageContainerStyle = {
     display: 'flex',
-    justifyContent: 'flex-start'
-  }
+    justifyContent: 'flex-start',
+  };
 
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -85,15 +85,17 @@ const ReviewCard = ({
             {authorName}
           </Typography>
         </Button>
-        <div style={imageContainerStyle}>{images.map((image, i) => (
-          <Image
-            key={i}
-            src={image}
-            style={{ padding: '60px' }}
-            imageStyle={{ height: '100px', width: '100px' }}
-            cover
-          />)
-        )}</div>
+        <Box style={imageContainerStyle}>
+          {images.map((image) => (
+            <Image
+              key={image}
+              src={image}
+              style={{ ...SpacingDesign.padding(7), ...SpacingDesign.marginx(1), backgroundColor: 'transparent' }}
+              imageStyle={{ borderRadius: '8px', backgroundColor: 'transparent' }}
+              cover
+            />
+          ))}
+        </Box>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
           less={<Icon className="fas fa-caret-up" color="secondary" />}

@@ -21,6 +21,11 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
+//remove ingredient from firebase so it is not persisted on reload -
+//resize ingredient card/image - done
+//filter on enter key press reloads entire page - done
+
+
 
 const PantryStart = () => {
   const history = useHistory();
@@ -31,7 +36,9 @@ const PantryStart = () => {
   const [ingredients, setIngredients] = useState([]);
   const [recipes, setRecipes] = useContext(PantryContext);
 
+
   const handleFilter = (e) => {
+    e.preventDefault();
     setFilter(e.target.value.toLowerCase());
   }
 
@@ -52,13 +59,18 @@ const PantryStart = () => {
     ingredients.forEach((item, index) => {
       let temp = ingredients;
       if(item.name === name) {
-        ingredients.splice(index, 1);
+        let test = ingredients.splice(index, 1);
         setIngredients([...ingredients]);
+        let id = test[0].id;
+
+        //update firebase
+        firebase.database().ref(`users/${logStatus.uid}/pantry/${id}`).remove().catch((error) => console.error(error));
       }
     })
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     // logic to handleingredient already in pantry
     for (let ingredient of ingredients) {
       if (ingredient.name.toLowerCase() === filter.toLowerCase()) {
@@ -117,7 +129,7 @@ const PantryStart = () => {
       history.push('/wfd');
     })
     .catch((err) => {
-      console.log(err);
+      throw err;
     })
   }
 
@@ -127,7 +139,7 @@ const PantryStart = () => {
 
   return (
     <Box style={{ ...SpacingDesign.marginBottom(1) }}>
-      <form noValidate autoComplete="off" onChange={handleFilter}>
+      <form noValidate autoComplete="off" onSubmit={handleSubmit} onChange={handleFilter}>
         <TextField
           id="search"
           label="Filter/Add"
@@ -150,7 +162,7 @@ const PantryStart = () => {
             <AddCircleOutlineOutlinedIcon style={{ ...SpacingDesign.fontSize(5)}}></AddCircleOutlineOutlinedIcon>
           </IconButton>
 
-          <Button variant='outlined' onClick={handleWFD}>WFD</Button>
+          <Button variant='outlined' onClick={handleWFD} style={{...SpacingDesign.marginy(1.5)}}>WFD</Button>
 
             <input accept="image/*"  id="icon-button-file" type="file" hidden onChange={(e) => {handlePhoto(e)}}/>
             <label htmlFor="icon-button-file">
