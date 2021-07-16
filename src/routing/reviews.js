@@ -62,8 +62,9 @@ export default {
    */
   putRecipeFavorite: (recipeID, active) => new Promise((resolve, reject) => {
     // returns newly created review's ID
-    axios.post(`${entry}/${recipeID}/favorite`, { active })
-      .then(() => {
+    axios.put(`${entry}/${recipeID}/favorite`, { active })
+      .then((result) => {
+        resolve(result);
         /* post to current user's firebase data
         firebase.dostuff()
           .then(() => {
