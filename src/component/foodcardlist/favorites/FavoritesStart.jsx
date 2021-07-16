@@ -8,6 +8,7 @@ import { useTheme } from '@material-ui/core/styles';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
+import endPoint from '../../../routing';
 
 const data = [
   {
@@ -41,6 +42,7 @@ const FavoritesStart = () => {
   const themeDesign = useTheme();
   const [filter, setFilter] = useState('');
   const [favorites, setFavorites] = useState([]);
+  // const [favorites, setFavorites] = useState(logStatus.favRecipes)
 
   //ADJUST FOR LIVE DATA
   useEffect(() => {
@@ -49,13 +51,18 @@ const FavoritesStart = () => {
 
   const removeFavorite = (e) => {
     e.preventDefault();
-    let index = e.currentTarget.value;
+    const index = e.currentTarget.value;
+    //
     let copy = favorites.slice();
     copy.splice(index, 1);
     setFavorites(copy);
-
-    //UPDATE USER FAVORITES ON FIREBASE
-
+    //
+    const clickedId = favorites[index].id;
+    // for (let key in logStatus.favRecipes) {
+    //   if (logStatus.favRecipes[key].backendId === clickedId) {
+    //     firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(clickedId, true)).catch(console.error);
+    //   }
+    // }
   }
 
   const handleFilter = (e) => {
