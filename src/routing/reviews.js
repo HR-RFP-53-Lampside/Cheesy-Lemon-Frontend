@@ -1,10 +1,20 @@
 /* eslint-disable import/no-unresolved */
 import axios from 'axios';
 import endpoint from '../config/configrouting';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 const entry = `${endpoint.backendPort}/local`;
 
 export default {
+  /**
+   * Retrieve all the reviews of a given recipe
+   * @param {number} recipeId - Id of the recipe
+   * @param {number} reviewId - Id of the review
+   */
+  getSingleReview: (recipeId, reviewId) => axios.get(`${entry}/${recipeId}/reviews/${reviewId}`),
+
   /**
    * Retrieve all the reviews of a given recipe
    * @param {number} recipeId - Id of the recipe
@@ -37,21 +47,13 @@ export default {
     axios.post(`${entry}/${recipeId}/reviews`, {
       recipeId, authorId, authorImageURL, headline, body, images,
     })
-      .then((reviewID) => {
-        console.log('attempting to post review');
-        resolve(reviewID);
-        // Alec, add the reviewID to the Firebase store
-        /* post to current user's firebase data
-        firebase.dostuff()
-          .then(() => {
-            stuff here
-            resolve(beep)
-          })
-          .catch((err) => {
-            undo the axios post
-            reject(err)
-          })
-        */
+      .then((result) => {
+        const reviewId = result.data;
+        const newReviewKey = firebase.database().ref().child(`users/${authorId}/myReviews`).push().key;
+        const updates = {};
+        updates[`users/${authorId}/myReviews/${newReviewKey}`] = { id: newReviewKey, reviewId }
+        firebase.database().ref().update(updates).then(() => resolve(reviewId)).catch((error) => reject(error));
+        // I can write logic to remove the review from mongo here if RTDB update fails
       })
       .catch((err) => {
         reject(err);
@@ -67,8 +69,9 @@ export default {
    */
   putRecipeFavorite: (recipeID, active) => new Promise((resolve, reject) => {
     // returns newly created review's ID
-    axios.post(`${entry}/${recipeID}/favorite`, { active })
-      .then(() => {
+    axios.put(`${entry}/${recipeID}/favorite`, { active })
+      .then((result) => {
+        resolve(result);
         /* post to current user's firebase data
         firebase.dostuff()
           .then(() => {
@@ -95,7 +98,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putUpvoteRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()
@@ -124,7 +127,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putDownRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()
@@ -157,6 +160,7 @@ export default {
     // reviewData
     axios.post(`${entry}/${recipeId}/reviews/${reviewId}/comment`, { authorId, body })
       .then(() => {
+        resolve('nice');
         /* post to current user's firebase data
           firebase.dostuff()
             .then(() => {
