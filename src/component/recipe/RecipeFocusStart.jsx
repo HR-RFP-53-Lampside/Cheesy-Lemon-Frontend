@@ -15,8 +15,12 @@ import RecipeInstructionsList from './RecipeInstructionsList';
 import RecipeDescription from './RecipeDescription';
 import RecipeReviewList from './RecipeReviewList';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import endPoint from '../../routing';
 
+=======
+import { useParams } from "react-router-dom";
+>>>>>>> main
 =======
 import { useParams } from "react-router-dom";
 >>>>>>> main
@@ -41,8 +45,11 @@ const RecipeFocusStart = () => {
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [clicked, setClicked] = useState(isFaved());
 =======
+=======
+>>>>>>> main
   const [reviewDeets, setReviewDeets] = useState([]);
   const [clicked, setClicked] = useState(false);
 >>>>>>> main
@@ -56,11 +63,19 @@ const RecipeFocusStart = () => {
     getRecipeData();
   }, [] );
   let parsedRecipeSummary = ''
+<<<<<<< HEAD
 
   if (recipeDeets.status) {
     const lastIndexOfPercent = recipeDeets.status.summary.lastIndexOf('%');
      parsedRecipeSummary = recipeDeets.status.summary.slice(0, lastIndexOfPercent);
 
+=======
+
+  if (recipeDeets.status) {
+    const lastIndexOfPercent = recipeDeets.status.summary.lastIndexOf('%');
+     parsedRecipeSummary = recipeDeets.status.summary.slice(0, lastIndexOfPercent);
+
+>>>>>>> main
   }
 
   const getRecipeData = () => {
