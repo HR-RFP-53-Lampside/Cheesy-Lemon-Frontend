@@ -26,6 +26,12 @@ const AddReviewForm = ({ setUpdateReview, updateReview }) => {
     }
   };
 
+  const resetInputs = () => {
+    setImages([]);
+    setHeadline('');
+    setBody('');
+  };
+
   const handleImageChange = (event) => {
     let files = Array.from(event.target.files);
     // Limits total number of images to 3
@@ -64,9 +70,11 @@ const AddReviewForm = ({ setUpdateReview, updateReview }) => {
     )
       .then(() => {
         setUpdateReview(!updateReview);
+        resetInputs();
       })
       .catch(() => {
         setUpdateReview(!updateReview);
+        resetInputs();
       });
   };
 
@@ -108,6 +116,7 @@ const AddReviewForm = ({ setUpdateReview, updateReview }) => {
         borderRadius="50%"
         style={{ ...SpacingDesign.marginBottom(1) }}
         onChange={handleTextInputChange}
+        value={headline}
       />
       <TextField
         id="body"
@@ -117,6 +126,7 @@ const AddReviewForm = ({ setUpdateReview, updateReview }) => {
         borderRadius="50%"
         style={{ ...SpacingDesign.marginBottom(1) }}
         onChange={handleTextInputChange}
+        value={body}
       />
       <Box style={imageContainterStyle}>
         {images.map((image, i) => (
