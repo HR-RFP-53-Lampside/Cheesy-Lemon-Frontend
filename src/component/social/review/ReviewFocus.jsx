@@ -60,24 +60,30 @@ const ReviewFocus = () => {
   }, [makeUpdate]);
 
   const imageListStyle = {
-    display: 'flex',
     flexWrap: 'nowrap',
-    justifyContent: 'space-around'
-  }
+    transform: 'translateZ(0)',
+  };
 
   return (
     <>
       <Paper style={{ ...SpacingDesign.padding(2) }}>
-        <div>
-          <ImageList cols={1.1} rowHeight={520} style={imageListStyle}>
-            {pictures.map((picUrl, i) => (
-              <ImageListItem key={i}>
-                {/* <Image src={picUrl} cover imageStyle={{ height: '520px', width: '520px' }} /> */}
-                <img src={picUrl} />
+        <Box
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            overflow: 'hidden',
+          }}
+        >
+          <ImageList cols={2} rowHeight={300} style={imageListStyle}>
+            {pictures.map((picUrl) => (
+              <ImageListItem key={picUrl}>
+                <Image src={picUrl} cover style={{ ...SpacingDesign.square(40) }} />
+                {/* <img src={picUrl} /> */}
               </ImageListItem>
             ))}
           </ImageList>
-        </div>
+        </Box>
         <CardActionArea component={Link} to={`/recipes/${recipeId}/reviews/`}>
           <Typography variant="h3">
             {reviewData.headline}

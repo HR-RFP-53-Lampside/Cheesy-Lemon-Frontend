@@ -176,7 +176,11 @@ const PantryStart = () => {
           My Pantry
         </Typography>
 
-
+        {ingredients.length === 0 && (
+          <Typography align="center" style={{ ...SpacingDesign.marginTop(5) }}>
+            No ingredients, add some!
+          </Typography>
+        )}
 
         {ingredients.filter(main => {
           return (main.name.toLowerCase().indexOf(filter) !== -1)
