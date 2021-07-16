@@ -31,7 +31,7 @@ const RecipeFocusStart = () => {
     if (faves) {
       for (const key in faves) {
         // need current recipe ID
-        if (faves[key].backendId === 654901) {
+        if (faves[key].backendId === recipeId) {
           favorite = true;
         }
       }
@@ -39,6 +39,8 @@ const RecipeFocusStart = () => {
     return favorite;
   };
   const [clicked, setClicked] = useState(isFaved());
+  const [reviewDeets, setReviewDeets] = useState([]);
+
   // const recipeId = 716429; // loading circle looks nice!
 
   let parsedRecipeSummary = '';
@@ -67,17 +69,13 @@ const RecipeFocusStart = () => {
     if (!clicked) {
       const newRecipeKey = firebase.database().ref().child(`users/${logStatus.uid}/favRecipes`).push().key;
       const updates = {};
-      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: faykeRecipeData.status.id };
-      firebase.database().ref().update(updates).then(() => setClicked(true))
-        .then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, false))
-        .catch(console.error);
+      updates[`users/${logStatus.uid}/favRecipes/${newRecipeKey}`] = { id: newRecipeKey, backendId: recipeId };
+      firebase.database().ref().update(updates).then(() => setClicked(true)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, false)).catch(console.error);
     } else {
       for (const key in logStatus.favRecipes) {
         // need the current recipe id
-        if (logStatus.favRecipes[key].backendId === faykeRecipeData.status.id) {
-          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false))
-            .then(() => endPoint.reviews.putRecipeFavorite(faykeRecipeData.status.id, true))
-            .catch(console.error);
+        if (logStatus.favRecipes[key].backendId === recipeId) {
+          firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(recipeId, true)).catch(console.error);
         }
       }
     }
@@ -97,7 +95,7 @@ const RecipeFocusStart = () => {
               />
               <Typography variant="h4" align="center" color="textPrimary">
                 {recipeDeets.status.title}
-                <Button onClick={(e) => handleFavorite()}>
+                <Button onClick={() => handleFavorite()}>
                   {!clicked
                     ? <Icon className="far fa-heart" allign="right" />
                     : <FavoriteIcon />}
