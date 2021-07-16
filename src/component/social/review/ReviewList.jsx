@@ -18,6 +18,7 @@ const ReviewList = () => {
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
     const reviewsData = data[0].reviews;
+    console.log(reviewsData);
     setReviews(reviewsData);
   };
 
@@ -73,15 +74,16 @@ const ReviewList = () => {
       </Select>
       {reviews && reviews.map((review) => (
         <ReviewCard
-          key={review.id}
-          id={review.id}
-          title={review.title}
+          key={review._id}
+          id={review._id}
+          title={review.headline}
           authorId={review.authorId}
           body={review.body}
           upvotes={review.upvotes}
           downvotes={review.downvotes}
-          recipeId={review.recipeId}
+          recipeId={recipeId}
           date={review._createdAt}
+          comments={review.comments}
         />
       ))}
     </Box>

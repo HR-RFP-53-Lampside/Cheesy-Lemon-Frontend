@@ -23,10 +23,13 @@ import endPoint from '../../../routing';
 import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  id, title, authorId, body, upvotes, downvotes, recipeId, date,
+  id, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
 }) => {
   const [authorName, setAuthorName] = useState('');
   const [logStatus] = useContext(LogStatus);
+  const [voted, setVoted] = useState('none');
+  const [upvoted, setUpvoted] = useState(upvotes);
+  const [downvoted, setDownvoted] = useState(downvotes);
 
   useEffect(() => {
     firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
@@ -36,14 +39,15 @@ const ReviewCard = ({
   }, []);
 
   const handleUpvote = () => {
-    firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
-      const upvotes = (snapshot.val() && snapshot.val());
-      console.log(upvotes);
-    });
-    endPoint.reviews.putUpvoteRecipeReview(recipeId, id)
-      .then((result) => {
-
-      });
+    // need help
+    // firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
+    //   const upvoted = (snapshot.val() && snapshot.val().upReviews) || 0;
+    //   console.log(upvoted);
+    // });
+    // endPoint.reviews.putUpvoteRecipeReview(recipeId, id, true)
+    //   .then((result) => {
+    //     setUpvoted(upvoted + 1);
+    //   });
   };
 
   const handleDownvote = () => {
@@ -70,7 +74,7 @@ const ReviewCard = ({
             {body}
           </Typography>
         </ShowMoreText>
-        <Typography variant="subtitle">
+        <Typography>
           {/* {date.toLocaleDateString(undefined, dateOptions)} */}
           {new Date(date).toLocaleDateString(undefined, dateOptions)}
         </Typography>
@@ -84,13 +88,13 @@ const ReviewCard = ({
         <Button onClick={handleUpvote}>
           <ThumbUp />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {upvotes}
+            {upvoted}
           </Typography>
         </Button>
         <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {upvotes}
+            {downvoted}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
@@ -113,6 +117,7 @@ ReviewCard.propType = {
   upvotes: PropTypes.number.isRequired,
   downvotes: PropTypes.number.isRequired,
   date: PropTypes.string.isRequired,
+  comments: PropTypes.array.isRequired,
 };
 
 export default ReviewCard;

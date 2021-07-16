@@ -95,7 +95,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putUpvoteRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/upvote`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()
@@ -124,7 +124,7 @@ export default {
    * If the firebase fails, the mongoDB will revert back the changes
    */
   putDownRecipeReview: (recipeId, reviewId, active) => new Promise((resolve, reject) => {
-    axios.post(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
+    axios.put(`${entry}/${recipeId}/reviews/${reviewId}/down`, { active })
       .then(() => {
         /* post to current user's firebase data
         firebase.dostuff()

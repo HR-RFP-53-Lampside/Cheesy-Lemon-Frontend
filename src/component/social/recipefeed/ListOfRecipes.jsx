@@ -11,11 +11,11 @@ const ListOfRecipes = ({ data }) => (
   <Box style={{ width: '100%' }}>
     {data.map((item) => (
       <RecipeCard
-        id={item.id}
+        id={item.recipeId}
         title={item.title}
-        body={item.body}
-        favorite={item.favorite}
-        reviews={item.reviews}
+        body={item.summary}
+        favorite={item.favoriteCount}
+        reviews={item.reviewCount}
         key={item.title}
       />
     ))}
