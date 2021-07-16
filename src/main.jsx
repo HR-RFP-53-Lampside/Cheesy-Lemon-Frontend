@@ -8,7 +8,7 @@ import App from './component/App';
 import config from './config/config';
 import test from './routing/routingtest';
 
-test();
+// test();
 
 const firebaseConfig = config;
 // Initialize Firebase
