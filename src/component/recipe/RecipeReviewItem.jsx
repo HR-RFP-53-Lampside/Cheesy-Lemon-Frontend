@@ -10,10 +10,10 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeReviewItem = () => {
+const RecipeReviewItem = ({reviewDeets}) => {
 
   const themeDesign = useTheme();
-  // place holder  until we get actual review data...
+  // place holder  until we get actual review data... just have to change map to map over reviedeets
   const faykeReviewsList = [
     {
      title: 'No more Onions!',
