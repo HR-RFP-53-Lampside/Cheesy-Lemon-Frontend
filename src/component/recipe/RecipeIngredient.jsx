@@ -10,27 +10,28 @@ import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import backgroundBG from '../../assets/lowpoly2.png';
 
-const RecipeIngredient = ({ingredients}) => {
-
+const RecipeIngredient = ({ ingredients }) => {
   const firstHalfFaykeIng = ingredients.slice(0, Math.ceil(ingredients.length / 2));
   const secondHalfFaykeDataIng = ingredients.slice(Math.ceil(ingredients.length / 2));
   // 50% width max height
   return (
 
     <Box
-    display="flex"
-    flexDirection="col"
-    flexWrap="nowrap"
-
-    style={SpacingDesign.padding(3)}
+      display="flex"
+      flexDirection="col"
+      flexWrap="nowrap"
     >
-    <div style={{width: '50%'}}>{firstHalfFaykeIng.map((item) => (
-  <p style={{flexDirection: "col"}}>{item}</p>
-))}</div>
-    <div style={{width: '50%'}}>{secondHalfFaykeDataIng.map((item) => (
-  <p style={{flexDirection: "col"}}>{item}</p>
-))}</div>
-      </Box>
+      <div style={{ width: '50%' }}>
+        {firstHalfFaykeIng.map((item) => (
+          <p style={{ flexDirection: 'col' }}>{item}</p>
+        ))}
+      </div>
+      <div style={{ width: '50%' }}>
+        {secondHalfFaykeDataIng.map((item) => (
+          <p style={{ flexDirection: 'col' }}>{item}</p>
+        ))}
+      </div>
+    </Box>
   );
 };
 

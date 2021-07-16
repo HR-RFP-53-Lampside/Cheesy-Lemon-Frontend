@@ -1,11 +1,12 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Paper, Typography, Button, Icon, CircularProgress,
+  Paper, Typography, Button, Icon, CircularProgress, Box,
 } from '@material-ui/core';
 import Image from 'material-ui-image';
-import { useTheme } from '@material-ui/core/styles';
 import axios from 'axios';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import firebase from 'firebase/app';
@@ -21,6 +22,9 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const RecipeFocusStart = () => {
+  const [logStatus] = useContext(LogStatus);
+  const [recipeDeets, setRecipeDeets] = useState([]);
+  const { recipeId } = useParams();
   const isFaved = () => {
     let favorite = false;
     const faves = logStatus && logStatus.favRecipes;
@@ -34,11 +38,7 @@ const RecipeFocusStart = () => {
     }
     return favorite;
   };
-  const [logStatus] = useContext(LogStatus);
-  const [recipeDeets, setRecipeDeets] = useState([]);
   const [clicked, setClicked] = useState(isFaved());
-  const themeDesign = useTheme();
-  const { recipeId } = useParams();
   // const recipeId = 716429; // loading circle looks nice!
 
   let parsedRecipeSummary = '';
@@ -95,7 +95,7 @@ const RecipeFocusStart = () => {
                 src={recipeDeets.status.image || null}
                 cover
               />
-              <Typography variant="h6" align="center" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="h4" align="center" color="textPrimary">
                 {recipeDeets.status.title}
                 <Button onClick={(e) => handleFavorite()}>
                   {!clicked
@@ -104,29 +104,29 @@ const RecipeFocusStart = () => {
                 </Button>
 
               </Typography>
-              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="h5" align="left" color="textPrimary" style={SpacingDesign.marginBottom(1)}>
                 Description
               </Typography>
-              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="body1" align="left" color="textSecondary">
                 {parsedRecipeSummary
           && <RecipeDescription summary={parsedRecipeSummary} />}
               </Typography>
-              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="h5" align="left" color="textPrimary" style={SpacingDesign.marginTop(3)}>
                 Ingredients
               </Typography>
-              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="body1" align="left" color="textSecondary">
                 <RecipeIngredientsList ingredients={recipeDeets.status.extendedIngredients} />
               </Typography>
-              <Typography variant="h6" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="h5" align="left" style={{ ...SpacingDesign.marginTop(3) }} color="textPrimary">
                 Instructions
               </Typography>
-              <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+              <Typography variant="body1" align="left" color="textSecondary">
                 <RecipeInstructionsList instructions={recipeDeets.status.instructions} />
               </Typography>
             </Paper>
-            <Typography variant="body1" align="left" style={{ color: themeDesign.custom.muted.grey }}>
+            <Box>
               <RecipeReviewList recipeId={recipeDeets.status.id} />
-            </Typography>
+            </Box>
           </>
         )
         :
