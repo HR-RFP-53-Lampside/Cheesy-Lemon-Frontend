@@ -157,6 +157,7 @@ export default {
     // reviewData
     axios.post(`${entry}/${recipeId}/reviews/${reviewId}/comment`, { authorId, body })
       .then(() => {
+        resolve('nice');
         /* post to current user's firebase data
           firebase.dostuff()
             .then(() => {

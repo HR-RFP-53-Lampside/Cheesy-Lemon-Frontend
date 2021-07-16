@@ -36,6 +36,7 @@ const ReviewFocus = () => {
         setPicture(myData.images);
       }
       console.log(myData);
+      myData.comments.reverse();
       setReviewData(myData);
     }
   };
@@ -97,7 +98,7 @@ const ReviewFocus = () => {
         recipeId={recipeId}
         reviewId={reviewId}
         setUpdate={setUpdate}
-        update={makeUpdate}
+        makeUpdate={makeUpdate}
       />
       {reviewData.comments && reviewData.comments.map((row) => (
         <ReviewFocusComment

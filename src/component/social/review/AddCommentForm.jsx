@@ -19,12 +19,12 @@ const AddCommentForm = (props) => {
 
   const handleSubmit = () => {
     // after bug is resolved
-    console.log(recipeId, reviewId);
-    console.log(logStatus.uid);
     routing.postComment(props.recipeId, props.reviewId, logStatus.uid, body)
-      .then((id) => {
-        console.log(id);
-        props.setUpdate(!props.update);
+      .then(() => {
+        props.setUpdate(!props.makeUpdate);
+      })
+      .catch(() => {
+        props.setUpdate(!props.makeUpdate);
       });
     // axios({
     //   method: 'post',
