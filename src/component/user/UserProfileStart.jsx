@@ -10,6 +10,7 @@ import 'firebase/database';
 
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
+import UserProfileReviews from './UserProfileReviews';
 
 const UserProfileStart = () => {
   const [logStatus] = useContext(LogStatus);
@@ -45,34 +46,35 @@ const UserProfileStart = () => {
   }, [logStatus]);
 
   return (
-    <Paper style={SpacingDesign.padding(2)}>
-      <Box display="flex">
-        <Avatar
-          title="UserProfilePicture"
-          src={displayUser && displayUser.photoURL}
-          style={{
-            ...SpacingDesign.square(15),
-            alignSelf: 'center',
-          }}
-        />
-        <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2), width: '100%' }}>
-          <Typography variant="h4">
-            {displayUser && `${displayUser.firstName} ${displayUser.lastName}`}
-          </Typography>
-          <Typography variant="h6" color="textSecondary">
-            {displayUser && `@${displayUser.username}`}
-          </Typography>
-          <Box display="flex">
-            <Icon className="fas fa-cookie" color="disabled" />
-            <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }} color="textSecondary">
-              {displayUser && displayUser.yummyPoints}
+    <>
+      <Paper>
+        <Box display="flex" bgcolor="primary.main" style={SpacingDesign.padding(2)} borderRadius={3}>
+          <Avatar
+            title="UserProfilePicture"
+            src={displayUser && displayUser.photoURL}
+            style={{
+              ...SpacingDesign.square(15),
+              alignSelf: 'center',
+            }}
+          />
+          <Box style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(2), width: '100%' }}>
+            <Typography variant="h4">
+              {displayUser && `${displayUser.firstName} ${displayUser.lastName}`}
             </Typography>
+            <Typography variant="h6" color="textPrimary">
+              {displayUser && `@${displayUser.username}`}
+            </Typography>
+            <Box display="flex">
+              <Icon className="fas fa-cookie" />
+              <Typography variant="subtitle1" style={{ alignSelf: 'center', ...SpacingDesign.marginLeft(1) }} color="textPrimary">
+                {displayUser && displayUser.yummyPoints}
+              </Typography>
+            </Box>
           </Box>
         </Box>
-      </Box>
-      {displayUser && (
-        <>
-          <Box style={SpacingDesign.marginTop(2)}>
+        {displayUser && (
+        <Box style={SpacingDesign.padding(3)}>
+          <Box>
             <Typography variant="h4">
               About Me
             </Typography>
@@ -88,14 +90,19 @@ const UserProfileStart = () => {
               {displayPrefs || 'No preferences, a food enjoyer' }
             </Typography>
           </Box>
-          <Box style={SpacingDesign.marginTop(2)}>
-            <Typography variant="h4">
-              My reviews
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Paper>
+        </Box>
+        )}
+      </Paper>
+      <Box style={SpacingDesign.marginTop(2)}>
+        <Typography variant="h4" style={SpacingDesign.marginLeft(4)}>
+          My reviews
+        </Typography>
+        <UserProfileReviews
+          userId={profileId || displayUser.uid}
+          userReviews={displayUser.myReviews}
+        />
+      </Box>
+    </>
   );
 };
 
