@@ -14,80 +14,39 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 
-const data = [
-  {
-     "id":715594,
-     "title":"Homemade Garlic and Basil French Fries",
-     "image":"https://spoonacular.com/recipeImages/715594-312x231.jpg"
-  },
-  {
-     "id":644387,
-     "title":"Garlicky Kale",
-     "image":"https://spoonacular.com/recipeImages/644387-312x231.jpg"
-  },
-  {
-     "id":794349,
-     "title":"Broccoli and Chickpea Rice Salad",
-     "image":"https://spoonacular.com/recipeImages/794349-312x231.jpg"
-  },
-  {
-     "id":782600,
-     "title":"Quinoa Salad with Vegetables and Cashews",
-     "image":"https://spoonacular.com/recipeImages/782600-312x231.jpg"
-  },
-  {
-     "id":640062,
-     "title":"Corn Avocado Salsa",
-     "image":"https://spoonacular.com/recipeImages/640062-312x231.jpg"
-  }
-]
-
 const FavoritesStart = () => {
   const themeDesign = useTheme();
   const [filter, setFilter] = useState('');
   const [favorites, setFavorites] = useState([]);
   const [logStatus] = useContext(LogStatus);
-  // const [favorites, setFavorites] = useState(logStatus.favRecipes)
-
-  // //ADJUST FOR LIVE DATA
-  // useEffect(() => {
-  //   setFavorites(data);
-  // }, [data]);
 
   useEffect(() => {
+    const favs = [];
     if(logStatus) {
       for(let i in logStatus.favRecipes) {
-        endPoint.recipes.getRecipeById(logStatus.favRecipes[i].backendId)
-          .then(({data}) => {
-            setFavorites(favorites => [...favorites, data.status]);
-          })
-          .catch(err => {
-            console.error(err);
-          });
+        favs.push(logStatus.favRecipes[i]);
+        // endPoint.recipes.getRecipeById(logStatus.favRecipes[i].backendId)
+        //   .then(({data}) => {
+        //     setFavorites(favorites => [...favorites, data.status]);
+        //   })
+        //   .catch(err => {
+        //     console.error(err);
+        //   });
       }
+      setFavorites(favs);
     }
   }, [logStatus]);
 
   const removeFavorite = (e) => {
     e.preventDefault();
     const index = e.currentTarget.value;
-    //
-    //
-    const clickedId = favorites[index].id;
-    console.log(clickedId);
+    const clickedId = favorites[index].backendId;
     for (let key in logStatus.favRecipes) {
-      console.log(key);
-      console.log(logStatus.favRecipes[key].backendId)
       if (logStatus.favRecipes[key].backendId == clickedId) {
-        console.log(key);
-        firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => endPoint.reviews.putRecipeFavorite(clickedId, true)).then(() => setFavorites([])).catch(console.error);
+        firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => endPoint.reviews.putRecipeFavorite(clickedId, true)).catch(console.error);
 
       }
     }
-
-    // let copy = favorites.slice();
-    // copy.splice(index, 1);
-    // setFavorites(copy);
   }
 
   const handleFilter = (e) => {
@@ -116,12 +75,11 @@ const FavoritesStart = () => {
         <Typography variant='h4' align='center'>
           Favorites
         </Typography>
-        {console.log(favorites)}
         {favorites.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
           .map((item, index) =>
-            <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
+            <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.backendId}>
               <CardActionArea
-                component={Link} to={`recipe/${item.id}`}
+                component={Link} to={`recipe/${item.backendId}`}
                 >
                 <CardContent>
                   <CardMedia
