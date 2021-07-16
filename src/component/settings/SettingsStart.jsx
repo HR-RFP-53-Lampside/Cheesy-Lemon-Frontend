@@ -21,8 +21,6 @@ const SettingsStart = () => {
   useEffect(() => {
     if (settingsFocus === 'account') {
       setGoToPage(<AccountSettings />);
-    } else if (settingsFocus === 'privacy') {
-      setGoToPage(<PrivacySettings />);
     }
   }, [settingsFocus]);
 
@@ -36,11 +34,6 @@ const SettingsStart = () => {
           <ToggleButton value="account" aria-label="account">
             <Typography>
               Account
-            </Typography>
-          </ToggleButton>
-          <ToggleButton value="privacy" aria-label="privacy">
-            <Typography>
-              Privacy
             </Typography>
           </ToggleButton>
         </ToggleButtonGroup>

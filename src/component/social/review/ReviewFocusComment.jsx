@@ -15,7 +15,6 @@ const ReviewFocusComment = ({ author, body }) => {
   const [authorName, setAuthorName] = useState(author);
 
   useEffect(() => {
-    console.log(author);
     firebase.database().ref(`users/${author}`).once('value').then((snapshot) => {
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);

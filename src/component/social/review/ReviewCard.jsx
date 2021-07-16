@@ -11,7 +11,7 @@ import {
   CardContent,
   Icon,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -23,23 +23,30 @@ import endPoint from '../../../routing';
 import LogStatus from '../../context/auth/LogStatus';
 
 const ReviewCard = ({
-  id, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
+  reviewId, title, authorId, body, upvotes, downvotes, recipeId, date, comments,
 }) => {
   const [authorName, setAuthorName] = useState('');
   const [logStatus] = useContext(LogStatus);
   const [voted, setVoted] = useState('none');
   const [upvoted, setUpvoted] = useState(upvotes);
   const [downvoted, setDownvoted] = useState(downvotes);
+  const [receivedRecipeId, setReceivedRecipeId] = useState(recipeId);
+  const [receivedReviewId] = useState(reviewId);
+  const history = useHistory();
 
   useEffect(() => {
     firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
       const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
       setAuthorName(username);
     });
+    // endPoint.reviews.getSingleReview(recipeId, id)
+    //   .then(({ data }) => {
+    //     console.log('what is', data);
+    //   });
   }, []);
 
   const handleUpvote = () => {
-    // need help
+    // need help. ALEC PLEASE :)
     // firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
     //   const upvoted = (snapshot.val() && snapshot.val().upReviews) || 0;
     //   console.log(upvoted);
@@ -62,9 +69,16 @@ const ReviewCard = ({
         <Typography variant="h4">
           {title}
         </Typography>
-        <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
-          {authorName}
-        </Typography>
+        <Button
+          onClick={() => {
+            history.push(`/profile/${authorId}`);
+          }}
+          style={{ ...SpacingDesign.marginBottom(2) }}
+        >
+          <Typography variant="h6">
+            {authorName}
+          </Typography>
+        </Button>
         <ShowMoreText
           more={<Icon className="fas fa-caret-down" color="primary" />}
           less={<Icon className="fas fa-caret-up" color="secondary" />}
@@ -74,7 +88,7 @@ const ReviewCard = ({
             {body}
           </Typography>
         </ShowMoreText>
-        <Typography>
+        <Typography variant="body2">
           {/* {date.toLocaleDateString(undefined, dateOptions)} */}
           {new Date(date).toLocaleDateString(undefined, dateOptions)}
         </Typography>
@@ -91,10 +105,10 @@ const ReviewCard = ({
             {upvoted}
           </Typography>
         </Button>
-        <Button component={Link} to={`/recipes/${recipeId}/reviews/${id}`}>
+        <Button component={Link} to={`/recipes/${recipeId}/reviews/${receivedReviewId}`}>
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
-            {downvoted}
+            {comments.length}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
@@ -109,7 +123,7 @@ const ReviewCard = ({
 };
 
 ReviewCard.propType = {
-  id: PropTypes.number.isRequired,
+  reviewId: PropTypes.number.isRequired,
   recipeId: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   authorId: PropTypes.string.isRequired,

@@ -1,33 +1,26 @@
-import React, { useContext, useState } from 'react';
-import {
-  Paper, Box, Typography, TextField, Button, IconButton, Container, Hidden,
-} from '@material-ui/core';
-import Image from 'material-ui-image';
-import { Link } from 'react-router-dom';
-import { useTheme } from '@material-ui/core/styles';
-import SpacingDesign from '../context/design/SpacingDesign';
-import LogStatus from '../context/auth/LogStatus';
-import backgroundBG from '../../assets/lowpoly2.png';
-import RecipeReviewItem from './RecipeReviewItem';
+/* eslint-disable import/no-unresolved */
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Typography } from '@material-ui/core';
 import AddReviewForm from './AddReviewForm';
+import ReviewList from '../social/review/ReviewList';
 
-const RecipeReviewList = ({recipieId, reviewDeets}) => {
-  const themeDesign = useTheme();
-
+const RecipeReviewList = ({ recipieId }) => {
+  const [updateReview, setUpdateReview] = useState(false);
 
   return (
-    <div>
+    <>
       <AddReviewForm
-        // Expects current recipeId as a prop
-        // recipeId={recipeId}
+        recipeId={recipieId}
+        setUpdateReview={setUpdateReview}
+        updateReview={updateReview}
       />
-      <div>
-        <RecipeReviewItem reviewDeets={reviewDeets}/>
-      </div>
-      <div style={{ align: "center" }}>
-      </div>
-    </div>
+      <ReviewList updateReview={updateReview} />
+    </>
   );
+};
+RecipeReviewList.propTypes = {
+  recipieId: PropTypes.string.isRequired,
 };
 
 export default RecipeReviewList;

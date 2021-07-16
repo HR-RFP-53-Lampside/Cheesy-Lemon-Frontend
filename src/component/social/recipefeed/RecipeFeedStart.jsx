@@ -14,6 +14,8 @@ const RecipeFeed = () => {
   const filterOptions = [
     'Most Reviews',
     'Most Favorites',
+    'Least Reviews',
+    'Least Favorites',
   ];
 
   const [data, setData] = useState([]);
@@ -23,7 +25,6 @@ const RecipeFeed = () => {
     endPoint.recipes.getAllRecipes()
       .then((results) => {
         const resultData = results.data;
-        console.log(resultData);
         setData(resultData);
       });
   }, []);
@@ -33,14 +34,22 @@ const RecipeFeed = () => {
   };
 
   useMemo(() => {
-    const copy = data.slice();
-    if (selected === filterOptions[0]) {
-      copy.sort((a, b) => b.reviews - a.reviews);
+    if (data.length > 0) {
+      const copy = data.slice().filter((item) => item && item);
+      if (selected === 'Most Reviews') {
+        copy.sort((a, b) => b.reviewCount - a.reviewCount);
+      }
+      if (selected === 'Most Favorites') {
+        copy.sort((a, b) => b.favoriteCount - a.favoriteCount);
+      }
+      if (selected === 'Least Reviews') {
+        copy.sort((a, b) => a.reviewCount - b.reviewCount);
+      }
+      if (selected === 'Least Favorites') {
+        copy.sort((a, b) => a.favoriteCount - b.favoriteCount);
+      }
+      setData(copy);
     }
-    if (selected === filterOptions[1]) {
-      copy.sort((a, b) => b.favorite - a.favorite);
-    }
-    setData(copy);
   }, [selected]);
 
   return (

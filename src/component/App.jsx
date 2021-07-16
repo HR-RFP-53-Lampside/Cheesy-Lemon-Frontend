@@ -115,7 +115,10 @@ function App() {
                   <Route exact path="/social/:reviewId">
                     social/reviewId
                   </Route>
-                  <Route path="/profile">
+                  <Route exact path="/profile">
+                    <UserProfileStart />
+                  </Route>
+                  <Route path="/profile/:profileId">
                     <UserProfileStart />
                   </Route>
                   <Route exact path="/recipe/:recipeId">

@@ -2,19 +2,21 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, TextField, Button, Icon, Box,
+  Typography, TextField, Button, Icon, Box, Paper,
 } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
 import Image from 'material-ui-image';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpacingDesign from '../context/design/SpacingDesign';
 import LogStatus from '../context/auth/LogStatus';
 import endPoint from '../../routing';
 
-const AddReviewForm = ({ recipeId }) => {
+const AddReviewForm = ({ setUpdateReview, updateReview }) => {
   const [logStatus] = useContext(LogStatus);
   const [images, setImages] = useState([]);
   const [headline, setHeadline] = useState('');
   const [body, setBody] = useState('');
+  const { recipeId } = useParams();
 
   const handleTextInputChange = (event) => {
     if (event.target.id === 'headline') {
@@ -60,9 +62,11 @@ const AddReviewForm = ({ recipeId }) => {
       body,
       images,
     )
-      .then(({ data }) => {
-        console.log('success!');
-        console.log(data);
+      .then(() => {
+        setUpdateReview(!updateReview);
+      })
+      .catch(() => {
+        setUpdateReview(!updateReview);
       });
   };
 
@@ -93,7 +97,10 @@ const AddReviewForm = ({ recipeId }) => {
   };
 
   return (
-    <>
+    <Paper style={{ ...SpacingDesign.padding(2), ...SpacingDesign.marginy(3) }}>
+      <Typography align="center" variant="h4">
+        Share your thoughts
+      </Typography>
       <TextField
         id="headline"
         label="Headline"
@@ -141,6 +148,7 @@ const AddReviewForm = ({ recipeId }) => {
         <input type="file" id="profile-image" multiple onChange={(event) => handleImageChange(event)} hidden />
       </Button>
       )}
+      <br />
       <Button
         variant="contained"
         color="primary"
@@ -153,12 +161,18 @@ const AddReviewForm = ({ recipeId }) => {
           Leave a review
         </Typography>
       </Button>
-    </>
+    </Paper>
   );
 };
 
 AddReviewForm.propTypes = {
-  recipeId: PropTypes.number.isRequired,
+  setUpdateReview: PropTypes.func,
+  updateReview: PropTypes.bool,
+};
+
+AddReviewForm.defaultProps = {
+  updateReview: false,
+  setUpdateReview: () => {},
 };
 
 export default AddReviewForm;
