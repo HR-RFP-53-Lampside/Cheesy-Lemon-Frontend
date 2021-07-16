@@ -40,7 +40,7 @@ const RecipeFocusStart = () => {
   const [recipeDeets, setRecipeDeets] = useState([]);
   const [reviewDeets, setReviewDeets] = useState([]);
   const themeDesign = useTheme();
-  const { recipeId } = useParams();
+
   // const recipeId = 716429; // loading circle looks nice!
 
   let parsedRecipeSummary = '';
