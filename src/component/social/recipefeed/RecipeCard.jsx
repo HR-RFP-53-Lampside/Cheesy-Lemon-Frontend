@@ -48,7 +48,10 @@ const RecipeCard = ({
         bgcolor="primary"
         style={{ ...SpacingDesign.paddingx(5), ...SpacingDesign.paddingy(2) }}
       >
-        <Button>
+        <Button onClick={() => {
+          // Alec do favorite logic here please :)
+        }}
+        >
           <Icon className="far fa-heart" />
           <Typography style={SpacingDesign.marginLeft(1)}>
             {favorite}

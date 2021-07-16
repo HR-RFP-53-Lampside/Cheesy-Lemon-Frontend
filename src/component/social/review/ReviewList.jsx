@@ -79,19 +79,20 @@ const ReviewList = () => {
       {reviews && reviews.map((review) => {
         console.log('what am I', review);
         return (
-        <ReviewCard
-          key={review._id}
-          reviewId={review._id}
-          title={review.headline}
-          authorId={review.authorId}
-          body={review.body}
-          upvotes={review.upvotes}
-          downvotes={review.downvotes}
-          recipeId={recipeId}
-          date={review._createdAt}
-          comments={review.comments}
-        />
-      )})}
+          <ReviewCard
+            key={review._id}
+            reviewId={review._id}
+            title={review.headline}
+            authorId={review.authorId}
+            body={review.body}
+            upvotes={review.upvotes}
+            downvotes={review.downvotes}
+            recipeId={recipeId}
+            date={review._createdAt}
+            comments={review.comments}
+          />
+        );
+      })}
     </Box>
   );
 };

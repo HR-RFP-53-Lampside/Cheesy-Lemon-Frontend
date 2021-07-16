@@ -47,7 +47,7 @@ const ReviewCard = ({
   }, []);
 
   const handleUpvote = () => {
-    // need help
+    // need help. ALEC PLEASE :)
     // firebase.database().ref(`users/${authorId}`).once('value').then((snapshot) => {
     //   const upvoted = (snapshot.val() && snapshot.val().upReviews) || 0;
     //   console.log(upvoted);
@@ -67,7 +67,6 @@ const ReviewCard = ({
   return (
     <Card style={{ ...SpacingDesign.marginy(3), ...SpacingDesign.padding(1) }} elevation={3}>
       <CardContent>
-        {receivedReviewId}
         <Typography variant="h4">
           {title}
         </Typography>
@@ -104,7 +103,6 @@ const ReviewCard = ({
           <RateReview />
           <Typography style={SpacingDesign.marginLeft(1)}>
             {comments.length}
-            {reviewId}
           </Typography>
         </Button>
         <Button onClick={handleDownvote}>
