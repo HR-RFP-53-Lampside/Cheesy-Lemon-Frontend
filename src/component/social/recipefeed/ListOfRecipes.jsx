@@ -9,7 +9,7 @@ import RecipeCard from './RecipeCard';
 
 const ListOfRecipes = ({ data }) => (
   <Box style={{ width: '100%' }}>
-    {data.map((item) => (
+    {data.map((item) => item && (
       <RecipeCard
         id={item.recipeId}
         title={item.title}

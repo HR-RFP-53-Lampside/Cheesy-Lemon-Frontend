@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -17,10 +17,14 @@ import ReviewFocusComment from './ReviewFocusComment';
 import endPoint from '../../../routing';
 import AddCommentForm from './AddCommentForm';
 
+import LogStatus from '../../context/auth/LogStatus';
+
 const ReviewFocus = () => {
   const [reviewData, setReviewData] = useState({});
   const { recipeId, reviewId } = useParams();
   const [picture, setPicture] = useState('');
+  const [makeUpdate, setUpdate] = useState(false);
+  const logStatus = useContext(LogStatus);
 
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
@@ -28,10 +32,10 @@ const ReviewFocus = () => {
     const review = reviewsData && reviewsData.reviews;
     if (review) {
       const [myData] = review.filter((fit) => fit._id === reviewId);
-      console.log(myData);
       if (myData.images) {
         setPicture(myData.images);
       }
+      console.log(myData);
       setReviewData(myData);
     }
   };
@@ -39,6 +43,10 @@ const ReviewFocus = () => {
   useEffect(() => {
     getReviews();
   }, [recipeId]);
+
+  useEffect(() => {
+    getReviews();
+  }, [makeUpdate]);
 
   return (
     <>
@@ -85,13 +93,18 @@ const ReviewFocus = () => {
           <option value="recent">Most Recent</option>
         </Select>
       </Box>
-<<<<<<< HEAD
+      <AddCommentForm
+        recipeId={recipeId}
+        reviewId={reviewId}
+        setUpdate={setUpdate}
+        update={makeUpdate}
+      />
       {reviewData.comments && reviewData.comments.map((row) => (
-=======
-      <AddCommentForm recipeId={123456789} reviewId={'60f06d5a973b6050b9fa09e7'}/>
-      {[1, 2, 3, 4, 5].map((row) => (
->>>>>>> main
-        <ReviewFocusComment key={row} />
+        <ReviewFocusComment
+          key={`comment-${row._id}`}
+          author={row.authorId}
+          body={row.body}
+        />
       ))}
     </>
   );
