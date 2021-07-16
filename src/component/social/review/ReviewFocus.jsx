@@ -9,8 +9,11 @@ import {
   CardActionArea,
 } from '@material-ui/core';
 import { ThumbUp, ThumbDown } from '@material-ui/icons';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import Image from 'material-ui-image';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 import SpacingDesign from '../../context/design/SpacingDesign';
 import ReviewFocusComment from './ReviewFocusComment';
@@ -25,6 +28,7 @@ const ReviewFocus = () => {
   const [picture, setPicture] = useState('');
   const [makeUpdate, setUpdate] = useState(false);
   const logStatus = useContext(LogStatus);
+  const history = useHistory();
 
   const getReviews = async () => {
     const { data } = await endPoint.reviews.getRecipeReviews(recipeId);
@@ -36,7 +40,11 @@ const ReviewFocus = () => {
         setPicture(myData.images);
       }
       myData.comments.reverse();
-      setReviewData(myData);
+      firebase.database().ref(`users/${myData.authorId}`).once('value').then((snapshot) => {
+        const username = (snapshot.val() && snapshot.val().username) || 'anonymous';
+        myData.authorName = username;
+        setReviewData(myData);
+      });
     }
   };
 
@@ -60,20 +68,33 @@ const ReviewFocus = () => {
             {reviewData.headline}
           </Typography>
         </CardActionArea>
-        <Typography component={Link} variant="h5" style={{ ...SpacingDesign.marginBottom(2), ...SpacingDesign.marginLeft(3) }}>
-          {reviewData.authorName}
-        </Typography>
+        <Button onClick={() => {
+          history.push(`/profile/${reviewData.authorId}`);
+        }}
+        >
+          <Typography variant="h5">
+            {reviewData.authorName}
+          </Typography>
+        </Button>
         <Typography variant="body1">
           {reviewData.body}
         </Typography>
         <Box display="flex" justifyContent="space-between" style={{ ...SpacingDesign.marginx(1), ...SpacingDesign.marginy(2) }}>
-          <Button onClick={() => { console.log('I\'ve been clicked'); }}>
+          <Button onClick={() => {
+            // Alec do the thumbs up here
+            console.log('I\'ve been clicked');
+          }}
+          >
             <ThumbUp />
             <Typography style={SpacingDesign.marginLeft(1)}>
               {reviewData.upvotes}
             </Typography>
           </Button>
-          <Button onClick={() => { console.log('I\'ve been clicked'); }}>
+          <Button onClick={() => {
+            // Alec do the thumbs down here
+            console.log('I\'ve been clicked');
+          }}
+          >
             <ThumbDown />
             <Typography style={SpacingDesign.marginLeft(1)}>
               {reviewData.downvotes}
@@ -85,13 +106,13 @@ const ReviewFocus = () => {
         <Typography variant="h6">
           Comments
         </Typography>
-        <Select
+        {/* <Select
           native
           variant="outlined"
         >
           <option value="yummies">Most Yummies</option>
           <option value="recent">Most Recent</option>
-        </Select>
+        </Select> */}
       </Box>
       <AddCommentForm
         recipeId={recipeId}

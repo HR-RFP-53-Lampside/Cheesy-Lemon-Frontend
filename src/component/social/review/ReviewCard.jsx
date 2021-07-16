@@ -69,11 +69,13 @@ const ReviewCard = ({
         <Typography variant="h4">
           {title}
         </Typography>
-        <Button onClick={() => {
-          history.push(`/profile/${authorId}`);
-        }}
+        <Button
+          onClick={() => {
+            history.push(`/profile/${authorId}`);
+          }}
+          style={{ ...SpacingDesign.marginBottom(2) }}
         >
-          <Typography variant="h5" style={SpacingDesign.marginBottom(2)}>
+          <Typography variant="h6">
             {authorName}
           </Typography>
         </Button>
