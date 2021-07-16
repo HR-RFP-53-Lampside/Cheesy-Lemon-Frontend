@@ -10,6 +10,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import SpacingDesign from '../../context/design/SpacingDesign';
 import LogStatus from '../../context/auth/LogStatus';
 import endPoint from '../../../routing';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 const data = [
   {
@@ -53,11 +56,15 @@ const FavoritesStart = () => {
 
   useEffect(() => {
     if(logStatus) {
-      const favs = [];
       for(let i in logStatus.favRecipes) {
-        favs.push(logStatus.favRecipes[i]);
+        endPoint.recipes.getRecipeById(logStatus.favRecipes[i].backendId)
+          .then(({data}) => {
+            setFavorites(favorites => [...favorites, data.status]);
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
-      setFavorites(favs);
     }
   }, [logStatus]);
 
@@ -65,16 +72,22 @@ const FavoritesStart = () => {
     e.preventDefault();
     const index = e.currentTarget.value;
     //
-    let copy = favorites.slice();
-    copy.splice(index, 1);
-    setFavorites(copy);
     //
     const clickedId = favorites[index].id;
-    // for (let key in logStatus.favRecipes) {
-    //   if (logStatus.favRecipes[key].backendId === clickedId) {
-    //     firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => setClicked(false)).then(() => endPoint.reviews.putRecipeFavorite(clickedId, true)).catch(console.error);
-    //   }
-    // }
+    console.log(clickedId);
+    for (let key in logStatus.favRecipes) {
+      console.log(key);
+      console.log(logStatus.favRecipes[key].backendId)
+      if (logStatus.favRecipes[key].backendId == clickedId) {
+        console.log(key);
+        firebase.database().ref(`users/${logStatus.uid}/favRecipes/${key}`).remove().then(() => endPoint.reviews.putRecipeFavorite(clickedId, true)).then(() => setFavorites([])).catch(console.error);
+
+      }
+    }
+
+    // let copy = favorites.slice();
+    // copy.splice(index, 1);
+    // setFavorites(copy);
   }
 
   const handleFilter = (e) => {
@@ -103,7 +116,7 @@ const FavoritesStart = () => {
         <Typography variant='h4' align='center'>
           Favorites
         </Typography>
-
+        {console.log(favorites)}
         {favorites.filter(main => main.title.toLowerCase().indexOf(filter) !== -1)
           .map((item, index) =>
             <Card style={{ ...SpacingDesign.marginy(3)}} elevation={5} key={item.id}>
