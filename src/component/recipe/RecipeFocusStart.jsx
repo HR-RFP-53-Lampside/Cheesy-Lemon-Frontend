@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import React, { useContext, useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import {
   Paper, Typography, Button, Icon, CircularProgress
 } from '@material-ui/core';
@@ -14,19 +15,10 @@ import RecipeIngredientsList from './RecipeIngredientsList';
 import RecipeInstructionsList from './RecipeInstructionsList';
 import RecipeDescription from './RecipeDescription';
 import RecipeReviewList from './RecipeReviewList';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import endPoint from '../../routing';
 
-=======
-import { useParams } from "react-router-dom";
->>>>>>> main
-=======
-import { useParams } from "react-router-dom";
->>>>>>> main
 import 'firebase/auth';
 import 'firebase/database';
-
 
 const RecipeFocusStart = () => {
   const isFaved = () => {
@@ -44,15 +36,8 @@ const RecipeFocusStart = () => {
   };
   const [logStatus] = useContext(LogStatus);
   const [recipeDeets, setRecipeDeets] = useState([]);
-<<<<<<< HEAD
-<<<<<<< HEAD
-  const [clicked, setClicked] = useState(isFaved());
-=======
-=======
->>>>>>> main
   const [reviewDeets, setReviewDeets] = useState([]);
-  const [clicked, setClicked] = useState(false);
->>>>>>> main
+  const [clicked, setClicked] = useState(isFaved());
   const themeDesign = useTheme();
   let { recipeId } = useParams();
   // const recipeId = 716429; // loading circle looks nice!
@@ -63,19 +48,10 @@ const RecipeFocusStart = () => {
     getRecipeData();
   }, [] );
   let parsedRecipeSummary = ''
-<<<<<<< HEAD
 
   if (recipeDeets.status) {
     const lastIndexOfPercent = recipeDeets.status.summary.lastIndexOf('%');
      parsedRecipeSummary = recipeDeets.status.summary.slice(0, lastIndexOfPercent);
-
-=======
-
-  if (recipeDeets.status) {
-    const lastIndexOfPercent = recipeDeets.status.summary.lastIndexOf('%');
-     parsedRecipeSummary = recipeDeets.status.summary.slice(0, lastIndexOfPercent);
-
->>>>>>> main
   }
 
   const getRecipeData = () => {
